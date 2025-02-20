@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ministry/src/core/providers/user_info_provider.dart';
 import 'package:ministry/src/features/login/application/login_controller.dart';
 
 import '../../../../core/resources/color_manager.dart';
@@ -82,7 +83,7 @@ class LoginPage extends ConsumerWidget {
                                   controller: usernameController,
                                   decoration: InputDecoration(
                                     prefixIcon: Icon(Icons.person,color: MyColors.primary,),
-                                    labelText: 'Username',
+                                    labelText: 'Passport No.',
                                     labelStyle: bh2,
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(12),
@@ -101,7 +102,7 @@ class LoginPage extends ConsumerWidget {
                                   ),
                                   validator: (val){
                                     if(val == null || val.trim().isEmpty){
-                                      return 'Username is required';
+                                      return 'Passport number is required';
                                     }
                                     return null;
                                   },
@@ -141,7 +142,9 @@ class LoginPage extends ConsumerWidget {
                                     if(formKey.currentState!.validate()){
                                       final username = usernameController.text.trim();
                                       final password = passwordController.text.trim();
-                                      await loginNotifier.login(username: username, password: password);
+                                      await loginNotifier.login(username: username, password: password).whenComplete((){
+                                        ref.refresh(userInfoProvider);
+                                      });
                                     }
                                   },
                                   validator: (val){
@@ -191,6 +194,7 @@ class LoginPage extends ConsumerWidget {
                                                   final password = passwordController.text.trim();
                                                   await loginNotifier.login(username: username, password: password).whenComplete((){
                                                     TextInput.finishAutofillContext(shouldSave: remember);
+                                                    ref.refresh(userInfoProvider);
                                                   });
                                                 }
                             

@@ -9,6 +9,7 @@ import '../resources/color_manager.dart';
 Shimmer commonShimmer({
   double? height,
   double? radius,
+  double? width,
   EdgeInsets? margin,
 }){
   return Shimmer.fromColors(
@@ -18,6 +19,7 @@ Shimmer commonShimmer({
     child: Container(
       height: height,
       margin: margin,
+      width: width ?? double.infinity,
       decoration: BoxDecoration(
         border: Border.all(
             color: MyColors.grey

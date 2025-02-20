@@ -1,3 +1,4 @@
+import 'package:device_preview_plus/device_preview_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -93,11 +94,15 @@ void main() async {
 
 
   runApp(
-      ProviderScope(
-        observers: [
-
-        ],
-        child: const MyApp()
+      DevicePreview(
+        enabled: false,
+        builder:(context){
+          return ProviderScope(
+              observers: [
+              ],
+              child: const MyApp()
+          );
+        }
       )
   );
 }

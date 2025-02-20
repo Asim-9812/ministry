@@ -25,7 +25,7 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       lastName: fields[5] as String,
       gender: fields[6] as int,
       email: fields[7] as String,
-      contact: fields[8] as String,
+      contact: fields[8] as String?,
       key: fields[9] as String?,
       orgId: fields[10] as String,
       flag: fields[11] as String?,
@@ -34,24 +34,25 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       userID: fields[14] as String,
       companyName: fields[15] as String,
       mailingName: fields[16] as String,
-      companyFullAddress: fields[17] as String,
+      companyFullAddress: fields[17] as String?,
       userCode: fields[18] as String,
       patientFullName: fields[19] as String,
       patientPhoto: fields[20] as String?,
-      patientFullAddress: fields[21] as String,
-      ageGender: fields[22] as String,
+      patientFullAddress: fields[21] as String?,
+      ageGender: fields[22] as String?,
       bloodGroup: fields[23] as String?,
       cardWatermark: fields[24] as String?,
       colorCode: fields[25] as String?,
       phGroup: fields[26] as String?,
       imagePhoto: fields[27] as String?,
+      passportNo: fields[28] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserModel obj) {
     writer
-      ..writeByte(28)
+      ..writeByte(29)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -107,7 +108,9 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       ..writeByte(26)
       ..write(obj.phGroup)
       ..writeByte(27)
-      ..write(obj.imagePhoto);
+      ..write(obj.imagePhoto)
+      ..writeByte(28)
+      ..write(obj.passportNo);
   }
 
   @override
@@ -134,7 +137,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       lastName: json['lastName'] as String,
       gender: (json['gender'] as num).toInt(),
       email: json['email'] as String,
-      contact: json['contact'] as String,
+      contact: json['contact'] as String?,
       key: json['key'] as String?,
       orgId: json['orgId'] as String,
       flag: json['flag'] as String?,
@@ -143,17 +146,18 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       userID: json['userID'] as String,
       companyName: json['companyName'] as String,
       mailingName: json['mailingName'] as String,
-      companyFullAddress: json['companyFullAddress'] as String,
+      companyFullAddress: json['companyFullAddress'] as String?,
       userCode: json['userCode'] as String,
       patientFullName: json['patientFullName'] as String,
       patientPhoto: json['patientPhoto'] as String?,
-      patientFullAddress: json['patientFullAddress'] as String,
-      ageGender: json['ageGender'] as String,
+      patientFullAddress: json['patientFullAddress'] as String?,
+      ageGender: json['ageGender'] as String?,
       bloodGroup: json['bloodGroup'] as String?,
       cardWatermark: json['cardWatermark'] as String?,
       colorCode: json['colorCode'] as String?,
       phGroup: json['phGroup'] as String?,
       imagePhoto: json['imagePhoto'] as String?,
+      passportNo: json['passportNo'] as String?,
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -185,4 +189,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'colorCode': instance.colorCode,
       'phGroup': instance.phGroup,
       'imagePhoto': instance.imagePhoto,
+      'passportNo': instance.passportNo,
     };

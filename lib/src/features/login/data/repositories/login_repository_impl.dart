@@ -22,8 +22,12 @@ class LoginRepositoryImpl implements LoginRepository{
     try{
       final response = await dio.post(Api.login,
         data: {
+          "id": 0,
           "userName": username,
-          "password": password
+          "password": password,
+          "flag": "string",
+          "token": "string",
+          "key": "wL65|[R7+VGB7-m"
         }
       );
       if (response.statusCode == 200) {

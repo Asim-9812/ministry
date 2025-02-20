@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ministry/src/core/providers/user_info_provider.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
 import 'package:ministry/src/features/dashboard/application/controller/dashboard_controller.dart';
 
@@ -16,6 +17,7 @@ class ProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final loginNotifier = ref.read(loginNotifierProvider.notifier);
+    final userInfo = ref.watch(userInfoProvider);
     return SafeArea(
       child: GestureDetector(
         onTap: ()=>FocusScope.of(context).unfocus(),
@@ -74,7 +76,7 @@ class ProfilePage extends ConsumerWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('John Doe',style: bh1,),
+                              Text('${userInfo.firstName} ${userInfo.lastName}',style: bh1,),
                               w08,
                               Icon(Icons.edit,color: MyColors.primary,size: 18,)
                             ],

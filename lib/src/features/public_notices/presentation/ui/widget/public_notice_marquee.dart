@@ -27,7 +27,7 @@ class PublicNoticeMarquee extends ConsumerWidget {
           return h10;
         }
         List<String> noticeList = notices.map((e)=>e.shortInfo.trim()).toList();
-        final allNotices = noticeList.join('    ');
+        final allNotices = noticeList.join('  |  ');
 
         return Card(
           elevation: 5,

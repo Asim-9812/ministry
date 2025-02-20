@@ -18,14 +18,15 @@ class NoticesRepositoryImpl implements NoticeRepository{
       final response = await dio.get(Api.publicNoticeList);
       if (response.statusCode == 200) {
         final data = response.data['result'] as List<dynamic>;
-        for(int i = 0; i < data.length; i++){
-          final dto = NoticeModel.fromJson(data[i]);
-          final fromDate = DateTime.parse(dto.validDate);
-          final toDate = DateTime.parse(dto.toDate);
-          if(currentDate.isAfter(fromDate) && currentDate.isBefore(toDate)){
-            noticeList.add(dto);
-          }
-        }
+        noticeList = data.map((e)=>NoticeModel.fromJson(e)).toList();
+        // for(int i = 0; i < data.length; i++){
+        //   final dto = NoticeModel.fromJson(data[i]);
+        //   final fromDate = DateTime.parse(dto.validDate);
+        //   final toDate = DateTime.parse(dto.toDate);
+        //   if(currentDate.isAfter(fromDate) && currentDate.isBefore(toDate)){
+        //     noticeList.add(dto);
+        //   }
+        // }
         return noticeList;
       } else {
         throw Exception('Failed to fetch data');

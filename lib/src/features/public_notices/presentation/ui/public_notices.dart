@@ -3,6 +3,9 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ministry/src/core/utils/shimmers.dart';
+import 'package:ministry/src/features/public_notices/presentation/ui/widget/detailed_notice_dialog.dart';
+import 'package:ministry/src/features/public_notices/presentation/ui/widget/loading_notices.dart';
 import 'package:ministry/src/features/public_notices/presentation/ui/widget/no_notices.dart';
 import '../../../../core/resources/color_manager.dart';
 import '../../../../core/resources/font_manager.dart';
@@ -21,6 +24,7 @@ class PublicNotices extends ConsumerWidget {
             return NoPublicNotices();
           }
           return ListView.separated(
+            padding: EdgeInsets.only(bottom: 50),
             itemCount: notices.length,
               separatorBuilder: (context,index){
                 return Divider(
@@ -31,28 +35,16 @@ class PublicNotices extends ConsumerWidget {
               },
               itemBuilder: (context,index){
                 final notice = notices[index];
-                final date = DateFormat('yyyy-MM-dd hh:mm').format(DateTime.parse(notice.validDate));
-                return ListTile(
-                  leading: Image.asset('assets/images/logo.png'),
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(notice.shortInfo,style: br1,),
-                      h10,
-                      Text(date,style: br3),
-                    ],
-                  ),
-                );
+
+                return NoticeDialog(notice: notice);
               }
           );
-        }, 
-        error: (err,stack){
-          return SizedBox();
         },
-        loading: (){
-          return SizedBox();
-        }
+        error: (error,stack)=>Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text('$error',style: bh2,),
+        ),
+        loading: ()=>LoadingNotices()
     );
   }
 }

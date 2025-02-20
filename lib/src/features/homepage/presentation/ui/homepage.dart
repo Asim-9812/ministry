@@ -4,16 +4,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
+import 'package:ministry/src/core/utils/page_route.dart';
 import 'package:ministry/src/features/banners/presentation/ui/banners.dart';
 import 'package:ministry/src/features/dashboard/application/controller/dashboard_controller.dart';
 import 'package:ministry/src/features/health_tips/presentation/ui/health_tips.dart';
 import 'package:ministry/src/features/personal_services/presentation/ui/personal_services.dart';
-import 'package:ministry/src/features/personal_services/presentation/ui/widgets/blurred_services.dart';
-import 'package:ministry/src/features/personal_services/presentation/ui/widgets/personal_services_list.dart';
 import 'package:ministry/src/features/public_notices/presentation/ui/widget/public_notice_marquee.dart';
 import 'package:ministry/src/features/quick_services/services.dart';
 import '../../../../core/resources/gap_manager.dart';
-import '../../../../core/utils/scanner.dart';
+import '../../../scanner/presentation/ui/scanner.dart';
 
 
 
@@ -29,7 +28,7 @@ class Homepage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         heroTag: 'homeFloat',
         backgroundColor: MyColors.primary,
-        onPressed: (){},
+        onPressed: ()=>routeTo(context, Scanner()),
         child: Icon(Icons.qr_code_2,color: MyColors.white,),
       ),
       body: SafeArea(

@@ -31,19 +31,19 @@ class UserModel {
   final String email;
 
   @HiveField(8)
-  final String contact;
+  final String? contact; // Nullable
 
   @HiveField(9)
-  final String? key;
+  final String? key; // Nullable
 
   @HiveField(10)
   final String orgId;
 
   @HiveField(11)
-  final String? flag;
+  final String? flag; // Nullable
 
   @HiveField(12)
-  final String? token;
+  final String? token; // Nullable
 
   @HiveField(13)
   final int typeID;
@@ -58,7 +58,7 @@ class UserModel {
   final String mailingName;
 
   @HiveField(17)
-  final String companyFullAddress;
+  final String? companyFullAddress; // Nullable
 
   @HiveField(18)
   final String userCode;
@@ -67,28 +67,31 @@ class UserModel {
   final String patientFullName;
 
   @HiveField(20)
-  final String? patientPhoto;
+  final String? patientPhoto; // Nullable
 
   @HiveField(21)
-  final String patientFullAddress;
+  final String? patientFullAddress; // Nullable
 
   @HiveField(22)
-  final String ageGender;
+  final String? ageGender; // Nullable
 
   @HiveField(23)
-  final String? bloodGroup;
+  final String? bloodGroup; // Nullable
 
   @HiveField(24)
-  final String? cardWatermark;
+  final String? cardWatermark; // Nullable
 
   @HiveField(25)
-  final String? colorCode;
+  final String? colorCode; // Nullable
 
   @HiveField(26)
-  final String? phGroup;
+  final String? phGroup; // Nullable
 
   @HiveField(27)
-  final String? imagePhoto;
+  final String? imagePhoto; // Nullable
+
+  @HiveField(28)
+  final String? passportNo; // Added field
 
   UserModel({
     required this.id,
@@ -99,26 +102,27 @@ class UserModel {
     required this.lastName,
     required this.gender,
     required this.email,
-    required this.contact,
+    this.contact,
     this.key,
     required this.orgId,
     this.flag,
-    required this.token,
+    this.token,
     required this.typeID,
     required this.userID,
     required this.companyName,
     required this.mailingName,
-    required this.companyFullAddress,
+    this.companyFullAddress,
     required this.userCode,
     required this.patientFullName,
     this.patientPhoto,
-    required this.patientFullAddress,
-    required this.ageGender,
+    this.patientFullAddress,
+    this.ageGender,
     this.bloodGroup,
     this.cardWatermark,
     this.colorCode,
     this.phGroup,
     this.imagePhoto,
+    this.passportNo, // Added field
   });
 
   // From JSON
@@ -137,7 +141,7 @@ class UserModel {
     lastName: '',
     gender: 0,
     email: '',
-    contact: '',
+    contact: null,
     key: null,
     orgId: '',
     flag: null,
@@ -146,17 +150,17 @@ class UserModel {
     userID: '',
     companyName: '',
     mailingName: '',
-    companyFullAddress: '',
+    companyFullAddress: null,
     userCode: '',
     patientFullName: '',
     patientPhoto: null,
-    patientFullAddress: '',
-    ageGender: '',
+    patientFullAddress: null,
+    ageGender: null,
     bloodGroup: null,
     cardWatermark: null,
     colorCode: null,
     phGroup: null,
     imagePhoto: null,
+    passportNo: null, // Added field
   );
-
 }

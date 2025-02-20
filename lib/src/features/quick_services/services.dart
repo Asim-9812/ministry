@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
 
@@ -11,17 +11,15 @@ class QuickServices extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          w16,
-          ServiceCard(name: 'E-Ticket', color: MyColors.primary, icon: CupertinoIcons.tickets),
-          ServiceCard(name: 'Online\nConsultation', color: MyColors.green, icon: Icons.computer),
-          ServiceCard(name: 'Second\nOpinion', color: MyColors.yellow, icon: Icons.group),
-          w12,
+          Expanded(child: ServiceCard(name: 'Nearby\nhospital', color: MyColors.primary, icon: Icons.emergency)),
+          w10,
+          Expanded(child: ServiceCard(name: 'Get\nAppointments', color: MyColors.green, icon: Icons.add_call)),
         ],
       ),
     );
@@ -33,7 +31,7 @@ class QuickServices extends StatelessWidget {
     required IconData icon
   }){
       return Card(
-        margin: EdgeInsets.only(right: 4),
+        margin: EdgeInsets.zero,
         elevation: 0,
         child: InkWell(
           onTap: (){
@@ -45,14 +43,17 @@ class QuickServices extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10)
             ),
             height: 70,
-            padding: EdgeInsets.only(right: 36,left: 18),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(icon,color: MyColors.white,size: 30,),
-                w10,
-                Text(name,style: wr1,)
-              ],
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(icon,color: MyColors.white),
+                  w10,
+                  Text(name,style: wr1,maxLines: 2,)
+                ],
+              ),
             ),
           ),
         ),
