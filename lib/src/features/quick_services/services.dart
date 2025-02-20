@@ -14,12 +14,12 @@ class QuickServices extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(child: ServiceCard(name: 'Nearby\nhospital', color: MyColors.primary, icon: Icons.emergency)),
+          Expanded(child: ServiceCard(name: 'Nearby hospital', color: MyColors.primary, icon: Icons.emergency)),
           w10,
-          Expanded(child: ServiceCard(name: 'Get\nAppointments', color: MyColors.green, icon: Icons.add_call)),
+          Expanded(child: ServiceCard(name: 'Get Appointments', color: MyColors.green, icon: Icons.add_call)),
         ],
       ),
     );
@@ -42,18 +42,15 @@ class QuickServices extends StatelessWidget {
                 color: color,
                 borderRadius: BorderRadius.circular(10)
             ),
-            height: 70,
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(icon,color: MyColors.white),
-                  w10,
-                  Text(name,style: wr1,maxLines: 2,)
-                ],
-              ),
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon,color: MyColors.white),
+                h10,
+                Text(name,style: wr1,maxLines: 2,textAlign: TextAlign.center,)
+              ],
             ),
           ),
         ),

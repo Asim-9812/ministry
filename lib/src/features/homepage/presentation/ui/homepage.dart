@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
 import 'package:ministry/src/core/utils/page_route.dart';
+import 'package:ministry/src/core/utils/toaster.dart';
 import 'package:ministry/src/features/banners/presentation/ui/banners.dart';
 import 'package:ministry/src/features/dashboard/application/controller/dashboard_controller.dart';
 import 'package:ministry/src/features/health_tips/presentation/ui/health_tips.dart';
@@ -28,8 +29,8 @@ class Homepage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         heroTag: 'homeFloat',
         backgroundColor: MyColors.primary,
-        onPressed: ()=>routeTo(context, Scanner()),
-        child: Icon(Icons.qr_code_2,color: MyColors.white,),
+        onPressed: ()=>Toaster.comingSoon(),
+        child: Icon(Icons.support_agent,color: MyColors.white,),
       ),
       body: SafeArea(
           child: Column(

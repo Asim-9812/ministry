@@ -8,7 +8,6 @@ import 'package:ministry/src/features/old_reminder/reminders/general/domain/mode
 import 'package:ministry/src/features/old_reminder/reminders/medicine/domain/model/medicine_model.dart' as oldMed;
 import 'package:workmanager/workmanager.dart';
 import 'src/app/my_app.dart';
-import 'src/features/old_documents/domain/model/patient_document_model.dart' as oldDoc;
 import 'src/features/status_page/domain/model/user_model.dart';
 
 
@@ -72,7 +71,6 @@ void main() async {
 
   Hive.registerAdapter(UserModelAdapter()); //typeid 0
 
-  Hive.registerAdapter<oldDoc.PatientDocumentModel>(oldDoc.PatientDocumentModelAdapter()); // typeId 12
 
   ///reminder....  // typeId (40 & 41) & (30 - 35)
   Hive.registerAdapter<oldMed.MedicineModel>(oldMed.MedicineModelAdapter());
@@ -90,8 +88,6 @@ void main() async {
   final userBox = await Hive.openBox<UserModel>('users');
   await Hive.openBox<oldMed.MedicineModel>('medicines');
   await Hive.openBox<oldGen.GeneralModel>('generals');
-  await Hive.openBox<oldDoc.PatientDocumentModel>('patientDocs');
-
 
   runApp(
       DevicePreview(

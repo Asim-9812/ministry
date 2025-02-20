@@ -203,7 +203,8 @@ class LoginPage extends ConsumerWidget {
                                             ? const SpinKitDualRing(color: MyColors.white, size: 16,)
                                             : const Text('Login',style: wh2,),
                                       ),
-                                    )
+                                    ),
+                                    h30
                                   ],
                                 )
                               ],

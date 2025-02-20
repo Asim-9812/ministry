@@ -19,8 +19,8 @@ class PersonalServicesList extends StatelessWidget {
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
-              childAspectRatio: 3/3,
+              crossAxisCount: 2,
+              childAspectRatio: 16/9,
               crossAxisSpacing: 0,
               mainAxisSpacing: 0
           ),
@@ -60,7 +60,7 @@ class PersonalServicesList extends StatelessWidget {
                         children: [
                           Image.asset('${personalList[index].img}'),
                           h10,
-                          Text('${personalList[index].name}',style: TextStyle(color: MyColors.primary,fontSize: 10),maxLines: 1)
+                          Text('${personalList[index].name}',style: TextStyle(color: MyColors.primary,fontSize: 16,fontWeight: FontWeight.w500),maxLines: 1)
                         ],
                       ),
                     ),

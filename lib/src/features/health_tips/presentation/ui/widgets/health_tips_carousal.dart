@@ -53,19 +53,21 @@ class HealthTipsCarousal extends ConsumerWidget {
                       decoration: BoxDecoration(
                         color: MyColors.primaryLight
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Health Tips',style: bh3,maxLines: 1,),
-                          h10,
-                          Text(healthTip.title,style: bh1,maxLines: 1,),
-                          h10,
-                          Text(healthTip.shortInfo,style: br1,maxLines: 2,),
-                          h20,
-                          HealthTipDialog(healthTip: healthTip)
-                        ],
+                      padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Health Tips',style: bh3,maxLines: 1,),
+                            h10,
+                            Text(healthTip.title,style: bh1,maxLines: 1,),
+                            h10,
+                            Text(healthTip.shortInfo,style: br1,maxLines: 1,),
+                            h20,
+                            HealthTipDialog(healthTip: healthTip)
+                          ],
+                        ),
                       ),
                     );
                   },

@@ -1,6 +1,7 @@
 
 
 
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
 import 'package:ministry/src/features/dashboard/presentation/ui/dashboard.dart';
@@ -13,18 +14,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Roboto',
-        scaffoldBackgroundColor: MyColors.white,
-        brightness: Brightness.light,
-        colorScheme: ColorScheme.fromSeed(seedColor: MyColors.primary),
-        useMaterial3: true,
-      ),
-      home: MediaQuery(
-          data: MediaQueryData(textScaler: TextScaler.linear(0.9)),
-          child: SplashScreen()
+    return ConnectivityAppWrapper(
+      app: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'Roboto',
+          scaffoldBackgroundColor: MyColors.white,
+          brightness: Brightness.light,
+          colorScheme: ColorScheme.fromSeed(seedColor: MyColors.primary),
+          useMaterial3: true,
+        ),
+        home: MediaQuery(
+            data: MediaQueryData(textScaler: TextScaler.linear(0.9)),
+            child: SplashScreen()
+        ),
       ),
     );
   }
