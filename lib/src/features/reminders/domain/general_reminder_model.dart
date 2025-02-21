@@ -21,7 +21,7 @@ class GeneralReminderModel extends HiveObject {
   final DateTime startDate;
 
   @HiveField(5)
-  final ReminderPattern pattern;
+  final GeneralReminderPattern pattern;
 
   GeneralReminderModel({
     required this.id,
@@ -34,7 +34,7 @@ class GeneralReminderModel extends HiveObject {
 }
 
 @HiveType(typeId: 5)
-class ReminderPattern {
+class GeneralReminderPattern {
   @HiveField(0)
   final int id;
 
@@ -47,5 +47,5 @@ class ReminderPattern {
   @HiveField(3)
   int? intervalDays;
 
-  ReminderPattern({required this.id, required this.pattern, this.daysOfWeek, this.intervalDays});
+  GeneralReminderPattern({required this.id, required this.pattern, this.daysOfWeek, this.intervalDays});
 }

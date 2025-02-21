@@ -16,13 +16,13 @@ class ReminderModel extends HiveObject {
   final int reminderType;
 
   @HiveField(2)
-  MedicineReminderModel? medicineReminder;
+  MedicineReminderModel? medicineReminder;  // type 1
 
   @HiveField(3)
-  GeneralReminderModel? generalReminder;
+  GeneralReminderModel? generalReminder; // type 2
 
   @HiveField(4)
-  NoteModel? notes;
+  NoteModel? notes; // type 3
 
   ReminderModel({
     required this.reminderId,

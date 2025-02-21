@@ -34,27 +34,29 @@ class BmrDialog extends StatelessWidget {
             h10,
             Text('According to your lifestyle and activities your bmr may vary to one of the following :',style: bh3,),
 
-            SingleChildScrollView(
-              child: Column(
-                children: activityList.map((e){
-                  return Column(
-                    children: [
-                      Material(
-                        child: ListTile(
-                          tileColor: MyColors.white,
-                          title: Text(e.activityLevel,style: bh3,),
-                          subtitle: Text('${e.calories} Kcal/day',style: bh2,),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: activityList.map((e){
+                    return Column(
+                      children: [
+                        Material(
+                          child: ListTile(
+                            tileColor: MyColors.white,
+                            title: Text(e.activityLevel,style: bh3,),
+                            subtitle: Text('${e.calories} Kcal/day',style: bh2,),
+                          ),
                         ),
-                      ),
-                      Divider(
-                        indent: 24,
-                        endIndent: 24,
-                        thickness: 0.5,
-                        height: 0,
-                      )
-                    ],
-                  );
-                }).toList(),
+                        Divider(
+                          indent: 24,
+                          endIndent: 24,
+                          thickness: 0.5,
+                          height: 0,
+                        )
+                      ],
+                    );
+                  }).toList(),
+                ),
               ),
             ),
             h10,

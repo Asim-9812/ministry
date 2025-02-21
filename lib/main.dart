@@ -6,8 +6,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:ministry/src/features/old_reminder/notification_controllers/notification_controller.dart';
 import 'package:ministry/src/features/old_reminder/reminders/general/domain/model/general_model.dart' as oldGen;
 import 'package:ministry/src/features/old_reminder/reminders/medicine/domain/model/medicine_model.dart' as oldMed;
+import 'package:ministry/src/features/reminders/domain/general_reminder_model.dart';
+import 'package:ministry/src/features/reminders/domain/medicine_reminder_model.dart';
+
 import 'package:workmanager/workmanager.dart';
 import 'src/app/my_app.dart';
+import 'src/features/reminders/domain/notes_model.dart';
+import 'src/features/reminders/domain/reminder_model.dart';
 import 'src/features/status_page/domain/model/user_model.dart';
 
 
@@ -71,8 +76,21 @@ void main() async {
 
   Hive.registerAdapter(UserModelAdapter()); //typeid 0
 
+  ///reminder....  // typeId (2 - 11)
+  Hive.registerAdapter(ReminderModelAdapter()); //typeid 2
+  Hive.registerAdapter(NoteModelAdapter()); //typeid 3
+  Hive.registerAdapter(GeneralReminderModelAdapter()); //typeid 4
+  Hive.registerAdapter(GeneralReminderPatternAdapter()); //typeid 5
+  Hive.registerAdapter(MedicineReminderModelAdapter()); //typeid 6
+  Hive.registerAdapter(MedicineRouteAdapter()); //typeid 7
+  Hive.registerAdapter(MedicineUnitAdapter()); //typeid 8
+  Hive.registerAdapter(FrequencyAdapter()); //typeid 9
+  Hive.registerAdapter(MealAdapter()); //typeid 10
+  Hive.registerAdapter(ReminderPatternAdapter()); //typeid 11
+  ///reminder end ....
 
-  ///reminder....  // typeId (40 & 41) & (30 - 35)
+
+  ///old reminder....  // typeId (40 & 41) & (30 - 35)
   Hive.registerAdapter<oldMed.MedicineModel>(oldMed.MedicineModelAdapter());
   Hive.registerAdapter<oldMed.MedicineRoute>(oldMed.MedicineRouteAdapter());
   Hive.registerAdapter<oldMed.MedicineUnit>(oldMed.MedicineUnitAdapter());
@@ -81,17 +99,18 @@ void main() async {
   Hive.registerAdapter<oldMed.Meal>(oldMed.MealAdapter());
   Hive.registerAdapter<oldGen.GeneralModel>(oldGen.GeneralModelAdapter());
   Hive.registerAdapter<oldGen.RemindBefore>(oldGen.RemindBeforeAdapter());
-  ///reminder end ....
+  ///old reminder end ....
 
 
   await Hive.initFlutter();
-  final userBox = await Hive.openBox<UserModel>('users');
+  await Hive.openBox<UserModel>('users');
   await Hive.openBox<oldMed.MedicineModel>('medicines');
   await Hive.openBox<oldGen.GeneralModel>('generals');
+  await Hive.openBox<ReminderModel>('reminders');
 
   runApp(
       DevicePreview(
-        enabled: false,
+        enabled: true,
         builder:(context){
           return ProviderScope(
               observers: [

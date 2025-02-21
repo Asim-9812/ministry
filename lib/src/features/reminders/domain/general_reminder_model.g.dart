@@ -22,7 +22,7 @@ class GeneralReminderModelAdapter extends TypeAdapter<GeneralReminderModel> {
       description: fields[2] as String?,
       attachmentList: (fields[3] as List?)?.cast<Uint8List>(),
       startDate: fields[4] as DateTime,
-      pattern: fields[5] as ReminderPattern,
+      pattern: fields[5] as GeneralReminderPattern,
     );
   }
 
@@ -55,17 +55,17 @@ class GeneralReminderModelAdapter extends TypeAdapter<GeneralReminderModel> {
           typeId == other.typeId;
 }
 
-class ReminderPatternAdapter extends TypeAdapter<ReminderPattern> {
+class GeneralReminderPatternAdapter extends TypeAdapter<GeneralReminderPattern> {
   @override
   final int typeId = 5;
 
   @override
-  ReminderPattern read(BinaryReader reader) {
+  GeneralReminderPattern read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ReminderPattern(
+    return GeneralReminderPattern(
       id: fields[0] as int,
       pattern: fields[1] as String,
       daysOfWeek: (fields[2] as List?)?.cast<String>(),
@@ -74,7 +74,7 @@ class ReminderPatternAdapter extends TypeAdapter<ReminderPattern> {
   }
 
   @override
-  void write(BinaryWriter writer, ReminderPattern obj) {
+  void write(BinaryWriter writer, GeneralReminderPattern obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
@@ -93,7 +93,7 @@ class ReminderPatternAdapter extends TypeAdapter<ReminderPattern> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ReminderPatternAdapter &&
+      other is GeneralReminderPatternAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

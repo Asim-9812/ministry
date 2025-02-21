@@ -12,6 +12,7 @@ import 'package:ministry/src/features/health_tips/presentation/ui/health_tips.da
 import 'package:ministry/src/features/personal_services/presentation/ui/personal_services.dart';
 import 'package:ministry/src/features/public_notices/presentation/ui/widget/public_notice_marquee.dart';
 import 'package:ministry/src/features/quick_services/services.dart';
+import 'package:ministry/src/features/support/presentation/ui/support.dart';
 import '../../../../core/resources/gap_manager.dart';
 import '../../../scanner/presentation/ui/scanner.dart';
 
@@ -29,7 +30,7 @@ class Homepage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         heroTag: 'homeFloat',
         backgroundColor: MyColors.primary,
-        onPressed: ()=>Toaster.comingSoon(),
+        onPressed: ()=>routeTo(context, Support()),
         child: Icon(Icons.support_agent,color: MyColors.white,),
       ),
       body: SafeArea(

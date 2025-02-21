@@ -365,24 +365,26 @@ class _EDDState extends State<Edd> {
           color: MyColors.grey.withOpacity(0.5),
           borderRadius: BorderRadius.circular(10)
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Estimated Due Date :',
-            style: TextStyle(color: MyColors.black, fontSize: 14,fontWeight: FontWeight.w500),
-          ),
-          Text(
-            '$calculatedEDD',
-            style: TextStyle(color: MyColors.black, fontSize: 16),
-          ),
-          h10,
-          Text(
-            'Estimated Due Date Range :',
-            style: TextStyle(color: MyColors.black, fontSize: 14,fontWeight: FontWeight.w500),
-          ),
-          Text(calculateEDDRange(),style: TextStyle(color: MyColors.black,fontSize: 16)),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Estimated Due Date :',
+              style: TextStyle(color: MyColors.black, fontSize: 14,fontWeight: FontWeight.w500),
+            ),
+            Text(
+              '$calculatedEDD',
+              style: TextStyle(color: MyColors.black, fontSize: 16),
+            ),
+            h10,
+            Text(
+              'Estimated Due Date Range :',
+              style: TextStyle(color: MyColors.black, fontSize: 14,fontWeight: FontWeight.w500),
+            ),
+            Text(calculateEDDRange(),style: TextStyle(color: MyColors.black,fontSize: 16)),
+          ],
+        ),
       ),
     );
   }
@@ -396,24 +398,26 @@ class _EDDState extends State<Edd> {
           color: MyColors.grey.withOpacity(0.5),
           borderRadius: BorderRadius.circular(10)
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Estimated Due Date :',
-            style: TextStyle(color: MyColors.black, fontSize: 14,fontWeight: FontWeight.w500),
-          ),
-          Text(
-            '$calculatedNepEDD',
-            style: TextStyle(color: MyColors.black, fontSize: 16),
-          ),
-          h10,
-          Text(
-            'Estimated Due Date Range :',
-            style: TextStyle(color: MyColors.black, fontSize: 14,fontWeight: FontWeight.w500),
-          ),
-          Text(calculateNepEDDRange(),style: TextStyle(color: MyColors.black,fontSize: 16)),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Estimated Due Date :',
+              style: TextStyle(color: MyColors.black, fontSize: 14,fontWeight: FontWeight.w500),
+            ),
+            Text(
+              '$calculatedNepEDD',
+              style: TextStyle(color: MyColors.black, fontSize: 16),
+            ),
+            h10,
+            Text(
+              'Estimated Due Date Range :',
+              style: TextStyle(color: MyColors.black, fontSize: 14,fontWeight: FontWeight.w500),
+            ),
+            Text(calculateNepEDDRange(),style: TextStyle(color: MyColors.black,fontSize: 16)),
+          ],
+        ),
       ),
     );
   }
