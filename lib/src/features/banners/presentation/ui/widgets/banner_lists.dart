@@ -1,4 +1,7 @@
 
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:ministry/src/core/utils/shimmers.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
@@ -32,11 +35,12 @@ class BannerLists extends ConsumerWidget {
             autoPlayCurve: Curves.fastOutSlowIn,
             enableInfiniteScroll: true,
             autoPlayInterval: Duration(seconds: 5),
-            autoPlayAnimationDuration: Duration(milliseconds: 500),
+            autoPlayAnimationDuration: Duration(seconds: 1),
             viewportFraction: 1,
           ),
           items: banners.map((banner) {
-            final bannerImg = '$baseUrl/${banner.imagePath}';
+            final bannerImg = banner.imagePath.split(',').last;
+            Uint8List imageBytes = base64Decode(bannerImg);
             return Builder(
               builder: (BuildContext context) {
                 return Card(
@@ -49,7 +53,7 @@ class BannerLists extends ConsumerWidget {
                         color: MyColors.grey
                       ),
                       borderRadius: BorderRadius.circular(12),
-                      image: DecorationImage(image: NetworkImage(bannerImg),fit: BoxFit.fill),
+                      image: DecorationImage(image: MemoryImage(imageBytes),fit: BoxFit.fill),
                       // color: MyColors.white
                     ),
                   ),

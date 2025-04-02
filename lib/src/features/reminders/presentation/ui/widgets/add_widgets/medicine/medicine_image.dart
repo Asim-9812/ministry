@@ -19,11 +19,76 @@ class MedicineImage extends ConsumerWidget {
     final image = ref.watch(medImageProvider);
     final imagePath = image == null ? '' : path.basename(image.path);
     return InkWell(
+      onTap: () async {
 
-      onTap: (){
-        ref.read(medImageProvider.notifier).pickAnImage();
+        await showModalBottomSheet(context: context, builder: (context){
+          return Container(
+            color: MyColors.white,
+            constraints: BoxConstraints(
+                minHeight: 150
+            ),
+            padding: EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      ref.read(medImageProvider.notifier).camera();
+                      Navigator.pop(context);
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: MyColors.lightGrey,
+                          borderRadius: BorderRadius.circular(12)
+                      ),
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.camera_alt,color: MyColors.primary,),
+                          Text('Camera',style: br3,)
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                w10,
+                Expanded(
+                  child: InkWell(
+                    onTap: (){
+                      ref.read(medImageProvider.notifier).pickAnImage();
+                      Navigator.pop(context);
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: MyColors.lightGrey,
+                          borderRadius: BorderRadius.circular(12)
+                      ),
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.image,color: MyColors.primary,),
+                          Text('Gallery',style: br3,)
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+
+
+
       },
-
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),

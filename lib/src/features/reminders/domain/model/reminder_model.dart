@@ -13,7 +13,7 @@ class ReminderModel extends HiveObject {
   final int reminderId;
 
   @HiveField(1)
-  final int reminderType;
+  final int reminderType;    //med = 1  //gen = 2  //notes = 3
 
   @HiveField(2)
   MedicineReminderModel? medicineReminder;  // type 1

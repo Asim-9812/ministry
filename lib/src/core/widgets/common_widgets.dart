@@ -26,3 +26,15 @@ AppBar commonNavBar(String text){
     title: Text(text, style: wh1,),
   );
 }
+
+Widget noItems(){
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.start,
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Image.asset('assets/images/empty/noFiles.png'),
+      Text('No Reminders',style: bh2,)
+    ],
+  );
+}

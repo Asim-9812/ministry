@@ -1,6 +1,7 @@
 
 
-import 'package:ministry/src/features/reminders/domain/medicine_reminder_model.dart';
+
+import '../../domain/model/medicine_reminder_model.dart';
 
 final frequencyList = [
   Frequency(id: 1, name: 'OD - Once a day'),

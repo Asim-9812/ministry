@@ -9,9 +9,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../../../core/resources/color_manager.dart';
 import '../../../../../../../core/resources/font_manager.dart';
 import '../../../../../../../core/resources/gap_manager.dart';
-import '../../../../../data/add_medicine_controller.dart';
+import '../../../../../application/controller/add_medicine_controller.dart';
 import '../../../../../data/medicine_data/unit_list.dart';
-import '../../../../../domain/medicine_reminder_model.dart';
+import '../../../../../domain/model/medicine_reminder_model.dart';
 
 class StrengthUnit extends ConsumerWidget {
   const StrengthUnit({super.key});
@@ -20,6 +20,8 @@ class StrengthUnit extends ConsumerWidget {
   Widget build(BuildContext context,ref) {
     final medNotifier = ref.read(addMedicineController.notifier);
     final selectedUnitId = ref.watch(addMedicineController).unitId;
+    final strengthController = ref.watch(addMedicineController).strengthController;
+    final unitError = ref.watch(addMedicineController).unitError;
     final selectedUnit = medicineUnitList.singleWhere((e)=>e.id == selectedUnitId,orElse: ()=>MedicineUnit(id: 0, name: 'Unit'));
 
     return Row(
@@ -27,6 +29,7 @@ class StrengthUnit extends ConsumerWidget {
       children: [
         Expanded(
             child: TextFormField(
+              controller: strengthController,
               decoration: InputDecoration(
                 isDense: true,
                 border: OutlineInputBorder(
@@ -52,19 +55,20 @@ class StrengthUnit extends ConsumerWidget {
                 try{
                   double.parse(value);
                 }catch(e){
-                  return 'Invalid value';
+                  return 'Invalid Type';
                 }
 
                 return null;
               },
               autovalidateMode: AutovalidateMode.onUserInteraction,
+
             )),
         w06,
         Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
-                  color: MyColors.primary
+                  color: unitError ? MyColors.red : MyColors.primary
               )
           ),
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
@@ -84,6 +88,7 @@ class StrengthUnit extends ConsumerWidget {
                 PopupMenuItem(
                     onTap: (){
                       medNotifier.changeUnit(e.id);
+                      ref.read(addMedicineController.notifier).unitHasError(false);
                     },
                     child: Text(e.name)
                 )).toList(),

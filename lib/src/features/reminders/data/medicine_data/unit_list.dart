@@ -1,8 +1,7 @@
 
 
 
-
-import '../../domain/medicine_reminder_model.dart';
+import '../../domain/model/medicine_reminder_model.dart';
 
 final medicineUnitList = medicineUnitJsonList.map((e)=>MedicineUnit.fromJson(e)).toList();
 

@@ -9,7 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../../../core/resources/color_manager.dart';
 import '../../../../../../../core/resources/font_manager.dart';
 import '../../../../../../../core/resources/gap_manager.dart';
-import '../../../../../data/add_medicine_controller.dart';
+import '../../../../../application/controller/add_medicine_controller.dart';
 import '../../../../../data/medicine_data/pattern_list.dart';
 
 class MedicinePattern extends ConsumerWidget {
@@ -21,10 +21,12 @@ class MedicinePattern extends ConsumerWidget {
     final patternId = ref.watch(addMedicineController).patternId;
     final selectedDays = ref.watch(addMedicineController).selectedDaysOfWeek;
     final intervalController = ref.watch(addMedicineController).interval;
+    final patternError = ref.watch(addMedicineController).patternError;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               flex: 3,
@@ -51,6 +53,7 @@ class MedicinePattern extends ConsumerWidget {
                 onSelected: (value) {
                   if(value != null){
                     medNotifier.changePattern(value);
+                    ref.read(addMedicineController.notifier).patternHasError(null);
                   }
                 },
                 menuStyle: MenuStyle(
@@ -58,6 +61,7 @@ class MedicinePattern extends ConsumerWidget {
                   padding: WidgetStatePropertyAll(EdgeInsets.zero),
                 ),
                 dropdownMenuEntries: patternList.map((e)=>DropdownMenuEntry(value: e.id, label: e.pattern)).toList(),
+                errorText: patternError,
               ),
             ),
             if(patternId == 3)

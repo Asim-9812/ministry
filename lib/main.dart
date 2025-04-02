@@ -6,13 +6,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:ministry/src/features/old_reminder/notification_controllers/notification_controller.dart';
 import 'package:ministry/src/features/old_reminder/reminders/general/domain/model/general_model.dart' as oldGen;
 import 'package:ministry/src/features/old_reminder/reminders/medicine/domain/model/medicine_model.dart' as oldMed;
-import 'package:ministry/src/features/reminders/domain/general_reminder_model.dart';
-import 'package:ministry/src/features/reminders/domain/medicine_reminder_model.dart';
+import 'package:ministry/src/features/reminders/domain/model/general_reminder_model.dart';
 
 import 'package:workmanager/workmanager.dart';
 import 'src/app/my_app.dart';
-import 'src/features/reminders/domain/notes_model.dart';
-import 'src/features/reminders/domain/reminder_model.dart';
+import 'src/features/reminders/domain/model/medicine_reminder_model.dart';
+import 'src/features/reminders/domain/model/notes_model.dart';
+import 'src/features/reminders/domain/model/reminder_model.dart';
 import 'src/features/status_page/domain/model/user_model.dart';
 
 

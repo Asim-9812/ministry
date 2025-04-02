@@ -1,6 +1,7 @@
 
 
-import '../../domain/medicine_reminder_model.dart';
+
+import '../../domain/model/medicine_reminder_model.dart';
 
 List<Meal> mealList = [
   Meal(id: 1, name: 'Before Meal'),

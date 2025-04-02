@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 import '../../../../../../../core/resources/color_manager.dart';
 import '../../../../../../../core/resources/font_manager.dart';
 import '../../../../../../../core/resources/gap_manager.dart';
-import '../../../../../data/add_medicine_controller.dart';
+import '../../../../../application/controller/add_medicine_controller.dart';
 
 class DurationDate extends ConsumerWidget {
   const DurationDate({super.key});
@@ -103,6 +103,13 @@ class DurationDate extends ConsumerWidget {
                 startDateController.text = date;
               }
             },
+            validator: (value){
+              if(value == null || value.trim().isEmpty){
+                return 'Date is required.';
+              }
+              return null;
+            },
+            autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
         ),
       ],

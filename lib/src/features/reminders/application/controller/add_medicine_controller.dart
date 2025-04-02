@@ -10,7 +10,9 @@ final addMedicineController = ChangeNotifierProvider.autoDispose((ref)=> AddMedi
 
 class AddMedicineController extends ChangeNotifier{
 
+  final formKey = GlobalKey<FormState>();
   TextEditingController medName = TextEditingController();
+  TextEditingController strengthController = TextEditingController();
   TextEditingController time = TextEditingController();
   TextEditingController medDuration = TextEditingController();
   TextEditingController startDate = TextEditingController();
@@ -18,9 +20,13 @@ class AddMedicineController extends ChangeNotifier{
   TextEditingController notes = TextEditingController();
   int mealId = 1;
   int routeId = 0;
+  bool routeError = false;
   int frequencyId = 0;
+  String? frequencyError;
   int patternId = 0;
+  String? patternError;
   int unitId = 0;
+  bool unitError = false;
   List<DateTime> scheduledTimeList = [];
   List<String> selectedDaysOfWeek = [];
 
@@ -92,5 +98,28 @@ class AddMedicineController extends ChangeNotifier{
     }
     notifyListeners();
   }
+
+
+  void routeHasError(bool value){
+    routeError = value;
+    notifyListeners();
+  }
+
+  void unitHasError(bool value){
+    unitError = value;
+    notifyListeners();
+  }
+
+  void frequencyHasError(String? value){
+    frequencyError = value;
+    notifyListeners();
+  }
+
+  void patternHasError(String? value){
+    patternError = value;
+    notifyListeners();
+  }
+
+
 
 }

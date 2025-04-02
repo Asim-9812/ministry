@@ -17,8 +17,9 @@ class ReminderFab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fabKey = GlobalKey<ExpandableFabState>();
     return ExpandableFab(
-      // key: _key,
+      key: fabKey,
       type: ExpandableFabType.up,
       childrenAnimation: ExpandableFabAnimation.none,
       distance: 70,
@@ -40,10 +41,10 @@ class ReminderFab extends StatelessWidget {
       ),
 
       childrenOffset: Offset(-4, 0),
-      children: const [
-        FabChildrenWidget(name: 'Notes', icon: FontAwesomeIcons.noteSticky, pageRoute: AddNotes(),),
-        FabChildrenWidget(name: 'General', icon: FontAwesomeIcons.stopwatch, pageRoute: AddGeneralReminder(),),
-        FabChildrenWidget(name: 'Medicine', icon: FontAwesomeIcons.pills, pageRoute: AddMedicineReminder(),)
+      children: [
+        FabChildrenWidget(fabKey: fabKey, name: 'Notes', icon: FontAwesomeIcons.noteSticky, pageRoute: AddNotes(),),
+        FabChildrenWidget(fabKey: fabKey, name: 'General', icon: FontAwesomeIcons.stopwatch, pageRoute: AddGeneralReminder(),),
+        FabChildrenWidget(fabKey: fabKey, name: 'Medicine', icon: FontAwesomeIcons.pills, pageRoute: AddMedicineReminder(),)
       ],
 
     );

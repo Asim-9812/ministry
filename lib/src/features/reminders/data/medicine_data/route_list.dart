@@ -1,7 +1,7 @@
 
-import '../../domain/medicine_reminder_model.dart';
 
 
+import '../../domain/model/medicine_reminder_model.dart';
 
 final medicineRouteList = medicineRouteJsonList.map((e)=>MedicineRoute.fromJson(e)).toList();
 

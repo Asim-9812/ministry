@@ -9,9 +9,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../../../core/resources/color_manager.dart';
 import '../../../../../../../core/resources/font_manager.dart';
 import '../../../../../../../core/resources/gap_manager.dart';
-import '../../../../../data/add_medicine_controller.dart';
+import '../../../../../application/controller/add_medicine_controller.dart';
 import '../../../../../data/medicine_data/route_list.dart';
-import '../../../../../domain/medicine_reminder_model.dart';
+import '../../../../../domain/model/medicine_reminder_model.dart';
+
 
 class RouteName extends ConsumerWidget {
   const RouteName({super.key});
@@ -21,6 +22,7 @@ class RouteName extends ConsumerWidget {
     final medNotifier = ref.read(addMedicineController.notifier);
     final medNameController = ref.watch(addMedicineController).medName;
     final selectedRouteId = ref.watch(addMedicineController).routeId;
+    final routeError = ref.watch(addMedicineController).routeError;
     final selectedRoute = medicineRouteList.singleWhere((e)=>e.id == selectedRouteId,orElse: ()=>MedicineRoute(id: 0, name: 'Route'));
 
     return Row(
@@ -30,12 +32,11 @@ class RouteName extends ConsumerWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
-                  color: MyColors.primary
+                  color: routeError ? MyColors.red : MyColors.primary
               )
           ),
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
           child: PopupMenuButton(
-
             position: PopupMenuPosition.under,
             constraints: BoxConstraints(
                 maxHeight: 200
@@ -51,6 +52,7 @@ class RouteName extends ConsumerWidget {
                 PopupMenuItem(
                     onTap: (){
                       medNotifier.changeRouteType(e.id);
+                      ref.read(addMedicineController.notifier).routeHasError(false);
                     },
                     child: Text(e.name)
                 )).toList(),
@@ -76,8 +78,15 @@ class RouteName extends ConsumerWidget {
                 ),
                 prefixIcon: Icon(FontAwesomeIcons.pills,color: MyColors.primary,),
                 labelText: 'Medicine Name',
-                labelStyle: bh3
+                labelStyle: bh3,
             ),
+            validator: (value) {
+              if(value == null || value.trim().isEmpty){
+                return 'Name is required';
+              }
+              return null;
+            },
+            autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
         ),
 

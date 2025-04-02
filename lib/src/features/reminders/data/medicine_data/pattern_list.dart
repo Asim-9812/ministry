@@ -1,8 +1,7 @@
 
 
 
-
-import 'package:ministry/src/features/reminders/domain/medicine_reminder_model.dart';
+import '../../domain/model/medicine_reminder_model.dart';
 
 List<ReminderPattern> patternList = [
   ReminderPattern(id: 1, pattern: 'Everyday'),

@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 import '../../../../../../../core/resources/color_manager.dart';
 import '../../../../../../../core/resources/font_manager.dart';
 import '../../../../../../../core/resources/gap_manager.dart';
-import '../../../../../data/add_medicine_controller.dart';
+import '../../../../../application/controller/add_medicine_controller.dart';
 import '../../../../../data/medicine_data/frequency_list.dart';
 
 class FrequencyTime extends ConsumerWidget {
@@ -20,7 +20,10 @@ class FrequencyTime extends ConsumerWidget {
   Widget build(BuildContext context,ref) {
     final medNotifier = ref.read(addMedicineController.notifier);
     final timeController = ref.watch(addMedicineController).time;
+    final dateController = ref.watch(addMedicineController).startDate;
+    final totalDays = ref.watch(addMedicineController).medDuration;
     final selectedFrequency = ref.watch(addMedicineController).frequencyId;
+    final frequencyError = ref.watch(addMedicineController).frequencyError;
     final scheduleTimeList = ref.watch(addMedicineController).scheduledTimeList;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,6 +61,7 @@ class FrequencyTime extends ConsumerWidget {
                       final time = DateFormat('HH:mm a').parse(timeController.text);
                       final scheduledTime = DateTime(now.year, now.month, now.day, time.hour, time.minute);
                       medNotifier.updateSchedule(value, scheduledTime);
+                      ref.read(addMedicineController.notifier).frequencyHasError(null);
                     }
                   }
                 },
@@ -66,6 +70,7 @@ class FrequencyTime extends ConsumerWidget {
                   padding: WidgetStatePropertyAll(EdgeInsets.zero),
                 ),
                 dropdownMenuEntries: frequencyList.map((e)=>DropdownMenuEntry(value: e.id, label: e.name)).toList(),
+                errorText: frequencyError,
               ),
             ),
             w06,
@@ -113,6 +118,24 @@ class FrequencyTime extends ConsumerWidget {
                     medNotifier.updateSchedule(selectedFrequency, time);
                   }
                 },
+                validator: (value){
+                  if(value == null || value.trim().isEmpty){
+                    return 'Time required.';
+                  }
+                  else if(dateController.text.trim().isNotEmpty && totalDays.text.trim().isNotEmpty){
+                    final now = DateTime.now();
+                    final selectedTime = DateFormat('HH:mm a').parse(value);
+                    final date = DateTime.parse(dateController.text.trim());
+                    final total = int.parse(totalDays.text.trim());
+                    final madeDate = DateTime(date.year,date.month,date.day,selectedTime.hour,selectedTime.minute);
+                    if(total == 1  && now.isAfter(madeDate)){
+                      return 'Scheduled time has passed.';
+                    }
+
+                  }
+                  return null;
+                },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
             )
           ],
