@@ -1,18 +1,16 @@
 
-
-
 import 'package:flutter/material.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
 import 'package:ministry/src/features/dashboard/application/controller/dashboard_controller.dart';
 import 'package:ministry/src/features/homepage/presentation/ui/homepage.dart';
-import 'package:ministry/src/features/old_reminder/reminders/reminders.dart';
 import 'package:ministry/src/features/status_page/presentation/status_page.dart';
 import 'package:ministry/src/features/utilities/presentation/ui/utilities.dart';
-
+import '../../../../core/controllers/notification_controller.dart';
 import '../../../notifications/presentation/ui/notifications.dart';
 import '../../../reminders/presentation/ui/reminders.dart';
+import 'widgets/ask_permission.dart';
 
 
 
@@ -22,6 +20,12 @@ class Dashboard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+
+
+    Future.microtask(() => askPermissionDialog(context));
+    Future.microtask(() async => await NotificationController.startListeningNotificationEvents());
+
+
     final controller = ref.watch(dashboardController).pageController;
     final pageIndex = ref.watch(dashboardController).pageIndex;
     final navIndex = ref.watch(dashboardController).navIndex;
@@ -106,4 +110,7 @@ class Dashboard extends ConsumerWidget {
       ),
     );
   }
+  
+  
+
 }

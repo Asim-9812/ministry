@@ -3,7 +3,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ministry/src/features/old_reminder/reminders/medicine/domain/model/medicine_model.dart';
 
 final addMedicineController = ChangeNotifierProvider.autoDispose((ref)=> AddMedicineController());
 

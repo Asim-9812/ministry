@@ -9,6 +9,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ministry/src/core/providers/user_info_provider.dart';
 import 'package:ministry/src/features/login/application/login_controller.dart';
 
+import '../../../../core/controllers/notification_controller.dart';
 import '../../../../core/resources/color_manager.dart';
 import '../../../../core/resources/font_manager.dart';
 import '../../../../core/resources/gap_manager.dart';
@@ -188,15 +189,16 @@ class LoginPage extends ConsumerWidget {
                                         onPressed: loginState.isLoading
                                             ? null
                                             : () async {
-                            
-                                                if(formKey.currentState!.validate()){
-                                                  final username = usernameController.text.trim();
-                                                  final password = passwordController.text.trim();
-                                                  await loginNotifier.login(username: username, password: password).whenComplete((){
-                                                    TextInput.finishAutofillContext(shouldSave: remember);
-                                                    ref.refresh(userInfoProvider);
-                                                  });
-                                                }
+
+                                          await NotificationController.scheduleNotification(id: 1, title: 'title', body: 'body', scheduleTime: DateTime.now().add(Duration(minutes: 1)));
+                                                // if(formKey.currentState!.validate()){
+                                                //   final username = usernameController.text.trim();
+                                                //   final password = passwordController.text.trim();
+                                                //   await loginNotifier.login(username: username, password: password).whenComplete((){
+                                                //     TextInput.finishAutofillContext(shouldSave: remember);
+                                                //     ref.refresh(userInfoProvider);
+                                                //   });
+                                                // }
                             
                                             },
                                         child: loginState.isLoading

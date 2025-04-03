@@ -45,32 +45,40 @@ class HealthTipsCarousal extends ConsumerWidget {
                 }
               ),
               items: healthTips.map((healthTip) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      height: 160,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: MyColors.primaryLight
+                return Card(
+
+                  margin: EdgeInsets.symmetric(horizontal: 16),
+                  child: Container(
+                    // margin: EdgeInsets.symmetric(horizontal: 16),
+                    width: double.infinity,
+                    height: 160,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: MyColors.grey
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Health Tips',style: bh3,maxLines: 1,),
-                            h10,
-                            Text(healthTip.title,style: bh1,maxLines: 1,),
-                            h10,
-                            Text(healthTip.shortInfo,style: br1,maxLines: 1,),
-                            h20,
-                            HealthTipDialog(healthTip: healthTip)
-                          ],
-                        ),
+                      color: MyColors.primaryLight
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Health Tips',style: bh3,maxLines: 1,),
+                          Divider(
+                            color: MyColors.primary,
+                            thickness: 0.5,
+                          ),
+                          Text(healthTip.title,style: bh1,maxLines: 1,),
+                          h10,
+                          Text(healthTip.shortInfo,style: br1,maxLines: 1,),
+                          h20,
+                          HealthTipDialog(healthTip: healthTip)
+                        ],
                       ),
-                    );
-                  },
+                    ),
+                  ),
                 );
               }).toList(),
             ),
