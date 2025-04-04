@@ -39,7 +39,7 @@ class NoticeDialog extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(notice.title!,style: bh1,),
+                        Text(notice.title ?? notice.code ?? '',style: bh1,),
                         Divider(),
                         Flexible(
                           child: SingleChildScrollView(
@@ -49,10 +49,12 @@ class NoticeDialog extends StatelessWidget {
                         ),
                         Flexible(
                           child: SingleChildScrollView(
-                            child: Text(notice.description!,
+                            child: Text(notice.description ?? '',
                                 style: br1,textAlign: TextAlign.justify),
                           ),
                         ),
+                        h10,
+                        Text(date,style: br3),
                         h20,
                         TextButton(
                             style: TextButton.styleFrom(
