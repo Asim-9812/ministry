@@ -55,7 +55,8 @@ class GeneralReminderModelAdapter extends TypeAdapter<GeneralReminderModel> {
           typeId == other.typeId;
 }
 
-class GeneralReminderPatternAdapter extends TypeAdapter<GeneralReminderPattern> {
+class GeneralReminderPatternAdapter
+    extends TypeAdapter<GeneralReminderPattern> {
   @override
   final int typeId = 5;
 

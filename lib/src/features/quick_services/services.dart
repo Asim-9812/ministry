@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:ministry/src/core/utils/page_route.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
+import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_form.dart';
 
 import '../../core/resources/color_manager.dart';
 import '../../core/resources/font_manager.dart';
@@ -17,7 +19,7 @@ class QuickServices extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(child: ServiceCard(name: 'Nearby hospital', color: MyColors.primary, icon: Icons.emergency)),
+          Expanded(child: ServiceCard(name: 'Enquire Hospital', color: MyColors.primary, icon: Icons.emergency, onTap: ()=> routeTo(context, EnquiryForm()))),
           w10,
           Expanded(child: ServiceCard(name: 'Get Appointments', color: MyColors.green, icon: Icons.add_call)),
         ],
@@ -28,15 +30,14 @@ class QuickServices extends StatelessWidget {
   Card ServiceCard({
     required String name,
     required Color color,
-    required IconData icon
+    required IconData icon,
+    VoidCallback? onTap
   }){
       return Card(
         margin: EdgeInsets.zero,
         elevation: 0,
         child: InkWell(
-          onTap: (){
-            Toaster.comingSoon();
-          },
+          onTap: onTap ?? ()=>Toaster.comingSoon(),
           child: Container(
             decoration: BoxDecoration(
                 color: color,

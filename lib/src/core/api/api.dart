@@ -11,4 +11,9 @@ class Api{
   static const healthTipList = '$baseUrl/HealthTips/GetList';
   static const sliderList = '$baseUrl/Sliders/GetList';
 
+  static const getMedicalAgency = '$baseUrl/medicalagency';
+  static const insertEnquiry = '$baseUrl/Enquiry/Insert';
+
+  static const getAllCountries = 'https://countriesnow.space/api/v0.1/countries/';
+
 }

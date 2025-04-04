@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ministry/src/features/reminders/data/repositories/reminder_repository.dart';
 import 'package:ministry/src/features/reminders/data/repositories/reminder_repository_impl.dart';
 
-import '../../domain/model/load_state.dart';
+import '../../../../core/models/load_state.dart';
 import '../../domain/model/medicine_reminder_model.dart';
 
 class ReminderNotifier extends StateNotifier<LoadState> {

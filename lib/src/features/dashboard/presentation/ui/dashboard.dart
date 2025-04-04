@@ -23,7 +23,6 @@ class Dashboard extends ConsumerWidget {
 
 
     Future.microtask(() => askPermissionDialog(context));
-    Future.microtask(() async => await NotificationController.startListeningNotificationEvents());
 
 
     final controller = ref.watch(dashboardController).pageController;

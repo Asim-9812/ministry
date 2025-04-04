@@ -18,44 +18,7 @@ import 'src/features/status_page/domain/model/user_model.dart';
 
 
 
-// @pragma('vm:entry-point')
-// void callbackDispatcher() {
-//   Workmanager().executeTask((task, inputData) async {
-//     await NotificationController.initializeLocalNotifications();
-//     await NotificationController.initializeIsolateReceivePort();
-//     await NotificationController.startListeningNotificationEvents();
-//     try{
-//       if(inputData != null){
-//         if(inputData['reminderTypeId'] == 1){
-//           await NotificationController.scheduleMedicineNotifications(allData: inputData);
-//           return Future.value(true);
-//         }
-//         else if(inputData['reminderTypeId'] == 2){
-//           await NotificationController.scheduleGeneralNotifications(allData: inputData);
-//           return Future.value(true);
-//         }
-//         else if(inputData['reminderTypeId'] == 3){
-//           await NotificationController.scheduleTaskNotifications(allData: inputData);
-//           return Future.value(true);
-//         }
-//         // else if(inputData['reminderTypeId'] == 4){
-//         //   await newBgNotifications(data: inputData);
-//         //   return Future.value(true);
-//         // }
-//         else{
-//           return Future.value(false);
-//         }
-//       }
-//       else{
-//         return Future.value(false);
-//       }
-//     } catch(e){
-//       //print(e);
-//       return Future.value(false);
-//     }
-//   });
-// }
-//
+
 
 
 void main() async {
@@ -66,6 +29,7 @@ void main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   await NotificationController.initialize();
+  await NotificationController.startListeningNotificationEvents();
 
   // await NotificationController.initializeLocalNotifications();
   // await NotificationController.initializeIsolateReceivePort();

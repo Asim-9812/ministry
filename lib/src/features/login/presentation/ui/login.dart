@@ -190,15 +190,15 @@ class LoginPage extends ConsumerWidget {
                                             ? null
                                             : () async {
 
-                                          await NotificationController.scheduleNotification(id: 1, title: 'title', body: 'body', scheduleTime: DateTime.now().add(Duration(minutes: 1)));
-                                                // if(formKey.currentState!.validate()){
-                                                //   final username = usernameController.text.trim();
-                                                //   final password = passwordController.text.trim();
-                                                //   await loginNotifier.login(username: username, password: password).whenComplete((){
-                                                //     TextInput.finishAutofillContext(shouldSave: remember);
-                                                //     ref.refresh(userInfoProvider);
-                                                //   });
-                                                // }
+                                          // await NotificationController.scheduleNotification(id: 1, title: 'title', body: 'body', scheduleTime: DateTime.now().add(Duration(minutes: 1)));
+                                                if(formKey.currentState!.validate()){
+                                                  final username = usernameController.text.trim();
+                                                  final password = passwordController.text.trim();
+                                                  await loginNotifier.login(username: username, password: password).whenComplete((){
+                                                    TextInput.finishAutofillContext(shouldSave: remember);
+                                                    ref.refresh(userInfoProvider);
+                                                  });
+                                                }
                             
                                             },
                                         child: loginState.isLoading
