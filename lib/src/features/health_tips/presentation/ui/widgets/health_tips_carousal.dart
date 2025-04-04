@@ -63,35 +63,40 @@ class HealthTipsCarousal extends ConsumerWidget {
                     child: Stack(
                       children: [
                         Positioned(
-                          right: 0,
-                          bottom: 10,
-                          left: 200,
-                          top: 120,
-                          child: CircleAvatar(
-                            backgroundColor: MyColors.primary.withAlpha(100),
-                            radius: 40,
-                          ),
-                        ),
-                        Positioned(
-                          right: 0,
-                          bottom: 10,
-                          left: 300,
-                          top: 100,
-                          child: CircleAvatar(
-                            backgroundColor: MyColors.primary.withAlpha(75),
-                            radius: 40,
-                          ),
-                        ),
-                        Positioned(
-                          right: -70,
-                          bottom: 60,
-                          left: 180,
-                          top: 10,
-                          child: CircleAvatar(
-                            backgroundColor: MyColors.primary.withAlpha(50),
-                            radius: 40,
-                          ),
-                        ),
+                            top: 0,
+                            bottom: 0,
+                            right: -70,
+                            child: Image.asset('assets/images/bwLogo.png',width: 150,height: 150,)),
+                        // Positioned(
+                        //   right: 0,
+                        //   bottom: 10,
+                        //   left: 200,
+                        //   top: 120,
+                        //   child: CircleAvatar(
+                        //     backgroundColor: MyColors.primary.withAlpha(100),
+                        //     radius: 40,
+                        //   ),
+                        // ),
+                        // Positioned(
+                        //   right: 0,
+                        //   bottom: 10,
+                        //   left: 300,
+                        //   top: 100,
+                        //   child: CircleAvatar(
+                        //     backgroundColor: MyColors.primary.withAlpha(75),
+                        //     radius: 40,
+                        //   ),
+                        // ),
+                        // Positioned(
+                        //   right: -70,
+                        //   bottom: 60,
+                        //   left: 180,
+                        //   top: 10,
+                        //   child: CircleAvatar(
+                        //     backgroundColor: MyColors.primary.withAlpha(50),
+                        //     radius: 40,
+                        //   ),
+                        // ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
                           child: SingleChildScrollView(
