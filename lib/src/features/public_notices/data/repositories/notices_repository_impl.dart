@@ -21,8 +21,8 @@ class NoticesRepositoryImpl implements NoticeRepository{
         // noticeList = data.map((e)=>NoticeModel.fromJson(e)).toList();
         for(int i = 0; i < data.length; i++){
           final dto = NoticeModel.fromJson(data[i]);
-          final fromDate = DateTime.parse(dto.validDate);
-          final toDate = DateTime.parse(dto.toDate);
+          final fromDate = DateTime.parse(dto.validDate!);
+          final toDate = DateTime.parse(dto.toDate!);
           if(currentDate.isAfter(fromDate) && currentDate.isBefore(toDate)){
             noticeList.add(dto);
           }

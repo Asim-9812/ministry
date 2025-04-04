@@ -26,7 +26,7 @@ class PublicNoticeMarquee extends ConsumerWidget {
         if(notices.isEmpty){
           return h10;
         }
-        List<String> noticeList = notices.map((e)=>e.shortInfo.trim()).toList();
+        List<String> noticeList = notices.where((e)=>e.shortInfo != null).map((e)=>e.shortInfo!.trim()).toList();
         final allNotices = noticeList.join('  |  ');
 
         return Card(

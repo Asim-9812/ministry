@@ -18,7 +18,7 @@ class NoticeDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final date = DateFormat('yyyy-MM-dd hh:mm').format(DateTime.parse(notice.validDate));
+    final date = DateFormat('yyyy-MM-dd hh:mm').format(DateTime.parse(notice.validDate!));
     return ListTile(
       onTap: () async {
         await showDialog(
@@ -39,17 +39,17 @@ class NoticeDialog extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(notice.title,style: bh1,),
+                        Text(notice.title!,style: bh1,),
                         Divider(),
                         Flexible(
                           child: SingleChildScrollView(
-                            child: Text(notice.shortInfo,
+                            child: Text(notice.shortInfo!,
                                 style: br1,textAlign: TextAlign.justify),
                           ),
                         ),
                         Flexible(
                           child: SingleChildScrollView(
-                            child: Text(notice.description,
+                            child: Text(notice.description!,
                                 style: br1,textAlign: TextAlign.justify),
                           ),
                         ),
@@ -82,8 +82,8 @@ class NoticeDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(notice.title,style: bh2,maxLines: 2,),
-          Text(notice.shortInfo,style: br2,maxLines: 2,),
+          Text(notice.title ?? notice.code ?? '',style: bh2,maxLines: 2,),
+          Text(notice.shortInfo ?? notice.code ?? '',style: br2,maxLines: 2,),
           Text(date,style: br3),
         ],
       ),

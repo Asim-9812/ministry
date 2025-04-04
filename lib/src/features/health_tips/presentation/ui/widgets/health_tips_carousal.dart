@@ -59,24 +59,58 @@ class HealthTipsCarousal extends ConsumerWidget {
                       ),
                       color: MyColors.primaryLight
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Health Tips',style: bh3,maxLines: 1,),
-                          Divider(
-                            color: MyColors.primary,
-                            thickness: 0.5,
+
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          right: 0,
+                          bottom: 10,
+                          left: 200,
+                          top: 120,
+                          child: CircleAvatar(
+                            backgroundColor: MyColors.primary.withAlpha(100),
+                            radius: 40,
                           ),
-                          Text(healthTip.title,style: bh1,maxLines: 1,),
-                          h10,
-                          Text(healthTip.shortInfo,style: br1,maxLines: 1,),
-                          h20,
-                          HealthTipDialog(healthTip: healthTip)
-                        ],
-                      ),
+                        ),
+                        Positioned(
+                          right: 0,
+                          bottom: 10,
+                          left: 300,
+                          top: 100,
+                          child: CircleAvatar(
+                            backgroundColor: MyColors.primary.withAlpha(75),
+                            radius: 40,
+                          ),
+                        ),
+                        Positioned(
+                          right: -70,
+                          bottom: 60,
+                          left: 180,
+                          top: 10,
+                          child: CircleAvatar(
+                            backgroundColor: MyColors.primary.withAlpha(50),
+                            radius: 40,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Health Tips',style: bh3,maxLines: 1,),
+                                h10,
+                                Text(healthTip.title,style: bh1,maxLines: 1,),
+                                h10,
+                                Text(healthTip.shortInfo,style: br1,maxLines: 1,),
+                                h20,
+                                HealthTipDialog(healthTip: healthTip)
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 );
