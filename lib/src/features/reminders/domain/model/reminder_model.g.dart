@@ -51,3 +51,33 @@ class ReminderModelAdapter extends TypeAdapter<ReminderModel> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+ReminderModel _$ReminderModelFromJson(Map<String, dynamic> json) =>
+    ReminderModel(
+      reminderId: (json['reminderId'] as num).toInt(),
+      reminderType: (json['reminderType'] as num).toInt(),
+      generalReminder: json['generalReminder'] == null
+          ? null
+          : GeneralReminderModel.fromJson(
+              json['generalReminder'] as Map<String, dynamic>),
+      medicineReminder: json['medicineReminder'] == null
+          ? null
+          : MedicineReminderModel.fromJson(
+              json['medicineReminder'] as Map<String, dynamic>),
+      notes: json['notes'] == null
+          ? null
+          : NoteModel.fromJson(json['notes'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$ReminderModelToJson(ReminderModel instance) =>
+    <String, dynamic>{
+      'reminderId': instance.reminderId,
+      'reminderType': instance.reminderType,
+      'medicineReminder': instance.medicineReminder,
+      'generalReminder': instance.generalReminder,
+      'notes': instance.notes,
+    };

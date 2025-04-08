@@ -23,7 +23,7 @@ class RouteName extends ConsumerWidget {
     final medNameController = ref.watch(addMedicineController).medName;
     final selectedRouteId = ref.watch(addMedicineController).routeId;
     final routeError = ref.watch(addMedicineController).routeError;
-    final selectedRoute = medicineRouteList.singleWhere((e)=>e.id == selectedRouteId,orElse: ()=>MedicineRoute(id: 0, name: 'Route'));
+    final selectedRoute = medicineRouteList.singleWhere((e)=>e.id == selectedRouteId,orElse: ()=>MedicineRoute(id: 0, route: 'Route'));
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +44,7 @@ class RouteName extends ConsumerWidget {
             popUpAnimationStyle: AnimationStyle.noAnimation,
             child: Row(
               children: [
-                Text(selectedRoute.name,style: bh3,),
+                Text(selectedRoute.route,style: bh3,),
                 Icon(Icons.arrow_drop_down)
               ],
             ),
@@ -54,7 +54,7 @@ class RouteName extends ConsumerWidget {
                       medNotifier.changeRouteType(e.id);
                       ref.read(addMedicineController.notifier).routeHasError(false);
                     },
-                    child: Text(e.name)
+                    child: Text(e.route)
                 )).toList(),
           ),
         ),

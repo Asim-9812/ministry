@@ -53,8 +53,8 @@ class Dashboard extends ConsumerWidget {
         controller: controller,
         children: [
           NotificationPage(),
-          // Reminders(),
-          OldReminderTab(),
+          Reminders(),
+          // OldReminderTab(),
           Homepage(),
           Utilities(),
           StatusPage(),

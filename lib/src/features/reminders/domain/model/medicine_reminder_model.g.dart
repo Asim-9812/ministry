@@ -94,7 +94,7 @@ class MedicineRouteAdapter extends TypeAdapter<MedicineRoute> {
     };
     return MedicineRoute(
       id: fields[0] as int,
-      name: fields[1] as String,
+      route: fields[1] as String,
     );
   }
 
@@ -105,7 +105,7 @@ class MedicineRouteAdapter extends TypeAdapter<MedicineRoute> {
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.name);
+      ..write(obj.route);
   }
 
   @override
@@ -130,8 +130,8 @@ class MedicineUnitAdapter extends TypeAdapter<MedicineUnit> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return MedicineUnit(
-      id: fields[0] as int,
-      name: fields[1] as String,
+      unitId: fields[0] as int,
+      units: fields[1] as String,
     );
   }
 
@@ -140,9 +140,9 @@ class MedicineUnitAdapter extends TypeAdapter<MedicineUnit> {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.id)
+      ..write(obj.unitId)
       ..writeByte(1)
-      ..write(obj.name);
+      ..write(obj.units);
   }
 
   @override
@@ -272,3 +272,116 @@ class ReminderPatternAdapter extends TypeAdapter<ReminderPattern> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+MedicineReminderModel _$MedicineReminderModelFromJson(
+        Map<String, dynamic> json) =>
+    MedicineReminderModel(
+      id: (json['id'] as num).toInt(),
+      medicineName: json['medicineName'] as String,
+      route: MedicineRoute.fromJson(json['route'] as Map<String, dynamic>),
+      strength: (json['strength'] as num).toDouble(),
+      unit: MedicineUnit.fromJson(json['unit'] as Map<String, dynamic>),
+      frequency: Frequency.fromJson(json['frequency'] as Map<String, dynamic>),
+      scheduledTime: (json['scheduledTime'] as List<dynamic>)
+          .map((e) => DateTime.parse(e as String))
+          .toList(),
+      totalDays: (json['totalDays'] as num).toInt(),
+      startDate: DateTime.parse(json['startDate'] as String),
+      endDate: DateTime.parse(json['endDate'] as String),
+      dateList: (json['dateList'] as List<dynamic>)
+          .map((e) => DateTime.parse(e as String))
+          .toList(),
+      meal: Meal.fromJson(json['meal'] as Map<String, dynamic>),
+      reminderPattern: ReminderPattern.fromJson(
+          json['reminderPattern'] as Map<String, dynamic>),
+      attachment: const Uint8ListBase64Converter()
+          .fromJson(json['attachment'] as String?),
+      note: json['note'] as String?,
+    );
+
+Map<String, dynamic> _$MedicineReminderModelToJson(
+        MedicineReminderModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'medicineName': instance.medicineName,
+      'route': instance.route,
+      'strength': instance.strength,
+      'unit': instance.unit,
+      'frequency': instance.frequency,
+      'scheduledTime':
+          instance.scheduledTime.map((e) => e.toIso8601String()).toList(),
+      'totalDays': instance.totalDays,
+      'startDate': instance.startDate.toIso8601String(),
+      'endDate': instance.endDate.toIso8601String(),
+      'dateList': instance.dateList.map((e) => e.toIso8601String()).toList(),
+      'meal': instance.meal,
+      'reminderPattern': instance.reminderPattern,
+      'attachment':
+          const Uint8ListBase64Converter().toJson(instance.attachment),
+      'note': instance.note,
+    };
+
+MedicineRoute _$MedicineRouteFromJson(Map<String, dynamic> json) =>
+    MedicineRoute(
+      id: (json['id'] as num).toInt(),
+      route: json['route'] as String,
+    );
+
+Map<String, dynamic> _$MedicineRouteToJson(MedicineRoute instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'route': instance.route,
+    };
+
+MedicineUnit _$MedicineUnitFromJson(Map<String, dynamic> json) => MedicineUnit(
+      unitId: (json['unitId'] as num).toInt(),
+      units: json['units'] as String,
+    );
+
+Map<String, dynamic> _$MedicineUnitToJson(MedicineUnit instance) =>
+    <String, dynamic>{
+      'id': instance.unitId,
+      'units': instance.units,
+    };
+
+Frequency _$FrequencyFromJson(Map<String, dynamic> json) => Frequency(
+      id: (json['id'] as num).toInt(),
+      name: json['name'] as String,
+    );
+
+Map<String, dynamic> _$FrequencyToJson(Frequency instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+    };
+
+Meal _$MealFromJson(Map<String, dynamic> json) => Meal(
+      id: (json['id'] as num).toInt(),
+      name: json['name'] as String,
+    );
+
+Map<String, dynamic> _$MealToJson(Meal instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+    };
+
+ReminderPattern _$ReminderPatternFromJson(Map<String, dynamic> json) =>
+    ReminderPattern(
+      id: (json['id'] as num).toInt(),
+      pattern: json['pattern'] as String,
+      daysOfWeek: (json['daysOfWeek'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      intervalDays: (json['intervalDays'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$ReminderPatternToJson(ReminderPattern instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'pattern': instance.pattern,
+      'daysOfWeek': instance.daysOfWeek,
+      'intervalDays': instance.intervalDays,
+    };

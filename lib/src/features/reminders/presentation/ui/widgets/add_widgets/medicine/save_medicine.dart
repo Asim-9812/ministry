@@ -69,7 +69,7 @@ class SaveMedicineButton extends ConsumerWidget {
       final medicineName = medInfo.medName.text.trim();
       final route = medicineRouteList.singleWhere((e)=>e.id == routeId);
       final strength = double.parse(medInfo.strengthController.text.trim());
-      final unit = medicineUnitList.singleWhere((e)=>e.id == unitId);
+      final unit = medicineUnitList.singleWhere((e)=>e.unitId == unitId);
       final frequency = frequencyList.singleWhere((e)=>e.id == frequencyId);
       final scheduledTime = medInfo.scheduledTimeList;
       final totalDays = int.parse(medInfo.medDuration.text.trim());

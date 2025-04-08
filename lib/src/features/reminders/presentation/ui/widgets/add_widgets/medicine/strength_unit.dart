@@ -22,7 +22,7 @@ class StrengthUnit extends ConsumerWidget {
     final selectedUnitId = ref.watch(addMedicineController).unitId;
     final strengthController = ref.watch(addMedicineController).strengthController;
     final unitError = ref.watch(addMedicineController).unitError;
-    final selectedUnit = medicineUnitList.singleWhere((e)=>e.id == selectedUnitId,orElse: ()=>MedicineUnit(id: 0, name: 'Unit'));
+    final selectedUnit = medicineUnitList.singleWhere((e)=>e.unitId == selectedUnitId,orElse: ()=>MedicineUnit(unitId: 0, units: 'Unit'));
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,17 +80,17 @@ class StrengthUnit extends ConsumerWidget {
             popUpAnimationStyle: AnimationStyle.noAnimation,
             child: Row(
               children: [
-                Text(selectedUnit.name,style: bh3,),
+                Text(selectedUnit.units,style: bh3,),
                 Icon(Icons.arrow_drop_down)
               ],
             ),
             itemBuilder: (context) => medicineUnitList.map((e)=>
                 PopupMenuItem(
                     onTap: (){
-                      medNotifier.changeUnit(e.id);
+                      medNotifier.changeUnit(e.unitId);
                       ref.read(addMedicineController.notifier).unitHasError(false);
                     },
-                    child: Text(e.name)
+                    child: Text(e.units)
                 )).toList(),
           ),
         ),

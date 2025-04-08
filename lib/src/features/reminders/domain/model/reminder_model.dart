@@ -1,6 +1,6 @@
-
-
 import 'package:hive/hive.dart';
+import 'package:json_annotation/json_annotation.dart';
+
 import 'general_reminder_model.dart';
 import 'medicine_reminder_model.dart';
 import 'notes_model.dart';
@@ -8,21 +8,22 @@ import 'notes_model.dart';
 part 'reminder_model.g.dart';
 
 @HiveType(typeId: 2)
+@JsonSerializable()
 class ReminderModel extends HiveObject {
   @HiveField(0)
   final int reminderId;
 
   @HiveField(1)
-  final int reminderType;    //med = 1  //gen = 2  //notes = 3
+  final int reminderType; // 1 = medicine, 2 = general, 3 = notes
 
   @HiveField(2)
-  MedicineReminderModel? medicineReminder;  // type 1
+  final MedicineReminderModel? medicineReminder;
 
   @HiveField(3)
-  GeneralReminderModel? generalReminder; // type 2
+  final GeneralReminderModel? generalReminder;
 
   @HiveField(4)
-  NoteModel? notes; // type 3
+  final NoteModel? notes;
 
   ReminderModel({
     required this.reminderId,
@@ -31,4 +32,9 @@ class ReminderModel extends HiveObject {
     this.medicineReminder,
     this.notes,
   });
+
+  factory ReminderModel.fromJson(Map<String, dynamic> json) =>
+      _$ReminderModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ReminderModelToJson(this);
 }

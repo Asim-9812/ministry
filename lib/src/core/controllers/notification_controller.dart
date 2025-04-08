@@ -4,6 +4,7 @@
 import 'dart:isolate';
 import 'dart:ui';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:ministry/src/core/controllers/medicine_notification_controller.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
 
 class NotificationController {
@@ -55,9 +56,15 @@ class NotificationController {
 
   }
 
+  static Future<void> delNotification({required int id}) async{
+    await AwesomeNotifications().cancel(id);
+  }
+
   static Future<void> startListeningNotificationEvents() async {
     AwesomeNotifications()
-        .setListeners(onActionReceivedMethod: onActionReceivedImplementationMethod);
+        .setListeners(
+      onActionReceivedMethod: onActionReceivedImplementationMethod
+    );
   }
 
   static Future<void> scheduleNotification({
@@ -74,8 +81,12 @@ class NotificationController {
           body: body,
           notificationLayout: NotificationLayout.Default,
           payload: {
-            'Print' : 'this is printed'
+            'reminderId':'1001',
+            'reminderTypeId' : '1',
+            'title' : title,
+            'body' : body
           },
+
       ),
       schedule: NotificationCalendar(
         year: scheduleTime.year,
@@ -87,13 +98,33 @@ class NotificationController {
         timeZone: await AwesomeNotifications().getLocalTimeZoneIdentifier(),
         preciseAlarm: true,
       ),
+        actionButtons: [
+          NotificationActionButton(key: '1', label: 'Snooze',actionType: ActionType.SilentAction),
+          NotificationActionButton(key: '2', label: 'Dismiss',actionType: ActionType.DismissAction)
+        ]
     );
   }
 
   @pragma("vm:entry-point")
-  static Future<void> onActionReceivedImplementationMethod(
-      ReceivedAction receivedAction) async {
+  static Future<void> onActionReceivedImplementationMethod(ReceivedAction receivedAction) async {
+
     print('notification for new');
+
     // Handle notification action here
+    print(receivedAction.payload);
+    print(receivedAction.buttonKeyPressed);
+
+    if(receivedAction.buttonKeyPressed.trim().isEmpty){
+      print('it was string');
+      await AwesomeNotifications().dismiss(int.parse(receivedAction.payload!['reminderId']!));
+    }
+    else if(receivedAction.buttonKeyPressed == '1'){
+      await MedicineNotificationController.setSnoozedNotification(payload: receivedAction.payload!);
+    }
+    else{
+      print('it was dismissed');
+    }
+
+
   }
 }

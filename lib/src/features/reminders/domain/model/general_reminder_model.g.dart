@@ -98,3 +98,52 @@ class GeneralReminderPatternAdapter
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+GeneralReminderModel _$GeneralReminderModelFromJson(
+        Map<String, dynamic> json) =>
+    GeneralReminderModel(
+      id: (json['id'] as num).toInt(),
+      title: json['title'] as String,
+      description: json['description'] as String?,
+      attachmentList: const Uint8ListListBase64Converter()
+          .fromJson(json['attachmentList'] as List<String>?),
+      startDate: DateTime.parse(json['startDate'] as String),
+      pattern: GeneralReminderPattern.fromJson(
+          json['pattern'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$GeneralReminderModelToJson(
+        GeneralReminderModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'description': instance.description,
+      'attachmentList':
+          const Uint8ListListBase64Converter().toJson(instance.attachmentList),
+      'startDate': instance.startDate.toIso8601String(),
+      'pattern': instance.pattern,
+    };
+
+GeneralReminderPattern _$GeneralReminderPatternFromJson(
+        Map<String, dynamic> json) =>
+    GeneralReminderPattern(
+      id: (json['id'] as num).toInt(),
+      pattern: json['pattern'] as String,
+      daysOfWeek: (json['daysOfWeek'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      intervalDays: (json['intervalDays'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$GeneralReminderPatternToJson(
+        GeneralReminderPattern instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'pattern': instance.pattern,
+      'daysOfWeek': instance.daysOfWeek,
+      'intervalDays': instance.intervalDays,
+    };

@@ -48,3 +48,23 @@ class NoteModelAdapter extends TypeAdapter<NoteModel> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+NoteModel _$NoteModelFromJson(Map<String, dynamic> json) => NoteModel(
+      id: (json['id'] as num).toInt(),
+      title: json['title'] as String,
+      notes: json['notes'] as String?,
+      attachments: const Uint8ListListBase64Converter()
+          .fromJson(json['attachments'] as List<String>?),
+    );
+
+Map<String, dynamic> _$NoteModelToJson(NoteModel instance) => <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'notes': instance.notes,
+      'attachments':
+          const Uint8ListListBase64Converter().toJson(instance.attachments),
+    };

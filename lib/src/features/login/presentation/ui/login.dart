@@ -190,7 +190,7 @@ class LoginPage extends ConsumerWidget {
                                             ? null
                                             : () async {
 
-                                          // await NotificationController.scheduleNotification(id: 1, title: 'title', body: 'body', scheduleTime: DateTime.now().add(Duration(minutes: 1)));
+                                          // await NotificationController.scheduleNotification(id: 1, title: 'title', body: 'body', scheduleTime: DateTime.now().add(Duration(seconds: 5)));
                                                 if(formKey.currentState!.validate()){
                                                   final username = usernameController.text.trim();
                                                   final password = passwordController.text.trim();

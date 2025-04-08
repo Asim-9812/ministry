@@ -1,9 +1,13 @@
 import 'dart:typed_data';
 import 'package:hive/hive.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+import '../../../../core/controllers/uint8ListBase64Converter.dart';
 
 part 'medicine_reminder_model.g.dart';
 
 @HiveType(typeId: 6)
+@JsonSerializable()
 class MedicineReminderModel extends HiveObject {
   @HiveField(0)
   final int id;
@@ -45,6 +49,7 @@ class MedicineReminderModel extends HiveObject {
   final ReminderPattern reminderPattern;
 
   @HiveField(13)
+  @Uint8ListBase64Converter()
   Uint8List? attachment;
 
   @HiveField(14)
@@ -67,47 +72,49 @@ class MedicineReminderModel extends HiveObject {
     this.attachment,
     this.note,
   });
+
+  factory MedicineReminderModel.fromJson(Map<String, dynamic> json) =>
+      _$MedicineReminderModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MedicineReminderModelToJson(this);
 }
 
 @HiveType(typeId: 7)
+@JsonSerializable()
 class MedicineRoute {
   @HiveField(0)
   final int id;
 
   @HiveField(1)
-  final String name;
+  final String route;
 
-  MedicineRoute({required this.id, required this.name});
+  MedicineRoute({required this.id, required this.route});
 
-  factory MedicineRoute.fromJson(Map<String, dynamic> json) {
-    return MedicineRoute(
-      id: json['id'],
-      name: json['route'],
-    );
-  }
+  factory MedicineRoute.fromJson(Map<String, dynamic> json) =>
+      _$MedicineRouteFromJson(json);
 
+  Map<String, dynamic> toJson() => _$MedicineRouteToJson(this);
 }
 
 @HiveType(typeId: 8)
+@JsonSerializable()
 class MedicineUnit {
   @HiveField(0)
-  final int id;
+  final int unitId;
 
   @HiveField(1)
-  final String name;
+  final String units;
 
-  MedicineUnit({required this.id, required this.name});
+  MedicineUnit({required this.unitId, required this.units});
 
-  factory MedicineUnit.fromJson(Map<String, dynamic> json) {
-    return MedicineUnit(
-      id: json['unitId'],
-      name: json['units'],
-    );
-  }
+  factory MedicineUnit.fromJson(Map<String, dynamic> json) =>
+      _$MedicineUnitFromJson(json);
 
+  Map<String, dynamic> toJson() => _$MedicineUnitToJson(this);
 }
 
 @HiveType(typeId: 9)
+@JsonSerializable()
 class Frequency {
   @HiveField(0)
   final int id;
@@ -116,9 +123,15 @@ class Frequency {
   final String name;
 
   Frequency({required this.id, required this.name});
+
+  factory Frequency.fromJson(Map<String, dynamic> json) =>
+      _$FrequencyFromJson(json);
+
+  Map<String, dynamic> toJson() => _$FrequencyToJson(this);
 }
 
 @HiveType(typeId: 10)
+@JsonSerializable()
 class Meal {
   @HiveField(0)
   final int id;
@@ -127,9 +140,14 @@ class Meal {
   final String name;
 
   Meal({required this.id, required this.name});
+
+  factory Meal.fromJson(Map<String, dynamic> json) => _$MealFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MealToJson(this);
 }
 
 @HiveType(typeId: 11)
+@JsonSerializable()
 class ReminderPattern {
   @HiveField(0)
   final int id;
@@ -144,4 +162,9 @@ class ReminderPattern {
   int? intervalDays;
 
   ReminderPattern({required this.id, required this.pattern, this.daysOfWeek, this.intervalDays});
+
+  factory ReminderPattern.fromJson(Map<String, dynamic> json) =>
+      _$ReminderPatternFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ReminderPatternToJson(this);
 }

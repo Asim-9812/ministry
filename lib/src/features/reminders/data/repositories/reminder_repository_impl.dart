@@ -4,6 +4,8 @@
 
 
 import 'package:hive/hive.dart';
+import 'package:ministry/src/core/controllers/notification_controller.dart';
+import 'package:workmanager/workmanager.dart';
 
 import '../../domain/model/medicine_reminder_model.dart';
 import '../../domain/model/reminder_model.dart';
@@ -33,6 +35,23 @@ class ReminderRepositoryImpl extends ReminderRepository{
         medicineReminder: medicine
       );
       await reminderBox.put('${medicine.id}', reminder);
+
+      String taskName = medicine.medicineName;
+
+      String uniqueName = '1-${medicine.id}';
+
+      Constraints constraints =Constraints(
+        networkType: NetworkType.not_required,
+        requiresBatteryNotLow: false,
+        requiresCharging: false,
+        requiresDeviceIdle: false,
+        requiresStorageNotLow: false,
+      );
+
+      await Workmanager().registerPeriodicTask(uniqueName, taskName, inputData: reminder.toJson(),constraints: constraints,frequency: Duration(hours: 4));
+
+      print('executed');
+
       return true;
 
     }on HiveError catch(e){
@@ -46,6 +65,12 @@ class ReminderRepositoryImpl extends ReminderRepository{
     try{
       final reminderBox = Hive.box<ReminderModel>('reminders');
       await reminderBox.delete('$reminderId');
+      for(int i =0; i<4; i++){
+        final notificationId = (reminderId * 1000) + i;
+        await NotificationController.delNotification(id: notificationId);
+      }
+      String uniqueName = '1-$reminderId';
+      await Workmanager().cancelByUniqueName(uniqueName);
       return true;
     }on HiveError catch(e){
       print(e);
