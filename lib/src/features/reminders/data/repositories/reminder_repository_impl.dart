@@ -28,17 +28,26 @@ class ReminderRepositoryImpl extends ReminderRepository{
   @override
   Future<bool> addMedicineReminder({required MedicineReminderModel medicine}) async {
     try{
+      print('adding was executed');
       final reminderBox = Hive.box<ReminderModel>('reminders');
       final reminder = ReminderModel(
           reminderId: medicine.id,
           reminderType: 1,
         medicineReminder: medicine
       );
-      await reminderBox.put('${medicine.id}', reminder);
+
 
       String taskName = medicine.medicineName;
 
       String uniqueName = '1-${medicine.id}';
+
+      Map<String, dynamic> inputData = {
+        'reminderId' : reminder.reminderId,
+        'reminderType' : reminder.reminderType,
+        'title' : medicine.medicineName,
+        'body' : 'Time for your medicine. ${medicine.strength}${medicine.unit.units} ${medicine.meal.name}',
+        'dateList' : medicine.dateList.map((e)=>e.toString()).toList()
+      };
 
       Constraints constraints =Constraints(
         networkType: NetworkType.not_required,
@@ -48,13 +57,18 @@ class ReminderRepositoryImpl extends ReminderRepository{
         requiresStorageNotLow: false,
       );
 
-      await Workmanager().registerPeriodicTask(uniqueName, taskName, inputData: reminder.toJson(),constraints: constraints,frequency: Duration(hours: 4));
+      await Workmanager().registerPeriodicTask(uniqueName, taskName, inputData: inputData,constraints: constraints,frequency: Duration(hours: 4),existingWorkPolicy: ExistingWorkPolicy.update);
 
-      print('executed');
+      await reminderBox.put('${medicine.id}', reminder);
+
+      print('workmanager executed');
 
       return true;
 
     }on HiveError catch(e){
+      print(e);
+      throw Exception('Unable to set reminder.');
+    }catch(e){
       print(e);
       throw Exception('Unable to set reminder.');
     }
@@ -76,6 +90,13 @@ class ReminderRepositoryImpl extends ReminderRepository{
       print(e);
       throw Exception('Unable to delete at this moment.');
     }
+  }
+
+  @override
+  ReminderModel fetchReminderById({required int reminderId}) {
+    final medicineHiveBox = Hive.box('reminders');
+    final reminder = medicineHiveBox.get('$reminderId');
+    return reminder;
   }
 
 

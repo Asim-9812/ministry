@@ -9,21 +9,22 @@ import '../../features/reminders/domain/model/reminder_model.dart';
 
 class MedicineNotificationController{
 
-  static Future<void> setScheduledNotification({required ReminderModel reminder}) async {
+  static Future<void> setScheduledNotification({required Map<String, dynamic> inputData}) async {
+
+    final reminder = inputData;
 
     final timezone = await AwesomeNotifications().getLocalTimeZoneIdentifier();
 
-    final reminderId = reminder.reminderId;
+    final reminderId = reminder['reminderId'];
 
-    final reminderType = reminder.reminderType;
+    final reminderType = reminder['reminderType'];
 
-    final medicine = reminder.medicineReminder!;
 
-    final title = medicine.medicineName;
+    final title = reminder['title'];
 
-    final body = 'Time for your medicine. ${medicine.strength}${medicine.unit.units} ${medicine.meal.name}';
+    final body = reminder['body'];
 
-    List<DateTime> dateList = medicine.dateList;
+    List<DateTime> dateList = (reminder['dateList'] as List<dynamic>).map((e)=>DateTime.parse(e)).toList();
 
     List<DateTime> timeRange = dateList.where((element){
       final now = DateTime.now();

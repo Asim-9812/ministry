@@ -15,3 +15,8 @@ final reminderProvider = StateProvider<List<ReminderModel>>((ref) {
   final getRemindersUseCase = ref.watch(getRemindersUseCaseProviders);
   return getRemindersUseCase(type: type);
 });
+
+final reminderByIdProvider = StateProvider.family.autoDispose<ReminderModel, int>((ref, reminderId) {
+  final getReminderByIdUseCase = ref.watch(getReminderByIdUseCaseProviders);
+  return getReminderByIdUseCase(reminderId: reminderId);
+});

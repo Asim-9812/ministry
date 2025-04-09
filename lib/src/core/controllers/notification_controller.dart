@@ -108,14 +108,7 @@ class NotificationController {
   @pragma("vm:entry-point")
   static Future<void> onActionReceivedImplementationMethod(ReceivedAction receivedAction) async {
 
-    print('notification for new');
-
-    // Handle notification action here
-    print(receivedAction.payload);
-    print(receivedAction.buttonKeyPressed);
-
     if(receivedAction.buttonKeyPressed.trim().isEmpty){
-      print('it was string');
       await AwesomeNotifications().dismiss(int.parse(receivedAction.payload!['reminderId']!));
     }
     else if(receivedAction.buttonKeyPressed == '1'){
