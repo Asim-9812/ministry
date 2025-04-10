@@ -6,6 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ministry/src/features/reminders/application/controller/medicine_image_picker.dart';
 import 'package:ministry/src/features/reminders/application/provider/reminders_providers.dart';
 
 import '../../../../../../../core/resources/color_manager.dart';
@@ -34,6 +35,8 @@ class SaveMedicineButton extends ConsumerWidget {
     final patternId = medInfo.patternId;
     final medState = ref.watch(reminderNotifier);
     final medNotifier = ref.read(reminderNotifier.notifier);
+    final medImage = ref.watch(medImageProvider);
+    final note = medInfo.notes;
     return Row(
       children: [
         Expanded(
@@ -77,6 +80,7 @@ class SaveMedicineButton extends ConsumerWidget {
       final endDate = startDate.add(Duration(days: totalDays-1));
       final meal = mealList.singleWhere((e)=>e.id == mealId);
 
+
       // For list of dates from startDate to endDate
       List<DateTime> dateList = [];
       for(int i = 0; i < totalDays; i++){
@@ -95,8 +99,6 @@ class SaveMedicineButton extends ConsumerWidget {
           daysOfWeek: patternId == 2 ? medInfo.selectedDaysOfWeek : null
       );
 
-
-
       final medicine = MedicineReminderModel(
           id: medId,
           medicineName: medicineName,
@@ -110,7 +112,10 @@ class SaveMedicineButton extends ConsumerWidget {
           endDate: endDate,
           dateList: dateList,
           meal: meal,
-          reminderPattern: reminderPattern
+          reminderPattern: reminderPattern,
+          attachment:await medImage?.readAsBytes(),
+          note: note.text
+
       );
 
       // print(medicine.scheduledTime);

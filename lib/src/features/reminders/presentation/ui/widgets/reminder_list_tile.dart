@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:ministry/src/core/utils/page_route.dart';
 import 'package:ministry/src/features/reminders/application/controller/reminder_notifier.dart';
 import 'package:ministry/src/features/reminders/application/provider/reminders_providers.dart';
 import 'package:ministry/src/features/reminders/domain/model/reminder_model.dart';
+import 'package:ministry/src/features/reminders/presentation/ui/pages/medicine_reminder.dart';
 
 import '../../../../../core/resources/color_manager.dart';
 import '../../../../../core/resources/font_manager.dart';
@@ -34,7 +36,9 @@ class ReminderListTile extends ConsumerWidget {
         : MyColors.yellow.withValues(alpha: 220);
     final trailDate = reminder.reminderType == 1 ? displayedTime(reminder.medicineReminder!.dateList) : DateFormat('HH:mm a').format(reminder.generalReminder!.startDate);
     final title = reminder.reminderType == 1 ? reminder.medicineReminder!.medicineName : reminder.reminderType == 2 ? reminder.generalReminder!.title : reminder.notes!.title;
+    final widget = reminder.reminderType == 1 ? MedicineReminderInfo(reminderId: reminder.reminderId) : null;
     return ListTile(
+      onTap: ()=>routeTo(context, widget!),
       onLongPress: () async {
         await showModalBottomSheet(
             context: context,

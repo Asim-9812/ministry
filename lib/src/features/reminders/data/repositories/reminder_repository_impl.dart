@@ -94,9 +94,9 @@ class ReminderRepositoryImpl extends ReminderRepository{
 
   @override
   ReminderModel fetchReminderById({required int reminderId}) {
-    final medicineHiveBox = Hive.box('reminders');
+    final medicineHiveBox = Hive.box<ReminderModel>('reminders');
     final reminder = medicineHiveBox.get('$reminderId');
-    return reminder;
+    return reminder!;
   }
 
 
