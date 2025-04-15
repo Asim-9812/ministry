@@ -4,8 +4,14 @@
 import 'dart:isolate';
 import 'dart:ui';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/material.dart';
 import 'package:ministry/src/core/controllers/medicine_notification_controller.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
+import 'package:ministry/src/core/utils/page_route.dart';
+import 'package:ministry/src/features/dashboard/presentation/ui/dashboard.dart';
+import 'package:ministry/src/features/reminders/presentation/ui/pages/medicine_reminder.dart';
+
+import '../../app/my_app.dart';
 
 class NotificationController {
   static ReceivePort? receivePort;
@@ -109,7 +115,25 @@ class NotificationController {
   static Future<void> onActionReceivedImplementationMethod(ReceivedAction receivedAction) async {
 
     if(receivedAction.buttonKeyPressed.trim().isEmpty){
-      await AwesomeNotifications().dismiss(int.parse(receivedAction.payload!['reminderId']!));
+
+      final typeId = int.parse(receivedAction.payload!['reminderType']!);
+      final reminderId = int.parse(receivedAction.payload!['reminderId']!);
+
+      BuildContext context = MyApp.navigatorKey.currentContext!;
+
+      if(typeId == '1'){ //medicine reminder
+        routeTo(context, MedicineReminderInfo(reminderId: reminderId));
+      }
+
+      else if(typeId == '2'){ //general reminder
+        // routeTo(context, MedicineReminderInfo(reminderId: reminderId));
+      }
+
+      else{
+        routeTo(context, Dashboard());
+      }
+
+      await AwesomeNotifications().dismiss(reminderId);
     }
     else if(receivedAction.buttonKeyPressed == '1'){
       await MedicineNotificationController.setSnoozedNotification(payload: receivedAction.payload!);

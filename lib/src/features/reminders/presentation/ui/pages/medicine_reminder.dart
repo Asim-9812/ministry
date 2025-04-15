@@ -161,12 +161,9 @@ class MedicineReminderInfo extends ConsumerWidget {
 
                   if(interval != null )
                     Text('In interval of $interval days',style: bh3,),
-
                 ],
               ),
             ),
-
-
             h10,
           ],
         ),

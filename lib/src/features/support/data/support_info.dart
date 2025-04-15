@@ -8,7 +8,7 @@ Map<String, String> supportInfo = {
   'website' : 'www.google.com',
   'version' : '1.0.0',
   'logo' : 'assets/images/logo.png',
-  'playStore' : 'www.google.com',
+  'playStore' : 'https://www.google.com',
   'address' : 'address-10, address'
 
 };
