@@ -114,27 +114,34 @@ class NotificationController {
   @pragma("vm:entry-point")
   static Future<void> onActionReceivedImplementationMethod(ReceivedAction receivedAction) async {
 
-    if(receivedAction.buttonKeyPressed.trim().isEmpty){
+    print('this is button ${receivedAction.buttonKeyPressed.trim()}');
+    if (receivedAction.buttonKeyPressed.trim().isEmpty) {
+      try {
+        print(receivedAction.payload!['reminderType']!);
 
-      final typeId = int.parse(receivedAction.payload!['reminderType']!);
-      final reminderId = int.parse(receivedAction.payload!['reminderId']!);
+        final typeId = int.parse(receivedAction.payload!['reminderType']!);
+        final reminderId = int.parse(receivedAction.payload!['reminderId']!);
 
-      BuildContext context = MyApp.navigatorKey.currentContext!;
+        BuildContext context = MyApp.navigatorKey.currentContext!;
 
-      if(typeId == '1'){ //medicine reminder
-        routeTo(context, MedicineReminderInfo(reminderId: reminderId));
-      }
+        if (typeId == 1) {
+          // medicine reminder
+          routeTo(context, MedicineReminderInfo(reminderId: reminderId));
+        } else if (typeId == 2) {
+          // general reminder
+          // routeTo(context, GeneralReminderInfo(reminderId: reminderId));
+        } else {
+          routeTo(context, Dashboard());
+        }
 
-      else if(typeId == '2'){ //general reminder
-        // routeTo(context, MedicineReminderInfo(reminderId: reminderId));
-      }
-
-      else{
+        await AwesomeNotifications().dismiss(reminderId);
+      } catch (e) {
+        print("Error handling notification action: $e");
+        BuildContext context = MyApp.navigatorKey.currentContext!;
         routeTo(context, Dashboard());
       }
-
-      await AwesomeNotifications().dismiss(reminderId);
     }
+ 
     else if(receivedAction.buttonKeyPressed == '1'){
       await MedicineNotificationController.setSnoozedNotification(payload: receivedAction.payload!);
     }
