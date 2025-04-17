@@ -1,6 +1,5 @@
 
 import 'package:ministry/src/core/controllers/medicine_notification_controller.dart';
-import 'package:ministry/src/features/reminders/domain/model/reminder_model.dart';
 import 'package:workmanager/workmanager.dart';
 
 import 'src/core/controllers/notification_controller.dart';

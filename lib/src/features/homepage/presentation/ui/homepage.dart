@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
 import 'package:ministry/src/core/utils/page_route.dart';
-import 'package:ministry/src/core/utils/toaster.dart';
 import 'package:ministry/src/features/banners/presentation/ui/banners.dart';
 import 'package:ministry/src/features/dashboard/application/controller/dashboard_controller.dart';
 import 'package:ministry/src/features/health_tips/presentation/ui/health_tips.dart';
@@ -14,7 +13,6 @@ import 'package:ministry/src/features/public_notices/presentation/ui/widget/publ
 import 'package:ministry/src/features/quick_services/services.dart';
 import 'package:ministry/src/features/support/presentation/ui/support.dart';
 import '../../../../core/resources/gap_manager.dart';
-import '../../../scanner/presentation/ui/scanner.dart';
 
 
 

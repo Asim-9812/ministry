@@ -5,8 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:ministry/src/core/controllers/notification_controller.dart';
 // import 'package:ministry/src/features/old_reminder/notification_controllers/notification_controller.dart';
-import 'package:ministry/src/features/old_reminder/reminders/general/domain/model/general_model.dart' as oldGen;
-import 'package:ministry/src/features/old_reminder/reminders/medicine/domain/model/medicine_model.dart' as oldMed;
 import 'package:ministry/src/features/reminders/domain/model/general_reminder_model.dart';
 
 import 'package:workmanager/workmanager.dart';

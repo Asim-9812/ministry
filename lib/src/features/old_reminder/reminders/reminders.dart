@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:ministry/src/core/widgets/common_widgets.dart';
 
 import '../../../core/resources/color_manager.dart';
-import '../../../core/resources/font_manager.dart';
 import '../utils/old_common_utils.dart';
 import 'general/general_list.dart';
 import 'general/widgets/create_general_reminder.dart';

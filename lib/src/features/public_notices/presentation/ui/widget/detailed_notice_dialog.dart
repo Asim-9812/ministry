@@ -5,7 +5,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:ministry/src/features/health_tips/domain/model/health_tips_model.dart';
 import 'package:ministry/src/features/public_notices/domain/model/notice_model.dart';
 
 import '../../../../../core/resources/color_manager.dart';

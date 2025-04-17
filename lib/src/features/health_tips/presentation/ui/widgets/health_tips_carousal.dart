@@ -4,15 +4,11 @@ import 'package:ministry/src/core/utils/shimmers.dart';
 import 'package:ministry/src/features/health_tips/application/controller/health_tips_carousal_controller.dart';
 import 'package:ministry/src/features/health_tips/application/providers/health_tips_providers.dart';
 import 'package:ministry/src/features/health_tips/presentation/ui/widgets/detailed_tips_dialog.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ministry/src/core/api/api.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
-import 'package:ministry/src/features/banners/application/providers/banner_providers.dart';
-import 'package:ministry/src/features/banners/presentation/ui/widgets/no_banner.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:animate_do/animate_do.dart';
 import '../../../../../core/resources/font_manager.dart';
 
 

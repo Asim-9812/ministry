@@ -4,7 +4,6 @@
 import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
-import 'package:ministry/src/features/dashboard/presentation/ui/dashboard.dart';
 import 'package:ministry/src/features/splash_screen/splash_screen.dart';
 
 class MyApp extends StatelessWidget {
@@ -16,6 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConnectivityAppWrapper(
       app: MaterialApp(
+        navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Roboto',

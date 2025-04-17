@@ -2,11 +2,9 @@
 
 
 
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:ministry/src/core/models/user_model.dart';
 import 'package:ministry/src/features/login/data/repositories/login_repository.dart';
 
 import '../../../../core/api/api.dart';
@@ -33,15 +31,20 @@ class LoginRepositoryImpl implements LoginRepository{
       if (response.statusCode == 200) {
         final data = response.data['result'] as Map<String, dynamic>;
 
+
         if(data['id'] == 0){
           throw ('Username or password is incorrect.');
         }
         else{
+          print(data['id']);
+          print(data['token']);
           final user = UserModel.fromJson(data);
 
           // Save the user in Hive for persistence
           final box = await Hive.box<UserModel>('users');
           await box.put('user', user);
+
+
 
           return user;
         }
@@ -51,7 +54,7 @@ class LoginRepositoryImpl implements LoginRepository{
       else {
         throw Exception('Failed to fetch data');
       }
-    }on DioException catch(err){
+    }on DioException {
       throw Exception('Failed to fetch data');
     }
   }

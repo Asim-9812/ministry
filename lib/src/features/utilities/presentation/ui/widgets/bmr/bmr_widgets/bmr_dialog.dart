@@ -1,12 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
-import 'package:ministry/src/features/utilities/data/bmi/bmi_categories.dart';
 import 'package:ministry/src/features/utilities/domain/model/bmr_model.dart';
 
 import '../../../../../../../core/resources/font_manager.dart';
 import '../../../../../../../core/resources/gap_manager.dart';
-import '../../../../../domain/model/bmi_models.dart';
 
 
 

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import '../../../../../../../core/resources/color_manager.dart';
-import '../../../../../application/bmi_controllers/bmi_controller.dart';
 import '../../../../../application/bmr_controllers/bmr_controller.dart';
 import '../../../../../application/height_converter.dart';
 

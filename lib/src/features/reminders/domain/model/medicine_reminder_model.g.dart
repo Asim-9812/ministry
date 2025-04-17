@@ -344,7 +344,7 @@ MedicineUnit _$MedicineUnitFromJson(Map<String, dynamic> json) => MedicineUnit(
 
 Map<String, dynamic> _$MedicineUnitToJson(MedicineUnit instance) =>
     <String, dynamic>{
-      'id': instance.unitId,
+      'unitId': instance.unitId,
       'units': instance.units,
     };
 

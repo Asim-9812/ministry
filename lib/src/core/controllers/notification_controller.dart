@@ -114,14 +114,11 @@ class NotificationController {
   @pragma("vm:entry-point")
   static Future<void> onActionReceivedImplementationMethod(ReceivedAction receivedAction) async {
 
-    print('this is button ${receivedAction.buttonKeyPressed.trim()}');
     if (receivedAction.buttonKeyPressed.trim().isEmpty) {
       try {
-        print(receivedAction.payload!['reminderType']!);
 
-        final typeId = int.parse(receivedAction.payload!['reminderType']!);
+        final typeId = int.parse(receivedAction.payload!['reminderTypeId']!);
         final reminderId = int.parse(receivedAction.payload!['reminderId']!);
-
         BuildContext context = MyApp.navigatorKey.currentContext!;
 
         if (typeId == 1) {
@@ -135,6 +132,7 @@ class NotificationController {
         }
 
         await AwesomeNotifications().dismiss(reminderId);
+
       } catch (e) {
         print("Error handling notification action: $e");
         BuildContext context = MyApp.navigatorKey.currentContext!;
@@ -148,7 +146,5 @@ class NotificationController {
     else{
       print('it was dismissed');
     }
-
-
   }
 }

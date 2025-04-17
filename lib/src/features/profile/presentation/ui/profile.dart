@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ministry/src/core/providers/user_info_provider.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
-import 'package:ministry/src/features/dashboard/application/controller/dashboard_controller.dart';
 import 'package:ministry/src/features/profile/presentation/ui/widgets/info_dialog.dart';
 
 import '../../../../core/resources/font_manager.dart';

@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
 
 import '../../status_page/domain/model/auth_state.dart';
-import '../data/repositories/login_repository.dart';
 import '../data/repositories/login_repository_impl.dart';
 
 class LoginNotifier extends StateNotifier<LoginState> {

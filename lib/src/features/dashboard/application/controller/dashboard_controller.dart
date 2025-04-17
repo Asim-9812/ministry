@@ -10,7 +10,7 @@ final dashboardController = ChangeNotifierProvider((ref)=>DashboardController())
 
 class DashboardController extends ChangeNotifier{
 
-  int pageIndex = 0;
+  int pageIndex = 2;
   int navIndex = -1;
 
   PageController pageController = PageController(initialPage: 2);

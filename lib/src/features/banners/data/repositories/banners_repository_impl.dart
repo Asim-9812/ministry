@@ -5,7 +5,6 @@ import 'package:dio/dio.dart';
 import 'package:ministry/src/features/banners/domain/model/banner_model.dart';
 
 import '../../../../core/api/api.dart';
-import '../../../health_tips/data/repositories/health_tips_repository.dart';
 import 'banner_repository.dart';
 
 class BannersRepositoryImpl implements BannerRepository{

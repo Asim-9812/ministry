@@ -100,6 +100,7 @@ class MedicineReminderInfo extends ConsumerWidget {
                     ),
                   ),
                 ),
+                if(img != null)
                 w10,
                 Expanded(
                   child: Container(

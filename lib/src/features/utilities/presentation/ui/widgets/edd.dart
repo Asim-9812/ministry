@@ -2,7 +2,6 @@
 
 
 import 'package:flutter/cupertino.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
 import 'package:ministry/src/core/widgets/common_widgets.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart' as picker;

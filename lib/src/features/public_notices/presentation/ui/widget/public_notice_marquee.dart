@@ -9,7 +9,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:marquee/marquee.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
 import 'package:ministry/src/features/public_notices/application/providers/notice_providers.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../../../../core/resources/font_manager.dart';
 import '../../../../../core/resources/gap_manager.dart';
 import '../../../../dashboard/application/controller/dashboard_controller.dart';
