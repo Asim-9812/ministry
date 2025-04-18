@@ -8,6 +8,6 @@ import 'usecase_providers.dart';
 
 
 final healthTipsProvider = FutureProvider<List<HealthTipsModel>>((ref) async {
-  final getBannersUseCase = ref.watch(getHealthTipsUseCaseProviders);
-  return getBannersUseCase();
+  final getHealthTipsUseCase = ref.watch(getHealthTipsUseCaseProviders);
+  return getHealthTipsUseCase();
 });

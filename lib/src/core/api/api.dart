@@ -14,6 +14,9 @@ class Api{
   static const getMedicalAgency = '$baseUrl/medicalagency';
   static const insertEnquiry = '$baseUrl/Enquiry/Insert';
 
+  static const getMedicalReport = 'https://mainapi.hospitalsnepal.com/api/Ministry/MedicalReport/GetReportForMobileByPatientID?PatientNo=';
+
   static const getAllCountries = 'https://countriesnow.space/api/v0.1/countries/';
+
 
 }
