@@ -34,6 +34,7 @@ class FrequencyTime extends ConsumerWidget {
             Expanded(
               flex: 3,
               child: DropdownMenu(
+
                 width: double.infinity,
                 inputDecorationTheme: InputDecorationTheme(
                     isDense: true,
