@@ -73,6 +73,7 @@ class StrengthUnit extends ConsumerWidget {
           ),
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
           child: PopupMenuButton(
+            initialValue: selectedUnit,
             position: PopupMenuPosition.under,
             constraints: BoxConstraints(
                 maxHeight: 200

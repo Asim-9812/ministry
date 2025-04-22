@@ -31,6 +31,7 @@ class MedicinePattern extends ConsumerWidget {
             Expanded(
               flex: 3,
               child: DropdownMenu(
+                initialSelection: patternId == 0 ? null : patternId,
                 width: double.infinity,
                 inputDecorationTheme: InputDecorationTheme(
                     isDense: true,

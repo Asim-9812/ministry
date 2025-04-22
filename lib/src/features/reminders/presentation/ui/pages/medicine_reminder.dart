@@ -8,11 +8,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:ministry/src/core/widgets/common_widgets.dart';
 import 'package:ministry/src/features/reminders/application/provider/reminders_providers.dart';
+import 'package:ministry/src/features/reminders/presentation/ui/widgets/del_widgets/medicine_delete.dart';
 
 import '../../../../../core/resources/color_manager.dart';
 import '../../../../../core/resources/font_manager.dart';
 import '../../../../../core/resources/gap_manager.dart';
+import '../../../../../core/utils/page_route.dart';
 import '../../../application/controller/reminder_notifier.dart';
+import '../widgets/add_widgets/add_medicine_reminder.dart';
+import '../widgets/edit_widgets/edit_medicine.dart';
 
 class MedicineReminderInfo extends ConsumerWidget {
   final int reminderId;
@@ -207,68 +211,8 @@ class MedicineReminderInfo extends ConsumerWidget {
                         )
                       ),
                       onPressed: () async {
-                        await showDialog(
-                            context: context,
-                            builder: (context){
-                              return Center(
-                                  child: ZoomIn(
-                                    child: Container(
-                                      color: MyColors.white,
-                                      padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-                                      child: Material(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text('Confirm Delete',style: bh2,),
-                                            Divider(),
-                                            Text('Are you sure you want to delete the reminder?',style: bh3,),
-                                            h20,
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                  child: TextButton(
-                                                      style: TextButton.styleFrom(
-                                                          backgroundColor: MyColors.grey,
-                                                          foregroundColor: MyColors.black,
-                                                          shape: ContinuousRectangleBorder(
-                                                              borderRadius: BorderRadius.circular(18)
-                                                          )
-                                                      ),
-                                                      onPressed: ()=>Navigator.pop(context),
-                                                      child: Text('No')),
-                                                ),
-                                                w10,
-                                                Expanded(
-                                                  child: TextButton(
-                                                      style: TextButton.styleFrom(
-                                                          backgroundColor: MyColors.red,
-                                                          foregroundColor: MyColors.white,
-                                                          shape: ContinuousRectangleBorder(
-                                                              borderRadius: BorderRadius.circular(18)
-                                                          )
-                                                      ),
-                                                      onPressed: () async {
-                                                        await medNotifier.delReminder(reminderId: reminder.reminderId).whenComplete((){
-                                                          ref.refresh(reminderProvider);
-                                                          Navigator.pop(context);
-                                                          Navigator.pop(context);
-                                                        });
-                                                      },
-                                                      child: Text('Yes')),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                              );
-                            }
-                        );
-
+                        await delMedicineDialog(context, ref, reminderId);
+                        Navigator.pop(context);
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -289,7 +233,9 @@ class MedicineReminderInfo extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(18)
                         )
                       ),
-                      onPressed: (){},
+                      onPressed: () async {
+                        await editMedicineReminder(ref, reminder).whenComplete(()=>routeTo(context, AddMedicineReminder()));
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

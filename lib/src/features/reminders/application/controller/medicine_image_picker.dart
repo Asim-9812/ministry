@@ -15,7 +15,7 @@ import '../../../../core/resources/color_manager.dart';
 
 
 
-final medImageProvider = StateNotifierProvider.autoDispose<MedImagePicker, XFile?>((ref) => MedImagePicker(null));
+final medImageProvider = StateNotifierProvider<MedImagePicker, XFile?>((ref) => MedImagePicker(null));
 
 
 

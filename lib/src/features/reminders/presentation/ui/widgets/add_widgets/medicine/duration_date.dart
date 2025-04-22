@@ -93,8 +93,10 @@ class DurationDate extends ConsumerWidget {
             readOnly: true,
             onTap: () async {
               final now = DateTime.now();
+              final date = startDateController.text.trim().isNotEmpty?  DateTime.parse(startDateController.text) : now;
               DateTime? selectedDate = await showDatePicker(
                   context: context,
+                  initialDate: date,
                   firstDate: now,
                   lastDate: now.add(Duration(days: 365))
               );

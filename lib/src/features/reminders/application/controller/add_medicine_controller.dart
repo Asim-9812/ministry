@@ -3,12 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final addMedicineController = ChangeNotifierProvider.autoDispose((ref)=> AddMedicineController());
+final addMedicineController = ChangeNotifierProvider((ref)=> AddMedicineController());
 
 
 class AddMedicineController extends ChangeNotifier{
 
   final formKey = GlobalKey<FormState>();
+  int? reminderId;
   TextEditingController medName = TextEditingController();
   TextEditingController strengthController = TextEditingController();
   TextEditingController time = TextEditingController();
@@ -27,6 +28,13 @@ class AddMedicineController extends ChangeNotifier{
   bool unitError = false;
   List<DateTime> scheduledTimeList = [];
   List<String> selectedDaysOfWeek = [];
+
+
+  void changeReminderId(int val){
+    reminderId = val;
+    notifyListeners();
+  }
+
 
   void changeMealType(int val){
     mealId = val;

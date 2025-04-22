@@ -37,6 +37,7 @@ class RouteName extends ConsumerWidget {
           ),
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
           child: PopupMenuButton(
+            initialValue: selectedRoute,
             position: PopupMenuPosition.under,
             constraints: BoxConstraints(
                 maxHeight: 200

@@ -14,28 +14,28 @@ void callbackDispatcher() {
     await NotificationController.initialize();
     await NotificationController.startListeningNotificationEvents();
 
-    print('Executing background task: $task');
-    print('Input data: $inputData');
+    // print('Executing background task: $task');
+    // print('Input data: $inputData');
 
     try {
 
       if (inputData != null) {
 
         if (inputData['reminderType'] == 1) {
-          print('Triggering Medicine Notification');
+          // print('Triggering Medicine Notification');
           await MedicineNotificationController.setScheduledNotification(inputData: inputData);
           return Future.value(true);
         } else {
-          print('Unsupported reminder type');
+          // print('Unsupported reminder type');
           return Future.value(false);
         }
       } else {
-        print('Input data is null');
+        // print('Input data is null');
         return Future.value(false);
       }
     } catch (e, stack) {
-      print('Exception occurred: $e');
-      print(stack);
+      // print('Exception occurred: $e');
+      // print(stack);
       return Future.value(false);
     }
 

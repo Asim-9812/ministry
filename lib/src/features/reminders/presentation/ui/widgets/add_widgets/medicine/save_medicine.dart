@@ -27,6 +27,7 @@ class SaveMedicineButton extends ConsumerWidget {
   Widget build(BuildContext context,ref) {
     final medInfo = ref.watch(addMedicineController);
     final formKey = medInfo.formKey;
+    final remId = medInfo.reminderId;
     final mealId = medInfo.mealId;
     final routeId = medInfo.routeId;
     final unitId = medInfo.unitId;
@@ -67,7 +68,7 @@ class SaveMedicineButton extends ConsumerWidget {
 
       // Proceed if all validations pass
 
-      final medId = Random().nextInt(100) + 1000;
+      final medId = remId ?? Random().nextInt(100) + 1000;
       final medicineName = medInfo.medName.text.trim();
       final route = medicineRouteList.singleWhere((e)=>e.id == routeId);
       final strength = double.parse(medInfo.strengthController.text.trim());
@@ -121,6 +122,7 @@ class SaveMedicineButton extends ConsumerWidget {
 
       await medNotifier.addMedicineReminder(medicine: medicine).whenComplete((){
         ref.refresh(reminderProvider);
+        ref.refresh(reminderByIdProvider(medId));
         Navigator.pop(context);
       });
 

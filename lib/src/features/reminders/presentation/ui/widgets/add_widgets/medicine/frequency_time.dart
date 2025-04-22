@@ -34,7 +34,7 @@ class FrequencyTime extends ConsumerWidget {
             Expanded(
               flex: 3,
               child: DropdownMenu(
-
+                initialSelection: selectedFrequency == 0 ? null : selectedFrequency,
                 width: double.infinity,
                 inputDecorationTheme: InputDecorationTheme(
                     isDense: true,
@@ -109,9 +109,10 @@ class FrequencyTime extends ConsumerWidget {
                 onTap: () async {
                   final now = DateTime.now();
                   final currentTime = TimeOfDay.now();
+                  final preSelectedTime = scheduleTimeList.isNotEmpty ? TimeOfDay.fromDateTime(scheduleTimeList.first) : currentTime;
                   TimeOfDay? selectedTime = await showTimePicker(
                     context: context,
-                    initialTime: currentTime,
+                    initialTime: preSelectedTime,
                   );
                   if(selectedTime != null){
                     DateTime time = DateTime(now.year, now.month, now.day, selectedTime.hour, selectedTime.minute);

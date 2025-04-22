@@ -13,6 +13,9 @@ import 'package:ministry/src/features/reminders/application/controller/reminder_
 import 'package:ministry/src/features/reminders/application/provider/reminders_providers.dart';
 import 'package:ministry/src/features/reminders/domain/model/reminder_model.dart';
 import 'package:ministry/src/features/reminders/presentation/ui/pages/medicine_reminder.dart';
+import 'package:ministry/src/features/reminders/presentation/ui/widgets/add_widgets/add_medicine_reminder.dart';
+import 'package:ministry/src/features/reminders/presentation/ui/widgets/del_widgets/medicine_delete.dart';
+import 'package:ministry/src/features/reminders/presentation/ui/widgets/edit_widgets/edit_medicine.dart';
 
 import '../../../../../core/resources/color_manager.dart';
 import '../../../../../core/resources/font_manager.dart';
@@ -58,72 +61,16 @@ class ReminderListTile extends ConsumerWidget {
                     ListTile(title: Text(reminder.generalReminder?.title ?? reminder.medicineReminder?.medicineName ?? reminder.notes?.title ?? '',style:  bh1,)),
                     Divider(),
                     ListTile(
+                      onTap: () async {
+                        await editMedicineReminder(ref, reminder).whenComplete(()=>routeTo(context, AddMedicineReminder()));
+                      },
                       leading: Icon(Icons.edit, color: MyColors.primary,),
                       title: Text('Edit'),
                     ),
                     Divider(),
                     ListTile(
                       onTap: () async {
-                        await showDialog(
-                            context: context,
-                            builder: (context){
-                              return Center(
-                                  child: ZoomIn(
-                                    child: Container(
-                                      color: MyColors.white,
-                                      padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-                                      child: Material(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text('Confirm Delete',style: bh2,),
-                                            Divider(),
-                                            Text('Are you sure you want to delete the reminder?',style: bh3,),
-                                            h20,
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                  child: TextButton(
-                                                      style: TextButton.styleFrom(
-                                                          backgroundColor: MyColors.grey,
-                                                          foregroundColor: MyColors.black,
-                                                          shape: ContinuousRectangleBorder(
-                                                              borderRadius: BorderRadius.circular(18)
-                                                          )
-                                                      ),
-                                                      onPressed: ()=>Navigator.pop(context),
-                                                      child: Text('No')),
-                                                ),
-                                                w10,
-                                                Expanded(
-                                                  child: TextButton(
-                                                      style: TextButton.styleFrom(
-                                                          backgroundColor: MyColors.red,
-                                                          foregroundColor: MyColors.white,
-                                                          shape: ContinuousRectangleBorder(
-                                                              borderRadius: BorderRadius.circular(18)
-                                                          )
-                                                      ),
-                                                      onPressed: () async {
-                                                        await medNotifier.delReminder(reminderId: reminder.reminderId).whenComplete((){
-                                                          ref.refresh(reminderProvider);
-                                                          Navigator.pop(context);
-                                                        });
-                                                      },
-                                                      child: Text('Yes')),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                              );
-                            }
-                        );
+                        await delMedicineDialog(context, ref, reminder.reminderId);
                       },
                       leading: Icon(Icons.delete, color: MyColors.primary,),
                       title: Text('Delete'),
