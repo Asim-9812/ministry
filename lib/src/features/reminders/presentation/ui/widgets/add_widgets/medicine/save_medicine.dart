@@ -5,14 +5,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:ministry/src/features/reminders/application/controller/medicine_image_picker.dart';
 import 'package:ministry/src/features/reminders/application/provider/reminders_providers.dart';
 
 import '../../../../../../../core/resources/color_manager.dart';
 import '../../../../../../../core/resources/font_manager.dart';
 import '../../../../../../../core/utils/toaster.dart';
-import '../../../../../application/controller/add_medicine_controller.dart';
-import '../../../../../application/controller/reminder_notifier.dart';
+import '../../../../../application/controller/medicine/add_medicine_controller.dart';
+import '../../../../../application/controller/medicine/medicine_image_picker.dart';
+import '../../../../../application/controller/medicine/medicine_reminder_notifier.dart';
 import '../../../../../data/medicine_data/frequency_list.dart';
 import '../../../../../data/medicine_data/meal_list.dart';
 import '../../../../../data/medicine_data/pattern_list.dart';

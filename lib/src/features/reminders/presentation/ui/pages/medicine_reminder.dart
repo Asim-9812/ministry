@@ -14,7 +14,7 @@ import '../../../../../core/resources/color_manager.dart';
 import '../../../../../core/resources/font_manager.dart';
 import '../../../../../core/resources/gap_manager.dart';
 import '../../../../../core/utils/page_route.dart';
-import '../../../application/controller/reminder_notifier.dart';
+import '../../../application/controller/medicine/medicine_reminder_notifier.dart';
 import '../widgets/add_widgets/add_medicine_reminder.dart';
 import '../widgets/edit_widgets/edit_medicine.dart';
 

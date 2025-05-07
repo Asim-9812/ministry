@@ -7,7 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:ministry/src/features/reminders/application/controller/add_medicine_controller.dart';
+import 'package:ministry/src/features/reminders/application/controller/medicine/add_medicine_controller.dart';
 
 import '../../../../../../../core/resources/color_manager.dart';
 import '../../../../../../../core/resources/font_manager.dart';

@@ -17,9 +17,9 @@ AppBar commonAppBar(String text){
   );
 }
 
-AppBar commonNavBar(String text){
+AppBar commonNavBar(String text, {Color? color}){
   return AppBar(
-    backgroundColor: MyColors.primary,
+    backgroundColor: color ?? MyColors.primary,
     elevation: 0,
     iconTheme: IconThemeData(color: MyColors.white),
     automaticallyImplyLeading: true,

@@ -22,22 +22,22 @@ class HealthTipsRepositoryImpl implements HealthTipsRepository{
       if (response.statusCode == 200) {
         final data = response.data['result'] as List<dynamic>;
         // No real data in api right now.
-        // if(data.isNotEmpty){
-        //   return data.map((json) {
-        //     final dto = HealthTipsModel.fromJson(json);
-        //     return dto;
-        //   }).toList();
-        // }
-        // else{
-        //   return sampleData.map((json) {
-        //     final dto = HealthTipsModel.fromJson(json);
-        //     return dto;
-        //   }).toList();
-        // }
-        return sampleData.map((json) {
-          final dto = HealthTipsModel.fromJson(json);
-          return dto;
-        }).toList();
+        if(data.isNotEmpty){
+          return data.map((json) {
+            final dto = HealthTipsModel.fromJson(json);
+            return dto;
+          }).toList();
+        }
+        else{
+          return sampleData.map((json) {
+            final dto = HealthTipsModel.fromJson(json);
+            return dto;
+          }).toList();
+        }
+        // return sampleData.map((json) {
+        //   final dto = HealthTipsModel.fromJson(json);
+        //   return dto;
+        // }).toList();
 
       }
       else {

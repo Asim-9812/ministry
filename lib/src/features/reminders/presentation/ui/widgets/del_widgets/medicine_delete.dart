@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../../../../../../core/resources/color_manager.dart';
 import '../../../../../../core/resources/font_manager.dart';
 import '../../../../../../core/resources/gap_manager.dart';
-import '../../../../application/controller/reminder_notifier.dart';
+import '../../../../application/controller/medicine/medicine_reminder_notifier.dart';
 import '../../../../application/provider/reminders_providers.dart';
 
 Future<void> delMedicineDialog(BuildContext context, ref,int reminderId) async {

@@ -19,3 +19,9 @@ final countriesProvider = FutureProvider<List<String>>((ref) async {
   final getCountriesUseCase = ref.watch(getCountriesUseCaseProviders);
   return getCountriesUseCase();
 });
+
+
+final availableCountriesProvider = FutureProvider<List<dynamic>>((ref) async {
+  final getCountriesUseCase = ref.watch(getAvailableCountriesUseCaseProviders);
+  return getCountriesUseCase();
+});

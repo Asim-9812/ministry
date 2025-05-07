@@ -11,8 +11,8 @@ class GetMedicalReport{
 
   GetMedicalReport(this.repository);
 
-  Future<String> call({required String id}) {
-    return repository.getMedicalReport(id: id);
+  Future<String> call({required String id, required String token}) {
+    return repository.getMedicalReport(id: id, token: token);
   }
 
 }

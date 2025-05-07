@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ministry/src/features/reminders/application/controller/add_medicine_controller.dart';
+import 'package:ministry/src/features/reminders/application/controller/medicine/add_medicine_controller.dart';
 import 'package:ministry/src/features/reminders/presentation/ui/widgets/add_widgets/medicine/save_medicine.dart';
 import '../../../../../../core/resources/gap_manager.dart';
 import '../../../../../../core/widgets/common_widgets.dart';

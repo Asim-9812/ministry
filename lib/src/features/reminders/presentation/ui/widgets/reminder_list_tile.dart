@@ -9,7 +9,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:ministry/src/core/utils/page_route.dart';
-import 'package:ministry/src/features/reminders/application/controller/reminder_notifier.dart';
 import 'package:ministry/src/features/reminders/application/provider/reminders_providers.dart';
 import 'package:ministry/src/features/reminders/domain/model/reminder_model.dart';
 import 'package:ministry/src/features/reminders/presentation/ui/pages/medicine_reminder.dart';
@@ -20,6 +19,7 @@ import 'package:ministry/src/features/reminders/presentation/ui/widgets/edit_wid
 import '../../../../../core/resources/color_manager.dart';
 import '../../../../../core/resources/font_manager.dart';
 import '../../../../../core/resources/gap_manager.dart';
+import '../../../application/controller/medicine/medicine_reminder_notifier.dart';
 
 class ReminderListTile extends ConsumerWidget {
   final ReminderModel reminder;

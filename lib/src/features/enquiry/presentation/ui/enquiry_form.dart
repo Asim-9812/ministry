@@ -33,7 +33,9 @@ class EnquiryForm extends ConsumerWidget {
     final emailController = ref.watch(enquiryController).emailController;
     final phoneController = ref.watch(enquiryController).phoneController;
     final remarksController = ref.watch(enquiryController).remarksController;
-    final selectedCountry = ref.watch(enquiryController).selectedCountry;
+    final dateController = ref.watch(enquiryController).dateController;
+    final selectedDate = ref.watch(enquiryController).selectedDate;
+    final selectedCountry = ref.watch(enquiryController).selectedCountryDynamic;
     final selectedCode = ref.watch(enquiryController).selectedCode;
     final selectedMedicalAgency = ref.watch(enquiryController).selectedMedical;
 
@@ -158,53 +160,6 @@ class EnquiryForm extends ConsumerWidget {
                       },
                     ),
                     h10,
-                    countriesAsyncValue.when(
-                        data: (countries){
-                          return DropdownSearch<String>(
-                            items: (filter, loadProps) => countries, // List of countries as <String>
-                            selectedItem: selectedCountry,
-                            decoratorProps: DropDownDecoratorProps(
-                              decoration: InputDecoration(
-                                labelText: "Apply for",
-                                prefixIcon: Icon(Icons.pin_drop,color: MyColors.primary,),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: MyColors.primary),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: MyColors.primary),
-                                ),
-                              ),
-                            ),
-                            onChanged: (value) {
-                              ref.read(enquiryController.notifier).selectCountry(value);
-                              FocusManager.instance.primaryFocus?.unfocus();
-                            },
-                            popupProps: PopupProps.menu(
-                              showSearchBox: true, // Enables the search feature
-                              searchFieldProps: TextFieldProps(
-                                decoration: InputDecoration(
-                                  hintText: "Search country...",
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(color: MyColors.primary),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            validator: (value) {
-                              if(value == null){
-                                return 'Please select a country you apply for';
-                              }
-                              return null;
-                            },
-                          );
-                        },
-                        error: (error,stack)=>h10,
-                        loading: ()=>commonShimmer(height: 50, width: double.infinity)
-                    ),
-                    h10,
                     medicalAsyncValue.when(
                       data: (medicalAgencies) {
                         return DropdownSearch<MedicalAgencyModel>(
@@ -270,6 +225,49 @@ class EnquiryForm extends ConsumerWidget {
                       error: (error, stack) => Text('$error'),
                       loading: () => commonShimmer(height: 50, width: double.infinity),
                     ),
+                    h10,
+                    TextFormField(
+                      controller: dateController,
+                      readOnly: true,
+                      onTap: () async {
+                        DateTime? selectDate = await showDatePicker(
+                            context: context,
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime.now().add(Duration(days: 90)),
+                            initialDate: DateTime.now(),
+                        );
+
+                        if(selectDate != null){
+                          TimeOfDay? selectTime = await showTimePicker(context: context, initialTime: TimeOfDay.now());
+
+                          if(selectTime != null){
+                            DateTime appointedDate = DateTime(selectDate.year, selectDate.month, selectDate.day, selectTime.hour, selectTime.minute);
+                            dateController.text = DateFormat('yyyy-MM-dd hh:mm a').format(appointedDate);
+                            ref.read(enquiryController.notifier).selectDate(appointedDate);
+                          }
+                        }
+
+                      },
+                      decoration: InputDecoration(
+                        labelText: "Select Appointment date & time",
+                        prefixIcon: Icon(Icons.watch_later_outlined,color: MyColors.primary,),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: MyColors.primary),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: MyColors.primary),
+                        ),
+                      ),
+                      validator: (value){
+                        if(value == null || value.trim().isEmpty){
+                          return 'Appointment date is required';
+                        }
+                        return null;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                    ),
                     h20,
                     Row(
                       children: [
@@ -281,17 +279,19 @@ class EnquiryForm extends ConsumerWidget {
                               ),
                               onPressed: () async {
                                 if(formKey.currentState!.validate()){
-                                  final now = DateFormat('yyyy-MM-ddThh:mm:ss').format(DateTime.now());
+                                  final now = DateFormat('yyyy-MM-ddThh:mm:ss').format(DateTime.now().add(Duration(seconds: 50)));
                                   Map<String, dynamic> data = {
                                     "id": 0,
                                     "fullName": nameController.text.trim(),
                                     "contact": phoneController.text.trim(),
                                     "emailID": emailController.text.trim(),
-                                    "appliedFor": selectedCountry,
+                                    "appliedFor": selectedCountry['value'],
                                     "medicalAgency": selectedCode,
                                     "queries": remarksController.text.trim(),
                                     "flag": "string",
-                                    "entryDate": now
+                                    "entryDate": now,
+                                    "appointmentDate": DateFormat('yyyy-MM-ddThh:mm:ssZ').format(selectedDate!),
+                                    "extra1": "string"
                                   };
                                   await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data);
 

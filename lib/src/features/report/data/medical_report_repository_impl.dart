@@ -5,14 +5,23 @@ import 'package:dio/dio.dart';
 import 'package:ministry/src/core/api/api.dart';
 import 'package:ministry/src/features/report/data/medical_report_repository.dart';
 
+
+
 class MedicalReportRepositoryImpl extends MedicalReportRepository{
 
   final dio = Dio();
 
   @override
-  Future<String> getMedicalReport({required String id}) async {
+  Future<String> getMedicalReport({required String id, required String token}) async {
     try{
-      final response = await dio.get('${Api.getMedicalReport}$id');
+
+      final response = await dio.get('${Api.getMedicalReport}$id',
+        // options: Options(
+        //   headers: {
+        //     'Authorization' : 'Bearer $token'
+        //   }
+        // )
+      );
 
       if(response.statusCode == 200){
         final data = response.data['result'] as List<dynamic>;
@@ -30,8 +39,13 @@ class MedicalReportRepositoryImpl extends MedicalReportRepository{
       }
 
     }on DioException catch(e){
-      print(e);
-      throw Exception('Unable to fetch report.');
+      if(e.response?.statusCode == 404){
+        throw 'No reports found';
+      }
+      else{
+        throw Exception('Unable to fetch report.');
+      }
+
     }
   }
 

@@ -7,10 +7,10 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:ministry/src/features/reminders/application/controller/add_medicine_controller.dart';
-import 'package:ministry/src/features/reminders/application/controller/medicine_image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../../../application/controller/medicine/add_medicine_controller.dart';
+import '../../../../application/controller/medicine/medicine_image_picker.dart';
 import '../../../../domain/model/reminder_model.dart';
 
 Future<void> editMedicineReminder(WidgetRef ref, ReminderModel reminder) async {

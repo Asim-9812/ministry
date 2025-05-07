@@ -12,9 +12,12 @@ class Api{
   static const sliderList = '$baseUrl/Sliders/GetList';
 
   static const getMedicalAgency = '$baseUrl/medicalagency';
+  static const getAvailableCountry = '$baseUrl/GlobalDropdown/getDropDownList?DropDownType=applycountry';
+  static const getAvailableAgency = '$baseUrl/GlobalDropdown/getDropDownList?DropDownType=FilterByCountry&filter1=';
   static const insertEnquiry = '$baseUrl/Enquiry/Insert';
 
-  static const getMedicalReport = 'https://mainapi.hospitalsnepal.com/api/Ministry/MedicalReport/GetReportForMobileByPatientID?PatientNo=';
+  static const getMedicalReport = '$baseUrl/MedicalReport/GetReportForMobileByPatientID?PatientNo=';
+
 
   static const getAllCountries = 'https://countriesnow.space/api/v0.1/countries/';
 

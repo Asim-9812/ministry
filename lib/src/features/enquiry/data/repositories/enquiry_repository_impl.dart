@@ -48,6 +48,24 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
     }
   }
 
+
+  @override
+  Future<List<dynamic>> fetchAvailableCountriesList() async {
+    try{
+      final response = await dio.get(Api.getAvailableCountry);
+      if(response.statusCode == 200){
+        final data = response.data['data'] as List<dynamic>;
+        return data;
+      }
+      else{
+        throw Exception('Unable to fetch data.');
+      }
+    }on DioException catch(e){
+      print(e);
+      throw Exception('Unable to fetch data.');
+    }
+  }
+
   @override
   Future<bool> insertEnquiry({required Map<String, dynamic> data}) async {
     try{

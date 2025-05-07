@@ -9,7 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../../../core/resources/color_manager.dart';
 import '../../../../../../../core/resources/font_manager.dart';
 import '../../../../../../../core/resources/gap_manager.dart';
-import '../../../../../application/controller/add_medicine_controller.dart';
+import '../../../../../application/controller/medicine/add_medicine_controller.dart';
 import '../../../../../data/medicine_data/unit_list.dart';
 import '../../../../../domain/model/medicine_reminder_model.dart';
 

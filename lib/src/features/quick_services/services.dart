@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:ministry/src/core/utils/page_route.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
+import 'package:ministry/src/features/enquiry/presentation/ui/country_picker.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_form.dart';
 
 import '../../core/resources/color_manager.dart';
@@ -19,7 +20,7 @@ class QuickServices extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(child: ServiceCard(name: 'Enquire Hospital', color: MyColors.primary, icon: Icons.emergency, onTap: ()=> routeTo(context, EnquiryForm()))),
+          Expanded(child: ServiceCard(name: 'Enquire Hospital', color: MyColors.primary, icon: Icons.emergency, onTap: ()=> routeTo(context, CountryPicker()))),
           w10,
           Expanded(child: ServiceCard(name: 'Get Appointments', color: MyColors.green, icon: Icons.add_call)),
         ],

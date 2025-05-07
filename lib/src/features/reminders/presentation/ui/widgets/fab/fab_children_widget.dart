@@ -6,12 +6,12 @@ import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ministry/src/core/utils/page_route.dart';
-import 'package:ministry/src/features/reminders/application/controller/medicine_image_picker.dart';
 
 import '../../../../../../core/resources/color_manager.dart';
 import '../../../../../../core/resources/font_manager.dart';
 import '../../../../../../core/resources/gap_manager.dart';
-import '../../../../application/controller/add_medicine_controller.dart';
+import '../../../../application/controller/medicine/add_medicine_controller.dart';
+import '../../../../application/controller/medicine/medicine_image_picker.dart';
 
 class FabChildrenWidget extends ConsumerWidget {
   final GlobalKey<ExpandableFabState> fabKey;

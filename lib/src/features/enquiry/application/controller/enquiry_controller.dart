@@ -18,15 +18,30 @@ class EnquiryController extends ChangeNotifier{
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController remarksController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  DateTime? selectedDate;
+  int countryId = 0;
   List<String> allCountries = [];
   List<String> filteredCountries = [];
   List<MedicalAgencyModel> filteredMedicals = [];
   String? selectedCode;
   MedicalAgencyModel? selectedMedical;
   String? selectedCountry;
+  dynamic selectedCountryDynamic;
   String? countryErrorText;
   String? medicalErrorText;
 
+
+  void selectDate(DateTime time){
+    selectedDate = time;
+    notifyListeners();
+  }
+
+
+  void selectAvailableCountry(dynamic country){
+    selectedCountryDynamic = country;
+    notifyListeners();
+  }
 
   void selectCountry(String? country){
     selectedCountry = country;

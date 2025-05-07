@@ -7,6 +7,7 @@ abstract class EnquiryRepository{
 
   Future<List<MedicalAgencyModel>> fetchMedicalAgencies();
   Future<List<String>> fetchCountriesList();
+  Future<List<dynamic>> fetchAvailableCountriesList();
   Future<bool> insertEnquiry({required Map<String, dynamic> data});
 
 }
