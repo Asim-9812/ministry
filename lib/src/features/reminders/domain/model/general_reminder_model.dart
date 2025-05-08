@@ -18,20 +18,16 @@ class GeneralReminderModel extends HiveObject {
   String? description;
 
   @HiveField(3)
-  @Uint8ListListBase64Converter()
-  List<Uint8List>? attachmentList;
-
-  @HiveField(4)
   final DateTime startDate;
 
-  @HiveField(5)
+  @HiveField(4)
   final GeneralReminderPattern pattern;
+
 
   GeneralReminderModel({
     required this.id,
     required this.title,
     this.description,
-    this.attachmentList,
     required this.startDate,
     required this.pattern,
   });

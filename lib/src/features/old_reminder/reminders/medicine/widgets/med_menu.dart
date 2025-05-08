@@ -112,7 +112,7 @@ void _delReminder(context,ref,MedicineModel medicine,bool isFromDetail) async{
           }
           await Workmanager().cancelByUniqueName('1-${medicine.reminderId}');
 
-          ref.read(medicineReminderNotifier.notifier).delReminder(medicine).then((value){
+          ref.read(medicineReminderNotifier.notifier).delMedReminder(medicine).then((value){
             ref.refresh(medReminderProvider);
             Navigator.pop(context);
             if(isFromDetail){

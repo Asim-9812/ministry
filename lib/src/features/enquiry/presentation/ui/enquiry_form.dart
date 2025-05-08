@@ -165,12 +165,12 @@ class EnquiryForm extends ConsumerWidget {
                         return DropdownSearch<MedicalAgencyModel>(
                           items: (filter, loadProps) => medicalAgencies, // List of MedicalAgencyModel
                           selectedItem: selectedMedicalAgency,
-                          itemAsString: (MedicalAgencyModel agency) => agency.organizationName, // Display organization name
+                          itemAsString: (MedicalAgencyModel agency) => agency.organizationname, // Display organization name
                           compareFn: (a, b) => a.code == b.code,
                           filterFn: (MedicalAgencyModel agency, String query) {
                             final lowerQuery = query.toLowerCase();
                             return agency.code.toLowerCase().contains(lowerQuery) ||
-                                agency.organizationName.toLowerCase().contains(lowerQuery) ||
+                                agency.organizationname.toLowerCase().contains(lowerQuery) ||
                                 agency.fullAddress.toLowerCase().contains(lowerQuery);
                           },
                           decoratorProps: DropDownDecoratorProps(
@@ -208,7 +208,7 @@ class EnquiryForm extends ConsumerWidget {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(item.organizationName,style: br1,),
+                                      Text(item.organizationname,style: br1,),
                                       Text(item.fullAddress,style: br3,),
                                     ],
                                   ),
@@ -285,7 +285,7 @@ class EnquiryForm extends ConsumerWidget {
                                     "fullName": nameController.text.trim(),
                                     "contact": phoneController.text.trim(),
                                     "emailID": emailController.text.trim(),
-                                    "appliedFor": selectedCountry['value'],
+                                    "appliedFor": selectedCountry['id'].toString(),
                                     "medicalAgency": selectedCode,
                                     "queries": remarksController.text.trim(),
                                     "flag": "string",

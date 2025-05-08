@@ -5,6 +5,7 @@ import 'dart:isolate';
 import 'dart:ui';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:ministry/src/core/controllers/general_notification_controller.dart';
 import 'package:ministry/src/core/controllers/medicine_notification_controller.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
 import 'package:ministry/src/core/utils/page_route.dart';
@@ -141,7 +142,14 @@ class NotificationController {
     }
  
     else if(receivedAction.buttonKeyPressed == '1'){
-      await MedicineNotificationController.setSnoozedNotification(payload: receivedAction.payload!);
+      if(receivedAction.payload!['reminderId'] == '1'){
+        await MedicineNotificationController.setSnoozedNotification(payload: receivedAction.payload!);
+      }
+      else if(receivedAction.payload!['reminderId'] == '2'){
+        await GeneralNotificationController.setSnoozedNotification(payload: receivedAction.payload!);
+      }
+
+
     }
     else{
       print('it was dismissed');

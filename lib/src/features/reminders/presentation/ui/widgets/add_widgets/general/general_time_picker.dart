@@ -53,6 +53,17 @@ class GeneralTimePicker extends ConsumerWidget {
           padding: EdgeInsets.all(16),
           child: Stack(
             children: [
+              Center(
+                child: Container(
+                  height: 40,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: MyColors.green.withValues(alpha: 200),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: MyColors.green)
+                  ),
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -116,17 +127,7 @@ class GeneralTimePicker extends ConsumerWidget {
                   ),
                 ],
               ),
-              Center(
-                child: Container(
-                  height: 40,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: MyColors.green.withValues(alpha: 200),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: MyColors.green)
-                  ),
-                ),
-              )
+
             ],
           ),
         ),
@@ -134,10 +135,7 @@ class GeneralTimePicker extends ConsumerWidget {
         Divider(
           color: MyColors.grey,
         ),
-        h20,
-        TextButton(onPressed: (){
-          print('$hour : $min $period');
-        }, child: Text('Press'))
+        h10,
       ],
     );
   }

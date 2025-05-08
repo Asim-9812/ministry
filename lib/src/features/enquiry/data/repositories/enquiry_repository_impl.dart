@@ -18,7 +18,9 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
       final response = await dio.get(Api.getMedicalAgency);
       if(response.statusCode == 200){
         final data = response.data['result'] as List<dynamic>;
+        print(data.length);
         final medicalAgencies = data.map((e)=>MedicalAgencyModel.fromJson(e)).toList();
+        print(medicalAgencies.length);
         return medicalAgencies;
       }
       else{
@@ -69,6 +71,7 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
   @override
   Future<bool> insertEnquiry({required Map<String, dynamic> data}) async {
     try{
+      print(data);
       final response = await dio.post(Api.insertEnquiry,
         data: data
       );

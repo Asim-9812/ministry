@@ -10,6 +10,7 @@ import 'package:ministry/src/features/old_reminder/notification_controllers/noti
 import 'package:ministry/src/features/reminders/domain/model/general_reminder_model.dart';
 import 'package:workmanager/workmanager.dart';
 // import 'callback_dispatcher.dart';
+import 'callback_dispatcher.dart';
 import 'src/app/my_app.dart';
 import 'src/features/reminders/domain/model/medicine_reminder_model.dart';
 import 'src/features/reminders/domain/model/notes_model.dart';
@@ -18,45 +19,45 @@ import 'src/features/status_page/domain/model/user_model.dart';
 
 
 
-
-@pragma('vm:entry-point')
-void callbackDispatcher() {
-  Workmanager().executeTask((task, inputData) async {
-    await oldNot.NotificationController.initializeLocalNotifications();
-    await oldNot.NotificationController.initializeIsolateReceivePort();
-    await oldNot.NotificationController.startListeningNotificationEvents();
-    try{
-      if(inputData != null){
-        if(inputData['reminderTypeId'] == 1){
-          await oldNot.NotificationController.scheduleMedicineNotifications(allData: inputData);
-          return Future.value(true);
-        }
-        else if(inputData['reminderTypeId'] == 2){
-          await oldNot.NotificationController.scheduleGeneralNotifications(allData: inputData);
-          return Future.value(true);
-        }
-        else if(inputData['reminderTypeId'] == 3){
-          await oldNot.NotificationController.scheduleTaskNotifications(allData: inputData);
-          return Future.value(true);
-        }
-        // else if(inputData['reminderTypeId'] == 4){
-        //   await newBgNotifications(data: inputData);
-        //   return Future.value(true);
-        // }
-        else{
-          return Future.value(false);
-        }
-      }
-      else{
-        return Future.value(false);
-      }
-    } catch(e){
-      //print(e);
-      return Future.value(false);
-    }
-  });
-}
-
+//
+// @pragma('vm:entry-point')
+// void callbackDispatcher() {
+//   Workmanager().executeTask((task, inputData) async {
+//     await oldNot.NotificationController.initializeLocalNotifications();
+//     await oldNot.NotificationController.initializeIsolateReceivePort();
+//     await oldNot.NotificationController.startListeningNotificationEvents();
+//     try{
+//       if(inputData != null){
+//         if(inputData['reminderTypeId'] == 1){
+//           await oldNot.NotificationController.scheduleMedicineNotifications(allData: inputData);
+//           return Future.value(true);
+//         }
+//         else if(inputData['reminderTypeId'] == 2){
+//           await oldNot.NotificationController.scheduleGeneralNotifications(allData: inputData);
+//           return Future.value(true);
+//         }
+//         else if(inputData['reminderTypeId'] == 3){
+//           await oldNot.NotificationController.scheduleTaskNotifications(allData: inputData);
+//           return Future.value(true);
+//         }
+//         // else if(inputData['reminderTypeId'] == 4){
+//         //   await newBgNotifications(data: inputData);
+//         //   return Future.value(true);
+//         // }
+//         else{
+//           return Future.value(false);
+//         }
+//       }
+//       else{
+//         return Future.value(false);
+//       }
+//     } catch(e){
+//       //print(e);
+//       return Future.value(false);
+//     }
+//   });
+// }
+//
 
 
 

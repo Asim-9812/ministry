@@ -5,14 +5,14 @@ part 'medical_agency_model.g.dart';
 @JsonSerializable()
 class MedicalAgencyModel {
   final String code;
-  final String organizationName;
+  final String organizationname;
   final String fullAddress;
   final String? contact;
   final String? email;
 
   MedicalAgencyModel({
     required this.code,
-    required this.organizationName,
+    required this.organizationname,
     required this.fullAddress,
     this.contact,
     this.email,
@@ -25,7 +25,7 @@ class MedicalAgencyModel {
   // Empty model
   static final empty = MedicalAgencyModel(
     code: '',
-    organizationName: '',
+    organizationname: '',
     fullAddress: '',
     contact: null,
     email: null,

@@ -42,7 +42,7 @@ class ReminderFab extends StatelessWidget {
 
       childrenOffset: Offset(-4, 0),
       children: [
-        FabChildrenWidget(fabKey: fabKey, name: 'Notes', icon: FontAwesomeIcons.noteSticky, pageRoute: AddNotes(),),
+        // FabChildrenWidget(fabKey: fabKey, name: 'Notes', icon: FontAwesomeIcons.noteSticky, pageRoute: AddNotes(),),
         FabChildrenWidget(fabKey: fabKey, name: 'General', icon: FontAwesomeIcons.stopwatch, pageRoute: AddGeneralReminder(),),
         FabChildrenWidget(fabKey: fabKey, name: 'Medicine', icon: FontAwesomeIcons.pills, pageRoute: AddMedicineReminder(),)
       ],

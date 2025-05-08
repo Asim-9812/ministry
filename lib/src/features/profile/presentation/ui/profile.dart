@@ -105,6 +105,7 @@ class ProfilePage extends ConsumerWidget {
                           onTap: () async {
                             await loginNotifier.logout().whenComplete((){
                               ref.refresh(loginNotifierProvider);
+
                             });
                           },
                           icon: Icons.logout, name: 'Log out'

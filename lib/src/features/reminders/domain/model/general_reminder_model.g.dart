@@ -20,16 +20,15 @@ class GeneralReminderModelAdapter extends TypeAdapter<GeneralReminderModel> {
       id: fields[0] as int,
       title: fields[1] as String,
       description: fields[2] as String?,
-      attachmentList: (fields[3] as List?)?.cast<Uint8List>(),
-      startDate: fields[4] as DateTime,
-      pattern: fields[5] as GeneralReminderPattern,
+      startDate: fields[3] as DateTime,
+      pattern: fields[4] as GeneralReminderPattern,
     );
   }
 
   @override
   void write(BinaryWriter writer, GeneralReminderModel obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -37,10 +36,8 @@ class GeneralReminderModelAdapter extends TypeAdapter<GeneralReminderModel> {
       ..writeByte(2)
       ..write(obj.description)
       ..writeByte(3)
-      ..write(obj.attachmentList)
-      ..writeByte(4)
       ..write(obj.startDate)
-      ..writeByte(5)
+      ..writeByte(4)
       ..write(obj.pattern);
   }
 
@@ -109,8 +106,6 @@ GeneralReminderModel _$GeneralReminderModelFromJson(
       id: (json['id'] as num).toInt(),
       title: json['title'] as String,
       description: json['description'] as String?,
-      attachmentList: const Uint8ListListBase64Converter()
-          .fromJson(json['attachmentList'] as List<String>?),
       startDate: DateTime.parse(json['startDate'] as String),
       pattern: GeneralReminderPattern.fromJson(
           json['pattern'] as Map<String, dynamic>),
@@ -122,8 +117,6 @@ Map<String, dynamic> _$GeneralReminderModelToJson(
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,
-      'attachmentList':
-          const Uint8ListListBase64Converter().toJson(instance.attachmentList),
       'startDate': instance.startDate.toIso8601String(),
       'pattern': instance.pattern,
     };

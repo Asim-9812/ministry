@@ -7,15 +7,32 @@ final addGeneralController = ChangeNotifierProvider.autoDispose((ref) => AddGene
 class AddGeneralController extends ChangeNotifier {
   final DateTime now = DateTime.now();
 
+  DateTime _startDate = DateTime.now();
+
+  final formKey = GlobalKey<FormState>();
+  TextEditingController labelController = TextEditingController();
+  TextEditingController descController = TextEditingController();
+  TextEditingController intervalController = TextEditingController();
+  List<String> selectedDaysOfWeek = [];
+  int? reminderId ;
+  int patternId = 0;
+  String? patternError;
+
+
+
   // Private field for hour
   int _hour = DateTime.now().hour % 12 == 0 ? 12 : DateTime.now().hour % 12;
   int _min = DateTime.now().minute;
   String _period = DateTime.now().hour >= 12 ? 'PM' : 'AM';
 
+
+
+
   // Getters
   int get hour => _hour;
   int get min => _min;
   String get period => _period;
+  DateTime get startDate => _startDate;
 
   // FixedExtentScrollController for hour, minute, and period lists
   late FixedExtentScrollController hourController;
@@ -69,4 +86,30 @@ class AddGeneralController extends ChangeNotifier {
     _period = value;
     notifyListeners();
   }
+
+  void changeStartDate(DateTime date){
+    _startDate = date;
+    notifyListeners();
+  }
+
+  void updateDaysList(String day) {
+    if(selectedDaysOfWeek.contains(day)){
+      selectedDaysOfWeek.remove(day);
+    }
+    else{
+      selectedDaysOfWeek.add(day);
+    }
+    notifyListeners();
+  }
+
+  void changePattern(int val){
+    patternId = val;
+    notifyListeners();
+  }
+
+  void patternHasError(String? value){
+    patternError = value;
+    notifyListeners();
+  }
+
 }

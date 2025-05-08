@@ -1,4 +1,5 @@
 
+import 'package:ministry/src/core/controllers/general_notification_controller.dart';
 import 'package:ministry/src/core/controllers/medicine_notification_controller.dart';
 import 'package:workmanager/workmanager.dart';
 
@@ -25,7 +26,12 @@ void callbackDispatcher() {
           // print('Triggering Medicine Notification');
           await MedicineNotificationController.setScheduledNotification(inputData: inputData);
           return Future.value(true);
-        } else {
+        }
+        else if(inputData['reminderType'] == 2){
+          await GeneralNotificationController.setScheduledNotification(inputData: inputData);
+          return Future.value(true);
+        }
+        else {
           // print('Unsupported reminder type');
           return Future.value(false);
         }
@@ -34,8 +40,8 @@ void callbackDispatcher() {
         return Future.value(false);
       }
     } catch (e, stack) {
-      // print('Exception occurred: $e');
-      // print(stack);
+      print('Exception occurred: $e');
+      print(stack);
       return Future.value(false);
     }
 

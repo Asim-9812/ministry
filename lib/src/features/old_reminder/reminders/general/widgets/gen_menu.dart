@@ -107,7 +107,7 @@ void _delReminder(context,ref,GeneralModel generalModel,bool isFromDetail) async
           await AwesomeNotifications().cancel(generalModel.reminderId);
           await AwesomeNotifications().cancel(generalModel.reminderId*100);
           await Workmanager().cancelByUniqueName('2-${generalModel.reminderId}');
-          ref.read(generalReminderNotifier.notifier).delReminder(generalModel).then((value){
+          ref.read(generalReminderNotifier.notifier).delMedReminder(generalModel).then((value){
             ref.refresh(genReminderProvider);
             Navigator.pop(context);
             if(isFromDetail){

@@ -43,8 +43,8 @@ class SaveMedicineButton extends ConsumerWidget {
           child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: MyColors.primary,
-                shape: ContinuousRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)
                 )
               ),
     onPressed: () async {

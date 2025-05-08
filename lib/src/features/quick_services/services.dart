@@ -16,15 +16,38 @@ class QuickServices extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(child: ServiceCard(name: 'Enquire Hospital', color: MyColors.primary, icon: Icons.emergency, onTap: ()=> routeTo(context, CountryPicker()))),
-          w10,
-          Expanded(child: ServiceCard(name: 'Get Appointments', color: MyColors.green, icon: Icons.add_call)),
-        ],
-      ),
+      child: ListTile(
+        tileColor: MyColors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: MyColors.grey)
+        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16),
+        leading : Icon(Icons.add_call,color: MyColors.primary),
+        title : Text('Get an appointment', style : bh2),
+        trailing : TextButton(
+          style : TextButton.styleFrom(
+            backgroundColor : MyColors.primary,
+            foregroundColor : MyColors.white,
+            shape : RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12)
+            )
+          ),
+          onPressed : ()=> routeTo(context, CountryPicker()),
+          child : Text('Click Here')
+        )
+      )
+
+
+      // Row(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   crossAxisAlignment: CrossAxisAlignment.center,
+      //   children: [
+      //     Expanded(child: ServiceCard(name: 'Enquire Hospital', color: MyColors.primary, icon: Icons.emergency, onTap: ()=> routeTo(context, CountryPicker()))),
+      //     w10,
+      //     Expanded(child: ServiceCard(name: 'Get Appointments', color: MyColors.green, icon: Icons.add_call)),
+      //   ],
+      // ),
     );
   }
   
