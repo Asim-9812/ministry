@@ -32,3 +32,17 @@ class GetAvailableCountries{
 
 
 }
+
+
+class GetProvinces{
+
+  final EnquiryRepository repository;
+
+  GetProvinces(this.repository);
+
+  Future<List<dynamic>> call() {
+    return repository.fetchProvinces();
+  }
+
+
+}

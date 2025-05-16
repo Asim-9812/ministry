@@ -28,7 +28,9 @@ class EnquiryController extends ChangeNotifier{
   MedicalAgencyModel? selectedMedical;
   String? selectedCountry;
   dynamic selectedCountryDynamic;
+  dynamic selectedProvince;
   String? countryErrorText;
+  String? provinceErrorText;
   String? medicalErrorText;
 
 
@@ -37,6 +39,10 @@ class EnquiryController extends ChangeNotifier{
     notifyListeners();
   }
 
+  void selectProvince(dynamic province){
+    selectedProvince = province;
+    notifyListeners();
+  }
 
   void selectAvailableCountry(dynamic country){
     selectedCountryDynamic = country;

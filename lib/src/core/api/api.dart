@@ -13,7 +13,8 @@ class Api{
 
   static const getMedicalAgency = '$baseUrl/medicalagency';
   static const getAvailableCountry = '$baseUrl/GlobalDropdown/getDropDownList?DropDownType=applycountry';
-  static const getAvailableAgency = '$baseUrl/GlobalDropdown/getDropDownList?DropDownType=FilterByCountry&filter1=';
+  static const getProvince = '$baseUrl/GlobalDropdown/getDropDownList?DropDownType=province';
+  // static const getAvailableAgency = '$baseUrl/GlobalDropdown/getDropDownList?DropDownType=FilterByCountry&filter1=';
   static const insertEnquiry = '$baseUrl/Enquiry/Insert';
 
   static const getMedicalReport = '$baseUrl/MedicalReport/GetReportForMobileByPatientID?PatientNo=';

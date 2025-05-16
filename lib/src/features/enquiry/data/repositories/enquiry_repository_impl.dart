@@ -13,15 +13,14 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
   final dio = Dio();
 
   @override
-  Future<List<MedicalAgencyModel>> fetchMedicalAgencies() async {
+  Future<List<MedicalAgencyModel>> fetchMedicalAgencies({required int provinceId}) async {
     try{
       final response = await dio.get(Api.getMedicalAgency);
       if(response.statusCode == 200){
         final data = response.data['result'] as List<dynamic>;
-        print(data.length);
         final medicalAgencies = data.map((e)=>MedicalAgencyModel.fromJson(e)).toList();
-        print(medicalAgencies.length);
-        return medicalAgencies;
+        final filteredMedicalAgencies = medicalAgencies.where((e)=>e.fullAddress.split(',').first == provinceId.toString()).toList();
+        return filteredMedicalAgencies;
       }
       else{
         throw Exception('Unable to fetch data.');
@@ -55,6 +54,23 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
   Future<List<dynamic>> fetchAvailableCountriesList() async {
     try{
       final response = await dio.get(Api.getAvailableCountry);
+      if(response.statusCode == 200){
+        final data = response.data['data'] as List<dynamic>;
+        return data;
+      }
+      else{
+        throw Exception('Unable to fetch data.');
+      }
+    }on DioException catch(e){
+      print(e);
+      throw Exception('Unable to fetch data.');
+    }
+  }
+
+  @override
+  Future<List<dynamic>> fetchProvinces() async {
+    try{
+      final response = await dio.get(Api.getProvince);
       if(response.statusCode == 200){
         final data = response.data['data'] as List<dynamic>;
         return data;

@@ -7,8 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
+import 'package:ministry/src/core/providers/user_info_provider.dart';
 import 'package:ministry/src/core/utils/shimmers.dart';
 import 'package:ministry/src/core/widgets/common_widgets.dart';
+import 'package:ministry/src/features/dashboard/presentation/ui/dashboard.dart';
 import 'package:ministry/src/features/enquiry/application/controller/enquiry_controller.dart';
 import 'package:ministry/src/features/enquiry/application/controller/enquiry_notifier.dart';
 import 'package:ministry/src/features/enquiry/application/providers/enquiry_provider.dart';
@@ -19,15 +21,17 @@ import '../../../../core/resources/gap_manager.dart';
 import '../../domain/model/medical_agency_model.dart';
 
 class EnquiryForm extends ConsumerWidget {
-  const EnquiryForm({super.key});
+  final int provinceId;
+  const EnquiryForm({required this.provinceId,super.key});
 
   @override
   Widget build(BuildContext context, ref) {
 
 
+    final passportNo = ref.watch(userInfoProvider).userName;
     final enquiryState = ref.watch(enquiryNotifier);
-    final countriesAsyncValue = ref.watch(countriesProvider);
-    final medicalAsyncValue = ref.watch(medicalAgenciesProvider);
+    // final countriesAsyncValue = ref.watch(countriesProvider);
+    final medicalAsyncValue = ref.watch(medicalAgenciesProvider(provinceId));
     final formKey = ref.watch(enquiryController).formKey;
     final nameController = ref.watch(enquiryController).nameController;
     final emailController = ref.watch(enquiryController).emailController;
@@ -202,6 +206,7 @@ class EnquiryForm extends ConsumerWidget {
                                 ),
                               ),
                             ),
+                            emptyBuilder: (context, searchEntry) => Center(child: Text('No available agency in this province.')),
                             itemBuilder: (context, item, isDisabled, isSelected) =>
                                 Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 16),
@@ -242,7 +247,7 @@ class EnquiryForm extends ConsumerWidget {
 
                           if(selectTime != null){
                             DateTime appointedDate = DateTime(selectDate.year, selectDate.month, selectDate.day, selectTime.hour, selectTime.minute);
-                            dateController.text = DateFormat('yyyy-MM-dd hh:mm a').format(appointedDate);
+                            dateController.text = DateFormat('yyyy-MM-dd HH:mm a').format(appointedDate);
                             ref.read(enquiryController.notifier).selectDate(appointedDate);
                           }
                         }
@@ -279,7 +284,7 @@ class EnquiryForm extends ConsumerWidget {
                               ),
                               onPressed: () async {
                                 if(formKey.currentState!.validate()){
-                                  final now = DateFormat('yyyy-MM-ddThh:mm:ss').format(DateTime.now().add(Duration(seconds: 50)));
+                                  final now = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now().add(Duration(seconds: 50)));
                                   Map<String, dynamic> data = {
                                     "id": 0,
                                     "fullName": nameController.text.trim(),
@@ -288,12 +293,13 @@ class EnquiryForm extends ConsumerWidget {
                                     "appliedFor": selectedCountry['id'].toString(),
                                     "medicalAgency": selectedCode,
                                     "queries": remarksController.text.trim(),
+                                    "passportNumber": passportNo,
                                     "flag": "string",
                                     "entryDate": now,
-                                    "appointmentDate": DateFormat('yyyy-MM-ddThh:mm:ssZ').format(selectedDate!),
+                                    "appointmentDate": DateFormat('yyyy-MM-ddTHH:mm:ssZ').format(selectedDate!),
                                     "extra1": "string"
                                   };
-                                  await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data);
+                                  await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete(()=>Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,));
 
                                 }
                               },

@@ -26,3 +26,9 @@ final getAvailableCountriesUseCaseProviders = Provider<GetAvailableCountries>((r
   final repository = ref.watch(enquiryRepositoryProvider);
   return GetAvailableCountries(repository);
 });
+
+
+final getProvinceUseCaseProviders = Provider<GetProvinces>((ref) {
+  final repository = ref.watch(enquiryRepositoryProvider);
+  return GetProvinces(repository);
+});

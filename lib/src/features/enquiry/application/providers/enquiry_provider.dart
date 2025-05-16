@@ -9,9 +9,9 @@ import 'package:ministry/src/features/enquiry/application/providers/usecase_prov
 
 import '../../domain/model/medical_agency_model.dart';
 
-final medicalAgenciesProvider = FutureProvider<List<MedicalAgencyModel>>((ref) async {
+final medicalAgenciesProvider = FutureProvider.family<List<MedicalAgencyModel>, int>((ref, id) async {
   final getMedicalAgencyUseCase = ref.watch(getMedicalAgencyUseCaseProviders);
-  return getMedicalAgencyUseCase();
+  return getMedicalAgencyUseCase(provinceId: id);
 });
 
 
@@ -24,4 +24,9 @@ final countriesProvider = FutureProvider<List<String>>((ref) async {
 final availableCountriesProvider = FutureProvider<List<dynamic>>((ref) async {
   final getCountriesUseCase = ref.watch(getAvailableCountriesUseCaseProviders);
   return getCountriesUseCase();
+});
+
+final provinceProvider = FutureProvider<List<dynamic>>((ref) async {
+  final getProvinceUseCase = ref.watch(getProvinceUseCaseProviders);
+  return getProvinceUseCase();
 });

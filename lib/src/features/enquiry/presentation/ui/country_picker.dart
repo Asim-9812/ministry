@@ -27,7 +27,9 @@ class CountryPicker extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final selectedCountry = ref.watch(enquiryController).selectedCountryDynamic;
+    final selectedProvince = ref.watch(enquiryController).selectedProvince;
     final countriesAsyncValue = ref.watch(availableCountriesProvider);
+    final provincesAsyncValue = ref.watch(provinceProvider);
     return Scaffold(
       appBar: commonNavBar('Enquiry Form'),
       body: FadeIn(
@@ -91,6 +93,57 @@ class CountryPicker extends ConsumerWidget {
                   loading: ()=>commonShimmer(width: double.infinity,height: 50)
               ),
               h20,
+              provincesAsyncValue.when(
+                  data: (provinces){
+                    return DropdownSearch<Map<String, dynamic>>(
+                      items: (filter, loadProps) => provinces.map((e)=>e as Map<String, dynamic>).toList(), // List of provinces as <String>
+                      selectedItem: selectedProvince,
+                      compareFn: (a, b) => a['id'] == b['id'],
+                      itemAsString: (item) => item['value'],
+                      decoratorProps: DropDownDecoratorProps(
+                        decoration: InputDecoration(
+                          labelText: "Select a province",
+                          prefixIcon: Icon(Icons.pin_drop,color: MyColors.primary,),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(color: MyColors.primary),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(color: MyColors.primary),
+                          ),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        ref.read(enquiryController.notifier).selectProvince(value);
+                      },
+                      popupProps: PopupProps.menu(
+                          showSearchBox: true, // Enables the search feature
+                          searchFieldProps: TextFieldProps(
+                            decoration: InputDecoration(
+                              hintText: "Search province...",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(color: MyColors.primary),
+                              ),
+                            ),
+                          ),
+                          constraints: BoxConstraints(
+                              maxHeight: 250
+                          )
+                      ),
+                      validator: (value) {
+                        if(value == null){
+                          return 'Please select a province';
+                        }
+                        return null;
+                      },
+                    );
+                  },
+                  error: (error, stack)=> Center(child: Text('$error')),
+                  loading: ()=>commonShimmer(width: double.infinity,height: 50)
+              ),
+              h20,
               Row(
                 children: [
                   Expanded(
@@ -103,7 +156,7 @@ class CountryPicker extends ConsumerWidget {
                             borderRadius: BorderRadius.circular(16)
                           )
                         ),
-                        onPressed: selectedCountry == null ? null : ()=>routeTo(context, EnquiryForm()), child: Text('Next')),
+                        onPressed: (selectedCountry == null || selectedProvince == null) ? null : ()=>routeTo(context, EnquiryForm(provinceId: selectedProvince['id'],)), child: Text('Next')),
                   ),
                 ],
               )

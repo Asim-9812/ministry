@@ -11,8 +11,8 @@ class GetMedicalAgency{
 
   GetMedicalAgency(this.repository);
 
-  Future<List<MedicalAgencyModel>> call() {
-    return repository.fetchMedicalAgencies();
+  Future<List<MedicalAgencyModel>> call({required int provinceId}) {
+    return repository.fetchMedicalAgencies(provinceId: provinceId);
   }
 
 }
