@@ -9,7 +9,7 @@ import 'usecase_providers.dart';
 
 
 
-final medicalReportProvider = FutureProvider<String>((ref) async {
+final medicalReportProvider = FutureProvider.autoDispose<String>((ref) async {
   final id = ref.read(userInfoProvider).userName;
   final token = ref.read(userInfoProvider).token;
   final getMedicalReportUseCase = ref.watch(getMedicalReportUseCaseProviders);

@@ -28,7 +28,7 @@ class EnquiryForm extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
 
 
-    final passportNo = ref.watch(userInfoProvider).userName;
+    final passportController = ref.watch(enquiryController).passportController;
     final enquiryState = ref.watch(enquiryNotifier);
     // final countriesAsyncValue = ref.watch(countriesProvider);
     final medicalAsyncValue = ref.watch(medicalAgenciesProvider(provinceId));
@@ -54,6 +54,31 @@ class EnquiryForm extends ConsumerWidget {
                 key: formKey,
                 child: Column(
                   children: [
+                    h10,
+                    TextFormField(
+                      controller: passportController,
+                      decoration: InputDecoration(
+                        labelText: "Passport No.",
+                        prefixIcon: Icon(Icons.person,color: MyColors.primary,),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: MyColors.primary),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: MyColors.primary),
+                        ),
+                      ),
+                      validator: (value) {
+                        if(value == null || value.trim().isEmpty){
+                          return 'Passport is required.';
+                        }
+                        return null;
+                      },
+                      // inputFormatters: [
+                      //   FilteringTextInputFormatter.digitsOnly
+                      // ],
+                    ),
                     h10,
                     TextFormField(
                       controller: nameController,
@@ -293,7 +318,7 @@ class EnquiryForm extends ConsumerWidget {
                                     "appliedFor": selectedCountry['id'].toString(),
                                     "medicalAgency": selectedCode,
                                     "queries": remarksController.text.trim(),
-                                    "passportNumber": passportNo,
+                                    "passportNumber": passportController.text.trim(),
                                     "flag": "string",
                                     "entryDate": now,
                                     "appointmentDate": DateFormat('yyyy-MM-ddTHH:mm:ssZ').format(selectedDate!),

@@ -14,6 +14,7 @@ final enquiryController = ChangeNotifierProvider.autoDispose((ref)=>EnquiryContr
 class EnquiryController extends ChangeNotifier{
 
   final formKey = GlobalKey<FormState>();
+  TextEditingController passportController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
