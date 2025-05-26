@@ -89,6 +89,8 @@ dependencies:
   url_launcher: any
   webview_flutter: ^4.10.0
   workmanager: ^0.5.2
+  printing: ^5.14.2
+  htmltopdfwidgets: ^1.0.9
 
 
 

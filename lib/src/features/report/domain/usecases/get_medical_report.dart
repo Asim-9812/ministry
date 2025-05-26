@@ -16,3 +16,15 @@ class GetMedicalReport{
   }
 
 }
+
+class GetMedicalReportList{
+
+  final MedicalReportRepository repository;
+
+  GetMedicalReportList(this.repository);
+
+  Future<List<Map<String,dynamic>>> call({required String id, required String token}) {
+    return repository.getMedicalReportList(id: id, token: token);
+  }
+
+}

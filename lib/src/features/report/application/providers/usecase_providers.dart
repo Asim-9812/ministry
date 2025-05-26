@@ -12,3 +12,8 @@ final getMedicalReportUseCaseProviders = Provider<GetMedicalReport>((ref) {
   final repository = ref.watch(medicalReportRepositoryProvider);
   return GetMedicalReport(repository);
 });
+
+final getMedicalReportListUseCaseProviders = Provider<GetMedicalReportList>((ref) {
+  final repository = ref.watch(medicalReportRepositoryProvider);
+  return GetMedicalReportList(repository);
+});

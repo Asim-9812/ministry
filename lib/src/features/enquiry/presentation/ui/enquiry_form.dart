@@ -181,12 +181,12 @@ class EnquiryForm extends ConsumerWidget {
                         ),
                       ),
                       maxLines: null,
-                      validator: (value) {
-                        if(value == null || value.trim().isEmpty){
-                          return 'Remarks is required.';
-                        }
-                        return null;
-                      },
+                      // validator: (value) {
+                      //   if(value == null || value.trim().isEmpty){
+                      //     return 'Remarks is required.';
+                      //   }
+                      //   return null;
+                      // },
                     ),
                     h10,
                     medicalAsyncValue.when(
@@ -294,6 +294,16 @@ class EnquiryForm extends ConsumerWidget {
                         if(value == null || value.trim().isEmpty){
                           return 'Appointment date is required';
                         }
+                        try{
+                          final now = DateTime.now();
+                          final date = DateFormat('yyyy-MM-dd HH:mm a').parse(value);
+                          if(date.isBefore(now)){
+                            return 'Selected date or time is before current date or time';
+                          }
+                        }catch(e){
+                          return 'Invalid date format';
+                        }
+
                         return null;
                       },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
