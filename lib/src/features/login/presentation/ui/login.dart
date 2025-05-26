@@ -12,6 +12,9 @@ import 'package:ministry/src/features/login/application/login_controller.dart';
 import '../../../../core/resources/color_manager.dart';
 import '../../../../core/resources/font_manager.dart';
 import '../../../../core/resources/gap_manager.dart';
+import '../../../health_tips/application/providers/healthTips_repository_provider.dart';
+import '../../../public_notices/application/providers/notice_repository_provider.dart';
+import '../../../report/application/providers/medical_report_repository_provider.dart';
 import '../../application/login_notifier.dart';
 
 class LoginPage extends ConsumerWidget {
@@ -196,6 +199,9 @@ class LoginPage extends ConsumerWidget {
                                                   await loginNotifier.login(username: username, password: password).whenComplete((){
                                                     TextInput.finishAutofillContext(shouldSave: remember);
                                                     ref.refresh(userInfoProvider);
+                                                    ref.refresh(healthRepositoryProvider);
+                                                    ref.refresh(noticeRepositoryProvider);
+                                                    ref.refresh(medicalReportRepositoryProvider);
                                                   });
                                                 }
                             
