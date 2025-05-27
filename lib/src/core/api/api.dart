@@ -16,6 +16,7 @@ class Api{
   static const getProvince = '$baseUrl/GlobalDropdown/getDropDownList?DropDownType=province';
   // static const getAvailableAgency = '$baseUrl/GlobalDropdown/getDropDownList?DropDownType=FilterByCountry&filter1=';
   static const insertEnquiry = '$baseUrl/Enquiry/Insert';
+  static const getEnquiryList = '$baseUrl/GlobalDropdown/genericapi';
 
   static const getMedicalReport = '$baseUrl/MedicalReport/GetReportForMobileByPatientID?PatientNo=';
 

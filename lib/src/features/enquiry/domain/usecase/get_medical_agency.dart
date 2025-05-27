@@ -16,3 +16,15 @@ class GetMedicalAgency{
   }
 
 }
+
+class GetMedicalAgencyByCode{
+
+  final EnquiryRepository repository;
+
+  GetMedicalAgencyByCode(this.repository);
+
+  Future<MedicalAgencyModel?> call({required String code}) {
+    return repository.fetchMedicalAgenciesByCode(code: code);
+  }
+
+}

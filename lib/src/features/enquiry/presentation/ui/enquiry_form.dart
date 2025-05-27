@@ -334,7 +334,10 @@ class EnquiryForm extends ConsumerWidget {
                                     "appointmentDate": DateFormat('yyyy-MM-ddTHH:mm:ssZ').format(selectedDate!),
                                     "extra1": "string"
                                   };
-                                  await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete(()=>Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,));
+                                  await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete((){
+                                    ref.invalidate(enquiryListProvider);
+                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+                                  });
 
                                 }
                               },

@@ -4,6 +4,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:ministry/src/core/api/api.dart';
+import 'package:ministry/src/features/enquiry/domain/model/enquiry_model.dart';
 import 'package:ministry/src/features/enquiry/domain/model/medical_agency_model.dart';
 
 import 'enquiry_repository.dart';
@@ -28,6 +29,27 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
     }on DioException catch(e){
       print(e);
       throw Exception('Unable to fetch data.');
+    }
+  }
+
+  @override
+  Future<MedicalAgencyModel?> fetchMedicalAgenciesByCode({required String code}) async {
+    final response = await dio.get(Api.getMedicalAgency);
+    if(response.statusCode == 200){
+      final data = response.data['result'] as List<dynamic>;
+      final medicalAgencies = data.map((e)=>MedicalAgencyModel.fromJson(e)).toList();
+      final medicalAgency = medicalAgencies.singleWhere((e)=>e.code.toLowerCase() == code.toLowerCase(), orElse: ()=> MedicalAgencyModel(code: '-1', organizationname: '', fullAddress: ''));
+
+      if(medicalAgency.code == '-1'){
+        return null;
+      }
+      else{
+        return medicalAgency;
+      }
+
+    }
+    else{
+      return null;
     }
   }
 
@@ -93,6 +115,34 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
       );
       if(response.statusCode == 200){
         return true;
+      }
+      else{
+        throw Exception('Unable to fetch data.');
+      }
+    }on DioException catch(e){
+      print(e);
+      throw Exception('Unable to fetch data.');
+    }
+  }
+
+  @override
+  Future<List<EnquiryModel>> enquiryList({required String passportNo}) async {
+    try{
+      print(Api.getEnquiryList);
+      final response = await dio.post(Api.getEnquiryList,
+        data: {
+          "tableName": "GetEnquiryByPassportNo",
+          "parameter": {
+            "passportNumber": "$passportNo",
+            "flag": "getprintlist"
+          }
+        }
+      );
+      if(response.statusCode == 200){
+        final data = response.data['data'] as List<dynamic>;
+        final enquiryList = data.map((e)=>EnquiryModel.fromJson(e)).toList();
+        print(enquiryList.length);
+        return enquiryList;
       }
       else{
         throw Exception('Unable to fetch data.');
