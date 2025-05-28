@@ -25,6 +25,9 @@ class EnquiryModel {
   @JsonKey(name: 'MedicalAgency')
   final String medicalAgency;
 
+  @JsonKey(name: 'MedicalAgencyFullName')
+  final String medicalAgencyFullName;
+
   @JsonKey(name: 'Queries')
   final String queries;
 
@@ -48,6 +51,7 @@ class EnquiryModel {
     required this.passportNumber,
     required this.appliedForRaw,
     required this.medicalAgency,
+    required this.medicalAgencyFullName,
     required this.queries,
     required this.appointmentDate,
     required this.entryDate,

@@ -46,7 +46,7 @@ class EnquiryForm extends ConsumerWidget {
     return GestureDetector(
       onTap: ()=>FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: commonNavBar('Enquiry Form'),
+        appBar: commonNavBar('Appointment Form'),
         body: Padding(
           padding: const EdgeInsets.all(16),
           child: SingleChildScrollView(

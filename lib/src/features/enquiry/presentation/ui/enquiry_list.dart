@@ -2,12 +2,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
 import 'package:ministry/src/core/resources/font_manager.dart';
+import 'package:ministry/src/core/utils/page_route.dart';
 import 'package:ministry/src/core/utils/shimmers.dart';
 import 'package:ministry/src/core/widgets/common_widgets.dart';
 import 'package:ministry/src/features/enquiry/application/providers/enquiry_provider.dart';
+import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_details.dart';
 
 import '../../../../core/resources/gap_manager.dart';
 
@@ -21,9 +24,10 @@ class EnquiryList extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
 
     final enquiryList = ref.watch(enquiryListProvider(passportNo));
+    final agencyDetailAsyncValue = ref.watch(medicalAgenciesByCodeProvider('adm'));
 
     return Scaffold(
-      appBar: commonNavBar('Enquiries'),
+      appBar: commonNavBar('Appointments'),
       body: enquiryList.when(
           data: (enquiries){
             if(enquiries.isEmpty){
@@ -47,58 +51,11 @@ class EnquiryList extends ConsumerWidget {
                   final enquiry = enquiries[index];
                   final code = enquiry.medicalAgency;
                   final date = DateFormat('yyyy-MM-dd HH:mm a').format(enquiry.appointmentDate);
-                  final status = enquiry.extra1;
+                  // final status = enquiry.extra1;
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
                     child: ListTile(
-                        onTap: () async {
-                          await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Center(
-                                    child: Material(
-                                      child: Container(
-                                        color: MyColors.white,
-                                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            h20,
-                                            Text('Appointment Details', style: bh2,),
-                                            Divider(),
-                                            Text('Passport No: $passportNo', style: bh3,),
-                                            Text('Appointment date: $date', style: bh3,),
-                                            h10,
-                                            Text('$code'),
-                                            Text('Applied for: ${enquiry.appliedForFormatted}'),
-                                            h10,
-
-                                            Text('Full name: ${enquiry.fullName}', style: bh3,),
-                                            Text('Email: ${enquiry.emailID}', style: bh3,),
-                                            Text('Contact: ${enquiry.contact}', style: bh3,),
-                                            h10,
-                                            Center(
-                                              child: TextButton(
-                                                  style: TextButton.styleFrom(
-                                                      backgroundColor: MyColors.primary,
-                                                      foregroundColor: MyColors.white,
-                                                      shape: RoundedRectangleBorder(
-                                                          borderRadius: BorderRadius.circular(12)
-                                                      )
-                                                  ),
-                                                  onPressed: ()=>Navigator.pop(context), child: Text('OK')),
-                                            )
-
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                );
-                              },
-                          );
-                        },
+                        onTap: ()=>routeTo(context, EnquiryDetails(enquiry: enquiry,)),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                             side: BorderSide(
@@ -110,7 +67,7 @@ class EnquiryList extends ConsumerWidget {
                         title: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(enquiry.medicalAgency,style: br1, maxLines: 1,),
+                            Text(enquiry.medicalAgencyFullName,style: br1, maxLines: 1,),
                             Text('Passport No. ${enquiry.passportNumber}',style: br2,),
                           ],
                         ),

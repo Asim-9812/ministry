@@ -8,7 +8,6 @@ import 'package:ministry/src/features/homepage/presentation/ui/homepage.dart';
 import 'package:ministry/src/features/status_page/presentation/status_page.dart';
 import 'package:ministry/src/features/utilities/presentation/ui/utilities.dart';
 import '../../../notifications/presentation/ui/notifications.dart';
-import '../../../old_reminder/reminders/reminders.dart';
 import '../../../reminders/presentation/ui/reminders.dart';
 import 'widgets/ask_permission.dart';
 

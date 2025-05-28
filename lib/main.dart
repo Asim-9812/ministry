@@ -4,9 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:ministry/src/core/controllers/notification_controller.dart';
-import 'package:ministry/src/features/old_reminder/reminders/general/domain/model/general_model.dart' as oldGen;
-import 'package:ministry/src/features/old_reminder/reminders/medicine/domain/model/medicine_model.dart' as oldMed;
-import 'package:ministry/src/features/old_reminder/notification_controllers/notification_controller.dart' as oldNot;
+// import 'package:ministry/src/features/old_reminder/reminders/general/domain/model/general_model.dart' as oldGen;
+// import 'package:ministry/src/features/old_reminder/reminders/medicine/domain/model/medicine_model.dart' as oldMed;
+// import 'package:ministry/src/features/old_reminder/notification_controllers/notification_controller.dart' as oldNot;
 import 'package:ministry/src/features/reminders/domain/model/general_reminder_model.dart';
 import 'package:workmanager/workmanager.dart';
 // import 'callback_dispatcher.dart';
@@ -71,8 +71,6 @@ void main() async {
   await NotificationController.initialize();
   await NotificationController.startListeningNotificationEvents();
 
-  await oldNot.NotificationController.initializeLocalNotifications();
-  await oldNot.NotificationController.initializeIsolateReceivePort();
 
   Workmanager().initialize(
       callbackDispatcher, // The top level function, aka callbackDispatcher
@@ -97,22 +95,20 @@ void main() async {
   ///reminder end ....
 
 
-  ///old reminder....  // typeId (40 & 41) & (30 - 35)
-  Hive.registerAdapter<oldMed.MedicineModel>(oldMed.MedicineModelAdapter());
-  Hive.registerAdapter<oldMed.MedicineRoute>(oldMed.MedicineRouteAdapter());
-  Hive.registerAdapter<oldMed.MedicineUnit>(oldMed.MedicineUnitAdapter());
-  Hive.registerAdapter<oldMed.Frequency>(oldMed.FrequencyAdapter());
-  Hive.registerAdapter<oldMed.ReminderPattern>(oldMed.ReminderPatternAdapter());
-  Hive.registerAdapter<oldMed.Meal>(oldMed.MealAdapter());
-  Hive.registerAdapter<oldGen.GeneralModel>(oldGen.GeneralModelAdapter());
-  Hive.registerAdapter<oldGen.RemindBefore>(oldGen.RemindBeforeAdapter());
-  ///old reminder end ....
+  // ///old reminder....  // typeId (40 & 41) & (30 - 35)
+  // Hive.registerAdapter<oldMed.MedicineModel>(oldMed.MedicineModelAdapter());
+  // Hive.registerAdapter<oldMed.MedicineRoute>(oldMed.MedicineRouteAdapter());
+  // Hive.registerAdapter<oldMed.MedicineUnit>(oldMed.MedicineUnitAdapter());
+  // Hive.registerAdapter<oldMed.Frequency>(oldMed.FrequencyAdapter());
+  // Hive.registerAdapter<oldMed.ReminderPattern>(oldMed.ReminderPatternAdapter());
+  // Hive.registerAdapter<oldMed.Meal>(oldMed.MealAdapter());
+  // Hive.registerAdapter<oldGen.GeneralModel>(oldGen.GeneralModelAdapter());
+  // Hive.registerAdapter<oldGen.RemindBefore>(oldGen.RemindBeforeAdapter());
+  // ///old reminder end ....
 
 
   await Hive.initFlutter();
   await Hive.openBox<UserModel>('users');
-  await Hive.openBox<oldMed.MedicineModel>('medicines');
-  await Hive.openBox<oldGen.GeneralModel>('generals');
   await Hive.openBox<ReminderModel>('reminders');
 
 

@@ -23,32 +23,16 @@ class Enquiry extends ConsumerWidget {
     final controller = ref.watch(enquiryController).passController;
 
     return Scaffold(
-      appBar: commonNavBar('Enquiry'),
+      appBar: commonNavBar('Appointments'),
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: MyColors.primary,
-                        foregroundColor: MyColors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)
-                        )
-                      ),
-                      onPressed: ()=>routeTo(context, CountryPicker()),
-                      child: Text('Request a appointment')
-                  ),
-                ),
-              ],
-            ),
-            h30,
-            Text('Search for your booked or pending appointments.', style: br1,),
+
+            h10,
+            Text('Search for your appointments', style: br1,),
             h10,
             TextFormField(
               controller: controller,
@@ -97,7 +81,35 @@ class Enquiry extends ConsumerWidget {
                   },
                   child: Text('Next')
               ),
-            )
+            ),
+            h20,
+            Row(
+              children: [
+                Expanded(child: Divider()),
+                w10,
+                Text('OR'),
+                w10,
+                Expanded(child: Divider()),
+              ],
+            ),
+            h20,
+            Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                      style: TextButton.styleFrom(
+                          backgroundColor: MyColors.primary,
+                          foregroundColor: MyColors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)
+                          )
+                      ),
+                      onPressed: ()=>routeTo(context, CountryPicker()),
+                      child: Text('Get an appointment')
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

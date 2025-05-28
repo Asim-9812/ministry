@@ -12,8 +12,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
 import 'package:ministry/src/core/widgets/common_widgets.dart';
-import 'package:ministry/src/features/old_reminder/reminders/general/controller/data.dart';
-import 'package:ministry/src/features/old_reminder/utils/old_common_utils.dart';
 import 'package:ministry/src/features/reminders/application/controller/general/add_general_controller.dart';
 import 'package:ministry/src/features/reminders/application/controller/medicine/medicine_reminder_notifier.dart';
 import 'package:ministry/src/features/reminders/domain/model/general_reminder_model.dart';
@@ -24,7 +22,7 @@ import '../../../../../../core/resources/font_manager.dart';
 import '../../../../../../core/resources/gap_manager.dart';
 import '../../../../../../core/utils/toaster.dart';
 import '../../../../application/provider/reminders_providers.dart';
-import '../../../../data/medicine_data/pattern_list.dart';
+import '../../../../data/general_data/pattern_list.dart';
 
 class AddGeneralReminder extends ConsumerWidget {
   const AddGeneralReminder({super.key});
@@ -58,7 +56,7 @@ class AddGeneralReminder extends ConsumerWidget {
 
 
     return GestureDetector(
-      onTap: ()=>unFocus(context),
+      onTap: ()=>FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: commonNavBar('Add Reminder',color: MyColors.green),
         body: Padding(
@@ -221,7 +219,7 @@ class AddGeneralReminder extends ConsumerWidget {
                             alignment: Alignment.bottomCenter,
                             padding: WidgetStatePropertyAll(EdgeInsets.zero),
                           ),
-                          dropdownMenuEntries: reminderPattern.map((e)=>DropdownMenuEntry(value: e.patternId, label: e.patternName)).toList(),
+                          dropdownMenuEntries: reminderPattern.map((e)=>DropdownMenuEntry(value: e.id, label: e.pattern)).toList(),
                         ),
                       ),
                       if(patternId == 4)
@@ -360,7 +358,7 @@ class AddGeneralReminder extends ConsumerWidget {
                               final title = labelController.text.trim();
                               final desc = descController.text.trim().isNotEmpty? descController.text.trim() : null;
                               final finalDate = DateTime(startDate.year, startDate.month, startDate.day, hour, min);
-                              final pattern = patternList.singleWhere((e)=>e.id == patternId);
+                              final pattern = generalPatternList.singleWhere((e)=>e.id == patternId);
                               final reminderPattern = GeneralReminderPattern(
                                   id: pattern.id,
                                   pattern: pattern.pattern,

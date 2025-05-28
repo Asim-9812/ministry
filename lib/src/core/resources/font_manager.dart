@@ -29,3 +29,14 @@ const gr2 = TextStyle(color: MyColors.darkGrey, fontSize: 14,fontWeight: FontWei
 const gr3 = TextStyle(color: MyColors.darkGrey, fontSize: 12,fontWeight: FontWeight.normal,);
 const gr4 = TextStyle(color: MyColors.darkGrey, fontSize: 10,fontWeight: FontWeight.normal,);
 
+
+const ph1 = TextStyle(color: MyColors.primary, fontSize: 24,fontWeight: FontWeight.bold,);
+const ph2 = TextStyle(color: MyColors.primary, fontSize: 18,fontWeight: FontWeight.w600,);
+const ph3 = TextStyle(color: MyColors.primary, fontSize: 14,fontWeight: FontWeight.w500,);
+const ph4 = TextStyle(color: MyColors.primary, fontSize: 12,fontWeight: FontWeight.w500,);
+
+const pr1 = TextStyle(color: MyColors.primary, fontSize: 16,fontWeight: FontWeight.normal);
+const pr2 = TextStyle(color: MyColors.primary, fontSize: 14,fontWeight: FontWeight.normal,);
+const pr3 = TextStyle(color: MyColors.primary, fontSize: 12,fontWeight: FontWeight.normal,);
+const pr4 = TextStyle(color: MyColors.primary, fontSize: 10,fontWeight: FontWeight.normal,);
+

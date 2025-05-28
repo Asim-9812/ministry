@@ -31,7 +31,7 @@ class CountryPicker extends ConsumerWidget {
     final countriesAsyncValue = ref.watch(availableCountriesProvider);
     final provincesAsyncValue = ref.watch(provinceProvider);
     return Scaffold(
-      appBar: commonNavBar('Enquiry Form'),
+      appBar: commonNavBar('Appointment Form'),
       body: FadeIn(
         duration: Duration(seconds: 1),
         child: Padding(

@@ -3,7 +3,7 @@
 
 import 'package:ministry/src/features/reminders/domain/model/general_reminder_model.dart';
 
-List<GeneralReminderPattern> patternList = [
+List<GeneralReminderPattern> generalPatternList = [
   GeneralReminderPattern(id: 1, pattern: 'Once'),
   GeneralReminderPattern(id: 2, pattern: 'Everyday'),
   GeneralReminderPattern(id: 3, pattern: 'Specific Days'),
