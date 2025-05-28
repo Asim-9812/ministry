@@ -2,12 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
 import 'package:ministry/src/core/resources/font_manager.dart';
 import 'package:ministry/src/core/utils/page_route.dart';
-import 'package:ministry/src/core/utils/shimmers.dart';
 import 'package:ministry/src/core/widgets/common_widgets.dart';
 import 'package:ministry/src/features/enquiry/application/providers/enquiry_provider.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_details.dart';
@@ -24,7 +22,6 @@ class EnquiryList extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
 
     final enquiryList = ref.watch(enquiryListProvider(passportNo));
-    final agencyDetailAsyncValue = ref.watch(medicalAgenciesByCodeProvider('adm'));
 
     return Scaffold(
       appBar: commonNavBar('Appointments'),

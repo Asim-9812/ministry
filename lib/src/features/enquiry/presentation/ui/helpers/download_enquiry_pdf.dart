@@ -69,7 +69,7 @@ Future<void> saveAsImage(GlobalKey previewContainerKey, String fileName) async {
     final file = File('${downloadsDir.path}/${fileName}_${DateTime.now().millisecondsSinceEpoch}.png');
     await file.writeAsBytes(pngBytes);
 
-    Toaster.success('Saved image to ${file.path}');
+    Toaster.success('Saved image to Gallery');
   } catch (e) {
     Toaster.error('Failed to save image: $e');
   }
