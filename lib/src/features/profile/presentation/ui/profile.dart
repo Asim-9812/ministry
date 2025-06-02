@@ -81,7 +81,7 @@ class ProfilePage extends ConsumerWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('${userInfo.firstName} ${userInfo.lastName}',style: bh1,),
+                          Text('${userInfo!.firstName} ${userInfo!.lastName}',style: bh1,),
                           // w08,
                           // Icon(Icons.edit,color: MyColors.primary,size: 18,)
                         ],

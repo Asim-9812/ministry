@@ -1,11 +1,12 @@
 
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -54,188 +55,239 @@ class EnquiryDetails extends ConsumerWidget {
               child: ExportFrame(
                 frameId: 'appointmentDoc',
                 exportDelegate: exportDelegate,
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: MyColors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: MyColors.grey
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          color: MyColors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: MyColors.grey
+                          ),
+                          image: DecorationImage(image: AssetImage('assets/images/logo.png'),opacity: 0.05,fit: BoxFit.none,scale: 10)
                       ),
-                      image: DecorationImage(image: AssetImage('assets/images/logo.png'),opacity: 0.05,fit: BoxFit.none,scale: 10)
-                  ),
-                  width: double.infinity,
-                  // padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      h10,
+                      width: double.infinity,
+                      // padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          h10,
 
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Text('Appointment Details',style: ph2,),
-                      ),
-                      Divider(),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Text('Appointment Details',style: ph2,),
+                          ),
+                          Divider(),
 
-                      agencyDetails.when(
-                          data: (agencyInfo){
-                            if(agencyInfo== null){
-                              return hospitalDetails(enquiry);
-                            }
-                            else{
-                              return Container(
-                                decoration: BoxDecoration(
-                                    color: MyColors.lightGrey.withValues(alpha: 120),
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(
-                                        color: MyColors.grey
-                                    )
+                          agencyDetails.when(
+                              data: (agencyInfo){
+                                if(agencyInfo== null){
+                                  return hospitalDetails(enquiry);
+                                }
+                                else{
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                        color: MyColors.lightGrey.withValues(alpha: 120),
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(
+                                            color: MyColors.grey
+                                        )
 
 
-                                ),
-                                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                width: double.infinity,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Hospital Details', style: ph3,),
-                                    Text('${enquiry.medicalAgencyFullName}', style: bh2,),
-                                    Text('Province ${agencyInfo.fullAddress}', style: br2,),
-                                  ],
-                                ),
-                              );
-                            }
-                          },
-                          error: (error, stack)=>hospitalDetails(enquiry),
-                          loading: ()=>hospitalDetails(enquiry),
-                      ),
+                                    ),
+                                    margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                    width: double.infinity,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Hospital Details', style: ph3,),
+                                        Text('${enquiry.medicalAgencyFullName}', style: bh2,),
+                                        Text('Province ${agencyInfo.fullAddress}', style: br2,),
+                                      ],
+                                    ),
+                                  );
+                                }
+                              },
+                              error: (error, stack)=>hospitalDetails(enquiry),
+                              loading: ()=>hospitalDetails(enquiry),
+                          ),
 
 
-                      Container(
-                        decoration: BoxDecoration(
-                            color: MyColors.lightGrey.withValues(alpha: 120),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                                color: MyColors.grey
-                            )
+                          Container(
+                            decoration: BoxDecoration(
+                                color: MyColors.lightGrey.withValues(alpha: 120),
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                    color: MyColors.grey
+                                )
 
 
-                        ),
-                        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Appointment Date & Time', style: ph3,),
-                            Text(dateTime, style: bh2,),
-
-                            h10,
-                            Row(
+                            ),
+                            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Column(
+                                Text('Appointment Date & Time', style: ph3,),
+                                Text(dateTime, style: bh2,),
+
+                                h10,
+                                Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text('Passport No.', style: ph3,),
-                                    Text(enquiry.passportNumber, style: bh2,),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text('Applied for', style: ph3,),
-                                    Text(enquiry.appliedForFormatted, style: bh3,),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Passport No.', style: ph3,),
+                                        Text(enquiry.passportNumber, style: bh2,),
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        Text('Applied for', style: ph3,),
+                                        Text(enquiry.appliedForFormatted, style: bh3,),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: MyColors.lightGrey.withValues(alpha: 120),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                                color: MyColors.grey
-                            )
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: MyColors.lightGrey.withValues(alpha: 120),
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                    color: MyColors.grey
+                                )
 
 
-                        ),
-                        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Full name', style: ph3,),
-                            Text(enquiry.fullName, style: bh2,),
-                            h10,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            ),
+                            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Text('Full name', style: ph3,),
+                                Text(enquiry.fullName, style: bh2,),
+                                h10,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text('Contact', style: ph3,),
-                                    Text(enquiry.contact, style: bh3,),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text('Email', style: ph3,),
-                                    Text(enquiry.emailID, style: bh3,),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Contact', style: ph3,),
+                                        Text(enquiry.contact, style: bh3,),
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        Text('Email', style: ph3,),
+                                        Text(enquiry.emailID, style: bh3,),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                          if(enquiry.queries.trim().isNotEmpty)
+                          Container(
+                            decoration: BoxDecoration(
+                                color: MyColors.lightGrey.withValues(alpha: 120),
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                    color: MyColors.grey
+                                )
+
+
+                            ),
+                            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Remarks', style: ph3,),
+                                Text(enquiry.queries, style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),),
+                              ],
+                            ),
+                          ),
+
+                          // Text('Passport No: passportNo', style: bh3,),
+                          // Text('Appointment date: date', style: bh3,),
+                          // h10,
+                          // Text('code'),
+                          // Text('Applied for: {enquiry.appliedForFormatted}'),
+                          // h10,
+                          //
+                          // Text('Full name: {enquiry.fullName}', style: bh3,),
+                          // Text('Email: {enquiry.emailID}', style: bh3,),
+                          // Text('Contact: {enquiry.contact}', style: bh3,),
+                          h10,
+                        ],
                       ),
-                      if(enquiry.queries.trim().isNotEmpty)
-                      Container(
-                        decoration: BoxDecoration(
-                            color: MyColors.lightGrey.withValues(alpha: 120),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                                color: MyColors.grey
-                            )
+                    ),
+                    h10,
+                    DottedBorder(
+                        dashPattern: [2,2],
+                        color: MyColors.grey,
+                        borderType: BorderType.RRect,
+                        radius: Radius.circular(12),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: MyColors.lightGrey,
+                            borderRadius: BorderRadius.circular(12)
+                          ),
+                          width: double.infinity,
+                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text('Payment Info',style: bh3,),
+                              h10,
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Rs. 10.00', style: ph1,),
+                                  Row(
+                                    children: [
+                                      Text('TXN ID : 1234567890',style: TextStyle(fontSize: 12,fontStyle: FontStyle.italic),),
+                                      w04,
+                                      InkWell(
 
+                                          onTap: (){
+                                            Clipboard.setData(ClipboardData(text: '1234567890'));
+                                            Toaster.message('Transaction id copied');
+                                          },
+                                          child: Icon(Icons.copy,color: MyColors.black,size: 10,))
+                                    ],
+                                  )
+                                ],
+                              ),
+                              h10,
+                              Text('Date: 02 June 2025, 10:30 AM', style: br2),
 
-                        ),
-                        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Remarks', style: ph3,),
-                            Text(enquiry.queries, style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),),
-                          ],
-                        ),
-                      ),
-
-                      // Text('Passport No: passportNo', style: bh3,),
-                      // Text('Appointment date: date', style: bh3,),
-                      // h10,
-                      // Text('code'),
-                      // Text('Applied for: {enquiry.appliedForFormatted}'),
-                      // h10,
-                      //
-                      // Text('Full name: {enquiry.fullName}', style: bh3,),
-                      // Text('Email: {enquiry.emailID}', style: bh3,),
-                      // Text('Contact: {enquiry.contact}', style: bh3,),
-                      h10,
-                    ],
-                  ),
+                            ],
+                          ),
+                        )
+                    )
+                  ],
                 ),
               ),
             ),

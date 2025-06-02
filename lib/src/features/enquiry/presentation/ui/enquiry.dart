@@ -34,53 +34,59 @@ class Enquiry extends ConsumerWidget {
             h10,
             Text('Search for your appointments', style: br1,),
             h10,
-            TextFormField(
-              controller: controller,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(
-                    color: MyColors.primary
-                  )
-                ),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                        color: MyColors.primary
-                    )
-                ),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                        color: MyColors.primary
-                    )
-                ),
-                labelText: 'Passport no.',
-                prefixIcon: Icon(Icons.search,color: MyColors.primary,)
-              ),
-            ),
-            h10,
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                  style: TextButton.styleFrom(
-                      backgroundColor: MyColors.primary,
-                      foregroundColor: MyColors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)
-                      )
+            Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    controller: controller,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: MyColors.primary
+                        )
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                              color: MyColors.primary
+                          )
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                              color: MyColors.primary
+                          )
+                      ),
+                      labelText: 'Passport no.',
+                      prefixIcon: Icon(Icons.search,color: MyColors.primary,)
+                    ),
                   ),
-                  onPressed: (){
-                    if(controller.text.trim().isEmpty){
-                      Toaster.error('Passport number is required');
-                    }
-                    else{
-                      routeTo(context, EnquiryList(passportNo: controller.text.trim()));
-                      controller.clear();
-                    }
-                  },
-                  child: Text('Next')
-              ),
+                ),
+                w10,
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                      style: TextButton.styleFrom(
+                          backgroundColor: MyColors.primary,
+                          foregroundColor: MyColors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          )
+                      ),
+                      onPressed: (){
+                        if(controller.text.trim().isEmpty){
+                          Toaster.error('Passport number is required');
+                        }
+                        else{
+                          routeTo(context, EnquiryList(passportNo: controller.text.trim()));
+                          controller.clear();
+                        }
+                      },
+                      child: Text('Next')
+                  ),
+                ),
+              ],
             ),
             h20,
             Row(

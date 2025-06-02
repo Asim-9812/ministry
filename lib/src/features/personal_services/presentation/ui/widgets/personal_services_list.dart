@@ -1,17 +1,23 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ministry/src/core/providers/user_info_provider.dart';
 import 'package:ministry/src/core/utils/page_route.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
+import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_list.dart';
+import 'package:ministry/src/features/report/presentation/ui/medical_report_list.dart';
 import '../../../../../core/resources/color_manager.dart';
 import '../../../../../core/resources/gap_manager.dart';
 import '../../../items/items.dart';
 
-class PersonalServicesList extends StatelessWidget {
+class PersonalServicesList extends ConsumerWidget {
   const PersonalServicesList({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+
+    final passportNo = ref.watch(userInfoProvider)?.passportNo;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GridView.builder(
@@ -36,11 +42,11 @@ class PersonalServicesList extends StatelessWidget {
               elevation: 0,
               child: InkWell(
                 onTap: (){
-                  if(personalList[index].route != null){
-                    routeTo(context, personalList[index].route!);
+                  if(index == 0 && passportNo != null){
+                    routeTo(context, EnquiryList(passportNo: passportNo));
                   }
-                  else{
-                    Toaster.comingSoon();
+                  else if(index == 1){
+                    routeTo(context, MedicalReportList());
                   }
 
                 },

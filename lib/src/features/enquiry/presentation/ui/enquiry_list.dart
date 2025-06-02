@@ -36,7 +36,7 @@ class EnquiryList extends ConsumerWidget {
                   children: [
                     Icon(Icons.search_off, color: MyColors.grey, size: 48,),
                     h10,
-                    Text('No enquiries found.', style: bh3,)
+                    Text('No Appointments found.', style: bh3,)
                   ],
                 ),
               );

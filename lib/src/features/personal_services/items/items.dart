@@ -19,7 +19,7 @@ class PersonalList{
 }
 
 List<PersonalList> personalList =[
-  PersonalList(name: 'My Documents', img: 'assets/images/personal_services/document.png',
+  PersonalList(name: 'My Appointments', img: 'assets/images/personal_services/document.png',
   ),
   PersonalList(name: 'My Reports', img: 'assets/images/personal_services/report.png',route: MedicalReportList()
   ),

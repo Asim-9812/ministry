@@ -15,12 +15,12 @@ class UserInfoProvider extends StateNotifier{
 
 
 
-  static UserModel getCurrentUserInfo() {
+  static UserModel? getCurrentUserInfo() {
 
     final userBox = Hive.box<UserModel>('users');
     final user = userBox.get('user');
 
-    return user!;
+    return user;
   }
 
 }

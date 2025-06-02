@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
-import 'package:ministry/src/core/providers/user_info_provider.dart';
+import 'package:ministry/src/core/utils/page_route.dart';
 import 'package:ministry/src/core/utils/shimmers.dart';
 import 'package:ministry/src/core/widgets/common_widgets.dart';
 import 'package:ministry/src/features/dashboard/presentation/ui/dashboard.dart';
@@ -15,6 +15,7 @@ import 'package:ministry/src/features/enquiry/application/controller/enquiry_con
 import 'package:ministry/src/features/enquiry/application/controller/enquiry_notifier.dart';
 import 'package:ministry/src/features/enquiry/application/providers/enquiry_provider.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_payment.dart';
 import '../../../../core/resources/color_manager.dart';
 import '../../../../core/resources/font_manager.dart';
 import '../../../../core/resources/gap_manager.dart';
@@ -29,7 +30,7 @@ class EnquiryForm extends ConsumerWidget {
 
 
     final passportController = ref.watch(enquiryController).passportController;
-    final enquiryState = ref.watch(enquiryNotifier);
+
     // final countriesAsyncValue = ref.watch(countriesProvider);
     final medicalAsyncValue = ref.watch(medicalAgenciesProvider(provinceId));
     final formKey = ref.watch(enquiryController).formKey;
@@ -317,7 +318,7 @@ class EnquiryForm extends ConsumerWidget {
                                 backgroundColor: MyColors.primary,
                                 foregroundColor: MyColors.white
                               ),
-                              onPressed: () async {
+                              onPressed: () {
                                 if(formKey.currentState!.validate()){
                                   final now = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now().add(Duration(seconds: 50)));
                                   Map<String, dynamic> data = {
@@ -334,16 +335,16 @@ class EnquiryForm extends ConsumerWidget {
                                     "appointmentDate": DateFormat('yyyy-MM-ddTHH:mm:ssZ').format(selectedDate!),
                                     "extra1": "string"
                                   };
-                                  await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete((){
-                                    ref.invalidate(enquiryListProvider);
-                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
-                                  });
+                                  // await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete((){
+                                  //   ref.invalidate(enquiryListProvider);
+                                  //   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+                                  // });
+                                  final date = DateFormat('yyyy-MM-dd HH:mm a').format(selectedDate);
+                                  routeTo(context, EnquiryPayment(data: data, date: date));
 
                                 }
                               },
-                              child: enquiryState.isLoading
-                                  ? SpinKitDualRing(color: MyColors.white,size: 16,)
-                                  : Text('Submit')
+                              child:  Text('Proceed to payment')
                           ),
                         )
                       ],
