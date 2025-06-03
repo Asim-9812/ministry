@@ -3,31 +3,23 @@
 
 
 
-
-import 'dart:io';
-
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
 import 'package:ministry/src/features/enquiry/application/controller/enquiry_controller.dart';
+import 'package:ministry/src/features/enquiry/data/services/esewa_services.dart';
 import 'package:ministry/src/features/enquiry/domain/model/medical_agency_model.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:ministry/src/features/enquiry/domain/model/payment_model.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:ministry/src/core/widgets/common_widgets.dart';
 import 'package:ministry/src/features/enquiry/application/providers/enquiry_provider.dart';
-import 'package:ministry/src/features/enquiry/domain/model/enquiry_model.dart';
-import 'package:flutter_to_pdf/flutter_to_pdf.dart';
 import '../../../../core/resources/color_manager.dart';
 import '../../../../core/resources/font_manager.dart';
 import '../../../../core/resources/gap_manager.dart';
 import '../../../dashboard/presentation/ui/dashboard.dart';
 import '../../application/controller/enquiry_notifier.dart';
-import 'helpers/download_enquiry_pdf.dart';
 
 class EnquiryPayment extends ConsumerWidget {
   final Map<String, dynamic> data;
@@ -40,6 +32,8 @@ class EnquiryPayment extends ConsumerWidget {
     final enquiryState = ref.watch(enquiryNotifier);
     final selectedCountry = ref.watch(enquiryController).selectedCountryDynamic;
     final selectedMedicalAgency = ref.watch(enquiryController).selectedMedical!;
+    final selectedPayment = ref.watch(enquiryController).selectedPayment;
+    final isPaying = ref.watch(enquiryController).isPaying;
 
     return Scaffold(
       appBar: commonNavBar('Details & Payment'),
@@ -334,25 +328,36 @@ class EnquiryPayment extends ConsumerWidget {
               child: Text('Select payment method',style: br2,),
             ),
             h10,
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: RadioListTile(
-                  value: true,
-                  groupValue: true,
-                  onChanged:(value) {},
-                  tileColor: MyColors.lightGrey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    side: BorderSide(color: MyColors.primary)
-                  ),
-                  title: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Image.asset('assets/icons/esewa.png', scale: 20,),
-                      w10,
-                      Text('Esewa', style: bh2,)
-                    ],
-                  ),
+              child: Column(
+                children: paymentList.map((e)=>
+                    RadioListTile(
+                      value: e,
+                      groupValue: selectedPayment,
+                      onChanged:(value) {
+                        if(value != null){
+                          final selectedMethod = value;
+                          ref.read(enquiryController.notifier).selectPayment(selectedMethod);
+                        }
+
+                      },
+                      tileColor: MyColors.lightGrey,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          side: BorderSide(color:selectedPayment?.id == e.id ?  MyColors.primary : MyColors.grey)
+                      ),
+                      title: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(e.icon, scale: 20,),
+                          w10,
+                          Text(e.name, style: bh2,)
+                        ],
+                      ),
+                    )
+                ).toList(),
               ),
             ),
             h20,
@@ -382,13 +387,51 @@ class EnquiryPayment extends ConsumerWidget {
                             borderRadius: BorderRadius.circular(12)
                           )
                         ),
-                        onPressed: () async {
-                          await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete((){
-                            ref.invalidate(enquiryListProvider);
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
-                          });
+                        onPressed: isPaying ? null : () async {
+                          if(selectedPayment != null){
+                            // ref.read(enquiryController.notifier).paymentLoading(true);
+
+                            if(selectedPayment.id == 1){
+                              final makePayment = await EsewaServices().makePayment();
+
+                              if(makePayment != null){
+                                ref.read(enquiryController.notifier).paymentLoading(true);
+
+                                final verification = await EsewaServices().verifyTransactionStatus(makePayment);
+
+                                if(verification){
+                                  await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete((){
+                                    ref.invalidate(enquiryListProvider);
+                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+                                  });
+                                  ref.read(enquiryController.notifier).paymentLoading(false);
+                                }
+                                else{
+                                  await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete((){
+                                    ref.invalidate(enquiryListProvider);
+                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+                                  });
+                                  Toaster.error('Payment not verified');
+                                  ref.read(enquiryController.notifier).paymentLoading(false);
+
+                                }
+                              }
+                              else{
+                                ref.read(enquiryController.notifier).paymentLoading(false);
+                                Toaster.error('Payment unsuccessful');
+                              }
+
+                            }
+
+
+                          }
+
+                          else{
+                            Toaster.error('Select a payment method');
+                          }
+
                         },
-                        child: enquiryState.isLoading
+                        child:(isPaying || enquiryState.isLoading)
                             ? SpinKitDualRing(color: MyColors.white,size: 16,)
                             : Text('Confirm Payment')),
                   ),

@@ -142,6 +142,7 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
         final data = response.data['data'] as List<dynamic>;
         final enquiryList = data.map((e)=>EnquiryModel.fromJson(e)).toList();
         print(enquiryList.length);
+        enquiryList.sort((a,b)=>b.entryDate.compareTo(a.entryDate));
         return enquiryList;
       }
       else{

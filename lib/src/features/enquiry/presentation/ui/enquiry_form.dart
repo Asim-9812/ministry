@@ -326,7 +326,7 @@ class EnquiryForm extends ConsumerWidget {
                                     "fullName": nameController.text.trim(),
                                     "contact": phoneController.text.trim(),
                                     "emailID": emailController.text.trim(),
-                                    "appliedFor": selectedCountry['id'].toString(),
+                                    "appliedFor": '${selectedCountry['id']}',
                                     "medicalAgency": selectedCode,
                                     "queries": remarksController.text.trim(),
                                     "passportNumber": passportController.text.trim(),

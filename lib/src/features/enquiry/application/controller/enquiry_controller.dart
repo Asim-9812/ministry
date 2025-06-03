@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ministry/src/features/enquiry/domain/model/medical_agency_model.dart';
+import 'package:ministry/src/features/enquiry/domain/model/payment_model.dart';
 
 
 
@@ -36,6 +37,20 @@ class EnquiryController extends ChangeNotifier{
   String? provinceErrorText;
   String? medicalErrorText;
 
+
+  bool isPaying = false;
+  PaymentModel? selectedPayment;
+
+  void paymentLoading(bool value){
+    isPaying = value;
+    notifyListeners();
+  }
+
+
+  void selectPayment(PaymentModel value){
+    selectedPayment = value;
+    notifyListeners();
+  }
 
   void selectDate(DateTime time){
     selectedDate = time;
