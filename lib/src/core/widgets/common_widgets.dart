@@ -17,8 +17,9 @@ AppBar commonAppBar(String text){
   );
 }
 
-AppBar commonNavBar(String text, {Color? color}){
+AppBar commonNavBar(String text, {Color? color, VoidCallback? onTap}){
   return AppBar(
+    leading: onTap == null ? null : IconButton(onPressed: onTap, icon: Icon(Icons.arrow_back,color: MyColors.white,)),
     backgroundColor: color ?? MyColors.primary,
     elevation: 0,
     iconTheme: IconThemeData(color: MyColors.white),

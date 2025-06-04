@@ -4,11 +4,14 @@
 
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ministry/src/core/utils/page_route.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
 import 'package:ministry/src/features/enquiry/application/controller/enquiry_controller.dart';
 import 'package:ministry/src/features/enquiry/data/services/esewa_services.dart';
 import 'package:ministry/src/features/enquiry/domain/model/medical_agency_model.dart';
 import 'package:ministry/src/features/enquiry/domain/model/payment_model.dart';
+import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_details.dart';
+import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_paid_details.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/material.dart';
@@ -400,17 +403,20 @@ class EnquiryPayment extends ConsumerWidget {
                                 final verification = await EsewaServices().verifyTransactionStatus(makePayment);
 
                                 if(verification){
-                                  await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete((){
+                                  await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete(() async {
                                     ref.invalidate(enquiryListProvider);
-                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+                                    final value = await ref.read(enquiryNotifier.notifier).getEnquiry(passportNo: data['passportNumber'], date: data['appointmentDate']);
+                                    if(value == null){
+                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+                                    }
+                                    else{
+                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>EnquiryPaidDetails(enquiry: value)), (route) => false,);
+                                    }
+
                                   });
                                   ref.read(enquiryController.notifier).paymentLoading(false);
                                 }
                                 else{
-                                  await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete((){
-                                    ref.invalidate(enquiryListProvider);
-                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
-                                  });
                                   Toaster.error('Payment not verified');
                                   ref.read(enquiryController.notifier).paymentLoading(false);
 

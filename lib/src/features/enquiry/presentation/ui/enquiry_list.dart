@@ -24,7 +24,12 @@ class EnquiryList extends ConsumerWidget {
     final enquiryList = ref.watch(enquiryListProvider(passportNo));
 
     return Scaffold(
-      appBar: commonNavBar('Appointments'),
+      appBar: commonNavBar('Appointments',
+        onTap: (){
+          ref.invalidate(enquiryListProvider);
+          Navigator.pop(context);
+        }
+      ),
       body: enquiryList.when(
           data: (enquiries){
             if(enquiries.isEmpty){

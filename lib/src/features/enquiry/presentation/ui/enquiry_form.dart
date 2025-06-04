@@ -332,7 +332,7 @@ class EnquiryForm extends ConsumerWidget {
                                     "passportNumber": passportController.text.trim(),
                                     "flag": "string",
                                     "entryDate": now,
-                                    "appointmentDate": DateFormat('yyyy-MM-ddTHH:mm:ssZ').format(selectedDate!),
+                                    "appointmentDate": DateFormat('yyyy-MM-ddTHH:mm:ss').format(selectedDate!),
                                     "extra1": "string"
                                   };
                                   // await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete((){

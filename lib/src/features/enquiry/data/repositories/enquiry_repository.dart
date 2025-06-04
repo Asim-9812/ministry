@@ -14,5 +14,6 @@ abstract class EnquiryRepository{
   Future<List<dynamic>> fetchProvinces();
   Future<bool> insertEnquiry({required Map<String, dynamic> data});
   Future<List<EnquiryModel>> enquiryList({required String passportNo});
+  Future<EnquiryModel?> getEnquiry({required String passportNo, required String date});
 
 }

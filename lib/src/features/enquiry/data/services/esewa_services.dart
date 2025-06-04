@@ -63,8 +63,7 @@ class EsewaServices{
       )
     );
     if (response.statusCode == 200) {
-      print('refid : ${result.refId}');
-      print('response data : ${response.data}');
+
       final sucResponse = response;
 
       if (sucResponse.data[0]['transactionDetails']['status'] == 'COMPLETE') {

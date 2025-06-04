@@ -109,7 +109,7 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
   @override
   Future<bool> insertEnquiry({required Map<String, dynamic> data}) async {
     try{
-      print(data);
+
       final response = await dio.post(Api.insertEnquiry,
         data: data
       );
@@ -128,7 +128,6 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
   @override
   Future<List<EnquiryModel>> enquiryList({required String passportNo}) async {
     try{
-      print(Api.getEnquiryList);
       final response = await dio.post(Api.getEnquiryList,
         data: {
           "tableName": "GetEnquiryByPassportNo",
@@ -141,7 +140,7 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
       if(response.statusCode == 200){
         final data = response.data['data'] as List<dynamic>;
         final enquiryList = data.map((e)=>EnquiryModel.fromJson(e)).toList();
-        print(enquiryList.length);
+
         enquiryList.sort((a,b)=>b.entryDate.compareTo(a.entryDate));
         return enquiryList;
       }
@@ -151,6 +150,40 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
     }on DioException catch(e){
       print(e);
       throw Exception('Unable to fetch data.');
+    }
+  }
+
+  @override
+  Future<EnquiryModel?> getEnquiry({required String passportNo, required String date}) async {
+    print(date);
+    try{
+      final response = await dio.post(Api.getEnquiryList,
+          data: {
+            "tableName": "GetEnquiryByPassportNo",
+            "parameter": {
+              "passportNumber": "$passportNo",
+              "flag": "getprintlist"
+            }
+          }
+      );
+      if(response.statusCode == 200){
+        final data = response.data['data'] as List<dynamic>;
+        final getEnquiryData = data.singleWhere((e)=> e['AppointmentDate'] == date, orElse: ()=>null);
+        if(getEnquiryData != null){
+          final enquiry = EnquiryModel.fromJson(getEnquiryData);
+          return enquiry;
+        }
+        else{
+          return null;
+        }
+
+      }
+      else{
+        return null;
+      }
+    }on DioException catch(e){
+      print(e);
+      return null;
     }
   }
 }

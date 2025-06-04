@@ -17,11 +17,12 @@ import 'package:flutter_to_pdf/flutter_to_pdf.dart';
 import '../../../../core/resources/color_manager.dart';
 import '../../../../core/resources/font_manager.dart';
 import '../../../../core/resources/gap_manager.dart';
+import '../../../dashboard/presentation/ui/dashboard.dart';
 import 'helpers/download_enquiry_pdf.dart';
 
-class EnquiryDetails extends ConsumerWidget {
+class EnquiryPaidDetails extends ConsumerWidget {
   final EnquiryModel enquiry;
-  const EnquiryDetails({required this.enquiry, super.key});
+  const EnquiryPaidDetails({required this.enquiry, super.key});
 
   @override
   Widget build(BuildContext context, ref) {
@@ -45,7 +46,13 @@ class EnquiryDetails extends ConsumerWidget {
     final dateTime = DateFormat('dd MMMM, yyy, HH:mm a').format(enquiry.appointmentDate);
 
     return Scaffold(
-      appBar: commonNavBar('Details'),
+      appBar: commonNavBar('Details',
+        onTap: (){
+          ref.invalidate(enquiryListProvider);
+
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+        }
+      ),
       body: Column(
         children: [
           Padding(
