@@ -77,7 +77,7 @@ class LoginPage extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Image.asset('assets/images/logo.png',width: 150,height: 150,),
+                                Image.asset('assets/images/hospital_logo.png',width: 100,height: 100,),
                                 h10,
                                 Text('Sign In',style: TextStyle(color: MyColors.primary,fontSize: 32,fontWeight: FontWeight.bold),),
                                 h10,

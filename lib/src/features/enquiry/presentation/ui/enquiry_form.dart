@@ -109,7 +109,7 @@ class EnquiryForm extends ConsumerWidget {
                           child: TextFormField(
                             controller: emailController,
                             decoration: InputDecoration(
-                              labelText: "E-mail",
+                              labelText: "E-mail (Optional)",
                               prefixIcon: Icon(Icons.mail,color: MyColors.primary,),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -120,20 +120,6 @@ class EnquiryForm extends ConsumerWidget {
                                 borderSide: BorderSide(color: MyColors.primary),
                               ),
                             ),
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return 'Email is required.';
-                              }
-
-                              // Regular expression for email validation
-                              final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-
-                              if (!emailRegex.hasMatch(value.trim())) {
-                                return 'Enter a valid email address.';
-                              }
-
-                              return null;
-                            },
 
                           ),
                         ),
@@ -325,10 +311,10 @@ class EnquiryForm extends ConsumerWidget {
                                     "id": 0,
                                     "fullName": nameController.text.trim(),
                                     "contact": phoneController.text.trim(),
-                                    "emailID": emailController.text.trim(),
+                                    "emailID": emailController.text.trim().isEmpty ? '' : emailController.text.trim(),
                                     "appliedFor": '${selectedCountry['id']}',
                                     "medicalAgency": selectedCode,
-                                    "queries": remarksController.text.trim(),
+                                    "queries": remarksController.text.trim().isEmpty ? '' : remarksController.text.trim(),
                                     "passportNumber": passportController.text.trim(),
                                     "flag": "string",
                                     "entryDate": now,

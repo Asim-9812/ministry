@@ -15,5 +15,6 @@ class PaymentModel{
 }
 
 final paymentList = [
-  PaymentModel(id: 1, name: 'Esewa', icon: 'assets/icons/esewa.png')
+  PaymentModel(id: 1, name: 'Esewa', icon: 'assets/icons/esewa.png'),
+  PaymentModel(id: 2, name: 'Khalti', icon: 'assets/icons/khalti.png')
 ];

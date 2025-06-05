@@ -98,6 +98,8 @@ dependencies:
   permission_handler: ^12.0.0+1
   image_gallery_saver_plus: ^4.0.1
   dotted_border: any
+#  khalti: ^2.0.0
+  khalti_checkout_flutter: ^1.0.0-dev.8
 
 
 
@@ -113,11 +115,11 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/fav.jpg"
+  image_path: "assets/images/hospital_logo.png"
   remove_alpha_ios: true
   min_sdk_android: 24 # android min sdk min:16, default 21
-  adaptive_icon_background: "#4591FF"
-  adaptive_icon_foreground: "assets/images/fav.jpg"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/images/hospital_logo.png"
 
 
   # The "flutter_lints" package below contains a set of recommended lints to

@@ -45,7 +45,8 @@ class Homepage extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children:[
-                      Image.asset('assets/images/logo.png',width: 80,height: 80,),
+                      // Image.asset('assets/images/hospital_logo.png',width: 80,height: 80,),
+
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.start,
                       //   crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,7 +61,7 @@ class Homepage extends ConsumerWidget {
                           ref.read(dashboardController.notifier).changePageIndex(5);
                         },
                         child: Card(
-                          margin: EdgeInsets.only(right: 8),
+                          margin: EdgeInsets.only(left: 8),
                           elevation: 0,
                           shape: CircleBorder(
                               side: BorderSide(
@@ -74,7 +75,10 @@ class Homepage extends ConsumerWidget {
                             child: Icon(Icons.person,color: MyColors.primary,),
                           ),
                         ),
-                      )
+                      ),
+                      SizedBox(
+                        height: 80,
+                      ),
                     ]
                 ),
               ),

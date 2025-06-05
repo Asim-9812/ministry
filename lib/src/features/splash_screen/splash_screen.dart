@@ -15,8 +15,8 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return AnimatedSplashScreen(
-      backgroundColor: MyColors.lightBlue,
-      splash: 'assets/images/logo.png',
+      backgroundColor: MyColors.white,
+      splash: 'assets/images/hospital_logo.png',
       nextScreen: const Dashboard(),
       splashIconSize: 140,
       centered: true,

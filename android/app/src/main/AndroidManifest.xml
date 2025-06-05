@@ -14,12 +14,14 @@
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 
 
+    <!-- Baidesik Swasthya Parikshan-->
     <application
-        android:label="ministry"
+        android:label="Baidesik Swasthya Parikshan"
         android:name="${applicationName}"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:icon="@mipmap/launcher_icon"
@@ -69,6 +71,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+
+
 
 
         <receiver android:name="me.carda.awesome_notifications.core.broadcasters.receivers.ScheduledNotificationReceiver" android:exported="true" />

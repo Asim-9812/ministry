@@ -22,8 +22,8 @@ class EsewaServices{
       EsewaFlutterSdk.initPayment(
         esewaConfig: EsewaConfig(
           environment: Environment.test,
-          clientId: client_id,
-          secretId: secret_key,
+          clientId: esewa_client_id,
+          secretId: esewa_secret_key,
         ),
         esewaPayment: EsewaPayment(
           productId: "1",
@@ -56,8 +56,8 @@ class EsewaServices{
     var response = await dio.get('https://rc.esewa.com.np/mobile/transaction?txnRefId=${result.refId}',
       options: Options(
         headers: {
-          'merchantId' : client_id,
-          'merchantSecret': secret_key,
+          'merchantId' : esewa_client_id,
+          'merchantSecret': esewa_secret_key,
           'Content-Type' : 'application/json'
         }
       )

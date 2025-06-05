@@ -114,7 +114,4 @@ class EnquiryList extends ConsumerWidget {
     );
   }
 
-
-
-
 }

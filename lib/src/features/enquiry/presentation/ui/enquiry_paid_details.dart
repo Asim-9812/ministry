@@ -73,7 +73,7 @@ class EnquiryPaidDetails extends ConsumerWidget {
                             border: Border.all(
                               color: MyColors.grey
                             ),
-                            image: DecorationImage(image: AssetImage('assets/images/logo.png'),opacity: 0.05,fit: BoxFit.none,scale: 10)
+                            image: DecorationImage(image: AssetImage('assets/images/hospital_logo.png'),opacity: 0.05,fit: BoxFit.none,scale: 5)
                         ),
                         width: double.infinity,
                         // padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),

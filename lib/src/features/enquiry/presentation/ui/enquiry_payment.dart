@@ -8,10 +8,12 @@ import 'package:ministry/src/core/utils/page_route.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
 import 'package:ministry/src/features/enquiry/application/controller/enquiry_controller.dart';
 import 'package:ministry/src/features/enquiry/data/services/esewa_services.dart';
+import 'package:ministry/src/features/enquiry/data/services/khalti_services.dart';
 import 'package:ministry/src/features/enquiry/domain/model/medical_agency_model.dart';
 import 'package:ministry/src/features/enquiry/domain/model/payment_model.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_details.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_paid_details.dart';
+import 'package:ministry/src/features/enquiry/presentation/ui/widgets/khalti_payment.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/material.dart';
@@ -53,7 +55,7 @@ class EnquiryPayment extends ConsumerWidget {
                     border: Border.all(
                         color: MyColors.grey
                     ),
-                    image: DecorationImage(image: AssetImage('assets/images/logo.png'),opacity: 0.05,fit: BoxFit.none,scale: 10)
+                    image: DecorationImage(image: AssetImage('assets/images/hospital_logo.png'),opacity: 0.05,fit: BoxFit.none,scale: 5)
                 ),
                 width: double.infinity,
                 // padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -336,28 +338,31 @@ class EnquiryPayment extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: paymentList.map((e)=>
-                    RadioListTile(
-                      value: e,
-                      groupValue: selectedPayment,
-                      onChanged:(value) {
-                        if(value != null){
-                          final selectedMethod = value;
-                          ref.read(enquiryController.notifier).selectPayment(selectedMethod);
-                        }
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: RadioListTile(
+                        value: e,
+                        groupValue: selectedPayment,
+                        onChanged:(value) {
+                          if(value != null){
+                            final selectedMethod = value;
+                            ref.read(enquiryController.notifier).selectPayment(selectedMethod);
+                          }
 
-                      },
-                      tileColor: MyColors.lightGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          side: BorderSide(color:selectedPayment?.id == e.id ?  MyColors.primary : MyColors.grey)
-                      ),
-                      title: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.asset(e.icon, scale: 20,),
-                          w10,
-                          Text(e.name, style: bh2,)
-                        ],
+                        },
+                        tileColor: MyColors.lightGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            side: BorderSide(color:selectedPayment?.id == e.id ?  MyColors.primary : MyColors.grey)
+                        ),
+                        title: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Image.asset(e.icon, scale: 20,),
+                            w10,
+                            Text(e.name, style: bh2,)
+                          ],
+                        ),
                       ),
                     )
                 ).toList(),
@@ -429,13 +434,42 @@ class EnquiryPayment extends ConsumerWidget {
 
                             }
 
+                            else if(selectedPayment.id == 2){
+                              ref.read(enquiryController.notifier).paymentLoading(true);
 
+                              final pidx = await KhaltiServices().initiatePayment(name: data['fullName'], email: data['emailID'], number: data['contact']);
+
+                              if(pidx != null){
+                                final payment = await KhaltiServices().makePayment(context: context, pidx: pidx);
+                                // routeTo(context, KhaltiPaymentUi(khalti: khalti));
+                                if(payment){
+                                  await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete(() async {
+                                    ref.invalidate(enquiryListProvider);
+                                    final value = await ref.read(enquiryNotifier.notifier).getEnquiry(passportNo: data['passportNumber'], date: data['appointmentDate']);
+                                    if(value == null){
+                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+                                    }
+                                    else{
+                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>EnquiryPaidDetails(enquiry: value)), (route) => false,);
+                                    }
+
+                                  });
+                                  ref.read(enquiryController.notifier).paymentLoading(false);
+                                }
+                                else{
+                                  ref.read(enquiryController.notifier).paymentLoading(false);
+                                  Toaster.error('Payment unsuccessful');
+                                }
+
+                              }
+
+
+                              // await KhaltiServices().initiatePayment();
+                            }
                           }
-
                           else{
                             Toaster.error('Select a payment method');
                           }
-
                         },
                         child:(isPaying || enquiryState.isLoading)
                             ? SpinKitDualRing(color: MyColors.white,size: 16,)

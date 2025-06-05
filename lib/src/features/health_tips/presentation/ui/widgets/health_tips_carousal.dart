@@ -62,7 +62,9 @@ class HealthTipsCarousal extends ConsumerWidget {
                             top: 0,
                             bottom: 0,
                             right: -70,
-                            child: Image.asset('assets/images/bwLogo.png',width: 150,height: 150,)),
+                            child: Opacity(
+                                opacity: 0.1,
+                                child: Image.asset('assets/images/hospital_logo.png',width: 130,height: 100,))),
                         // Positioned(
                         //   right: 0,
                         //   bottom: 10,
