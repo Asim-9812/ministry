@@ -358,7 +358,7 @@ class EnquiryPayment extends ConsumerWidget {
                         title: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Image.asset(e.icon, scale: 20,),
+                            Image.asset(e.icon, width: 30, height: 30,),
                             w10,
                             Text(e.name, style: bh2,)
                           ],
@@ -437,32 +437,9 @@ class EnquiryPayment extends ConsumerWidget {
                             else if(selectedPayment.id == 2){
                               ref.read(enquiryController.notifier).paymentLoading(true);
 
-                              final pidx = await KhaltiServices().initiatePayment(name: data['fullName'], email: data['emailID'], number: data['contact']);
+                              routeTo(context, KhaltiPaymentUI(data: data));
 
-                              if(pidx != null){
-                                final payment = await KhaltiServices().makePayment(context: context, pidx: pidx);
-                                // routeTo(context, KhaltiPaymentUi(khalti: khalti));
-                                if(payment){
-                                  await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete(() async {
-                                    ref.invalidate(enquiryListProvider);
-                                    final value = await ref.read(enquiryNotifier.notifier).getEnquiry(passportNo: data['passportNumber'], date: data['appointmentDate']);
-                                    if(value == null){
-                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
-                                    }
-                                    else{
-                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>EnquiryPaidDetails(enquiry: value)), (route) => false,);
-                                    }
-
-                                  });
-                                  ref.read(enquiryController.notifier).paymentLoading(false);
-                                }
-                                else{
-                                  ref.read(enquiryController.notifier).paymentLoading(false);
-                                  Toaster.error('Payment unsuccessful');
-                                }
-
-                              }
-
+                              ref.read(enquiryController.notifier).paymentLoading(false);
 
                               // await KhaltiServices().initiatePayment();
                             }

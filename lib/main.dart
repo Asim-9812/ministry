@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:khalti/khalti.dart';
 import 'package:ministry/src/core/controllers/notification_controller.dart';
 // import 'package:ministry/src/features/old_reminder/reminders/general/domain/model/general_model.dart' as oldGen;
 // import 'package:ministry/src/features/old_reminder/reminders/medicine/domain/model/medicine_model.dart' as oldMed;
@@ -70,6 +71,11 @@ void main() async {
 
   await NotificationController.initialize();
   await NotificationController.startListeningNotificationEvents();
+
+  await Khalti.init(
+      publicKey: 'live_public_key_ceead578475246fc83a9040d00610f93',
+    enabledDebugging: true,
+  );
 
 
   Workmanager().initialize(
