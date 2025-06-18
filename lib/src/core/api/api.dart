@@ -1,6 +1,8 @@
 
 
 
+final logoUrl = 'assets/images/ministry-logo.png';
+
 class Api{
 
   static const baseUrl = 'https://mainapi.hospitalsnepal.com/api/central';
@@ -19,6 +21,7 @@ class Api{
   static const getEnquiryList = '$baseUrl/GlobalDropdown/genericapi';
 
   static const getMedicalReport = '$baseUrl/MedicalReport/GetReportForMobileByPatientID?PatientNo=';
+  static const getAppointmentSlip = '$baseUrl/Enquiry/GetAppointmentSlip?passportno=';
 
 
   static const getAllCountries = 'https://countriesnow.space/api/v0.1/countries/';

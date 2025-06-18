@@ -42,7 +42,6 @@ class HealthTipsCarousal extends ConsumerWidget {
               ),
               items: healthTips.map((healthTip) {
                 return Card(
-
                   margin: EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
                     // margin: EdgeInsets.symmetric(horizontal: 16),
@@ -63,8 +62,8 @@ class HealthTipsCarousal extends ConsumerWidget {
                             bottom: 0,
                             right: -70,
                             child: Opacity(
-                                opacity: 0.1,
-                                child: Image.asset('assets/images/hospital_logo.png',width: 130,height: 100,))),
+                                opacity: 0.2,
+                                child: Image.asset(logoUrl,width: 140,height: 100,))),
                         // Positioned(
                         //   right: 0,
                         //   bottom: 10,
@@ -117,7 +116,7 @@ class HealthTipsCarousal extends ConsumerWidget {
                     ),
                   ),
                 );
-              }).toList(),
+              }).toList()
             ),
             h10,
             Row(

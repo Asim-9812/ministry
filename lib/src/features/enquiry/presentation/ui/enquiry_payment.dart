@@ -12,7 +12,9 @@ import 'package:ministry/src/features/enquiry/data/services/khalti_services.dart
 import 'package:ministry/src/features/enquiry/domain/model/medical_agency_model.dart';
 import 'package:ministry/src/features/enquiry/domain/model/payment_model.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_details.dart';
+import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_html_report.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_paid_details.dart';
+import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_paid_html_report.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/widgets/khalti_payment.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -408,17 +410,24 @@ class EnquiryPayment extends ConsumerWidget {
                                 final verification = await EsewaServices().verifyTransactionStatus(makePayment);
 
                                 if(verification){
-                                  await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete(() async {
+                                  final code = await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data);
+                                  if(code != null){
                                     ref.invalidate(enquiryListProvider);
-                                    final value = await ref.read(enquiryNotifier.notifier).getEnquiry(passportNo: data['passportNumber'], date: data['appointmentDate']);
+                                    final value = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: data['passportNumber'], code: code);
                                     if(value == null){
                                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
                                     }
                                     else{
-                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>EnquiryPaidDetails(enquiry: value)), (route) => false,);
+                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>EnquiryPaidHtml(html: value)), (route) => false,);
                                     }
+                                  }
+                                  else{
+                                    Toaster.error('Something went wrong.');
+                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+                                  }
 
-                                  });
+
+
                                   ref.read(enquiryController.notifier).paymentLoading(false);
                                 }
                                 else{

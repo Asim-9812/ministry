@@ -17,3 +17,15 @@ class GetEnquiryList{
   }
 
 }
+
+// class GetEnquiryReport{
+//
+//   final EnquiryRepository repository;
+//
+//   GetEnquiryReport(this.repository);
+//
+//   Future<String?> call({required String passportNo}) {
+//     return repository.getEnquiryReport(passportNo: passportNo);
+//   }
+//
+// }

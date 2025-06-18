@@ -12,6 +12,7 @@ import 'package:khalti/khalti.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
 import 'package:ministry/src/core/widgets/common_widgets.dart';
+import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_html_report.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../../core/resources/gap_manager.dart';
@@ -20,6 +21,7 @@ import '../../../application/controller/enquiry_notifier.dart';
 import '../../../application/providers/enquiry_provider.dart';
 import '../../../data/services/khalti_services.dart';
 import '../enquiry_paid_details.dart';
+import '../enquiry_paid_html_report.dart';
 
 class KhaltiPaymentUI extends ConsumerStatefulWidget {
   final Map<String, dynamic> data;
@@ -193,17 +195,21 @@ class _KhaltiPaymentUIState extends ConsumerState<KhaltiPaymentUI> {
                                     });
                                     final response = await KhaltiServices().confirmPayment(token: token!, otp: otpController.text.trim(), pin: pinController.text.trim());
 
-                                    await ref.read(enquiryNotifier.notifier).insertEnquiry(data: widget.data).whenComplete(() async {
+                                    final code = await ref.read(enquiryNotifier.notifier).insertEnquiry(data: widget.data);
+                                    if(code != null){
                                       ref.invalidate(enquiryListProvider);
-                                      final value = await ref.read(enquiryNotifier.notifier).getEnquiry(passportNo: widget.data['passportNumber'], date: widget.data['appointmentDate']);
+                                      final value = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: widget.data['passportNumber'], code: code);
                                       if(value == null){
                                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
                                       }
                                       else{
-                                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>EnquiryPaidDetails(enquiry: value)), (route) => false,);
+                                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>EnquiryPaidHtml(html: value)), (route) => false,);
                                       }
-
-                                    });
+                                    }
+                                    else{
+                                      Toaster.error('Something went wrong.');
+                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+                                    }
 
                                     Toaster.success('Payment Successful');
                                     setState(() {

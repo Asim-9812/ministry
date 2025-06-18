@@ -11,6 +11,9 @@ import 'package:ministry/src/features/enquiry/application/providers/enquiry_prov
 import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_details.dart';
 
 import '../../../../core/resources/gap_manager.dart';
+import '../../../../core/utils/toaster.dart';
+import '../../application/controller/enquiry_notifier.dart';
+import 'enquiry_html_report.dart';
 
 class EnquiryList extends ConsumerWidget {
 
@@ -57,7 +60,16 @@ class EnquiryList extends ConsumerWidget {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
                     child: ListTile(
-                        onTap: ()=>routeTo(context, EnquiryDetails(enquiry: enquiry,)),
+                        onTap: () async {
+                          final reportHtml = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: enquiry.passportNumber, code: enquiry.id.toString());
+
+                          if(reportHtml == null){
+                            Toaster.error('Something went wrong. Try again later');
+                          }
+                          else{
+                            routeTo(context, EnquiryReportHtml(html: reportHtml));
+                          }
+                        },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                             side: BorderSide(

@@ -19,21 +19,26 @@ class EnquiryNotifier extends StateNotifier<LoadState> {
   EnquiryNotifier({required this.enquiryRepository}) : super(LoadState());
 
 
-  Future<void> insertEnquiry({required Map<String, dynamic> data}) async {
+  Future<String?> insertEnquiry({required Map<String, dynamic> data}) async {
     state = LoadState(isLoading: true);  // Set loading state
 
     try {
-      bool result = await enquiryRepository.insertEnquiry(data: data);
-      if (result) {
+      String? result = await enquiryRepository.insertEnquiry(data: data);
+
+
+      if (result != null) {
         state = LoadState(isLoading: false, isSuccess: true);  // Success state
         Toaster.success('Enquiry submitted.');
+        return result;
       } else {
         state = LoadState(isLoading: false, error: 'Unable to submit enquiry.');  // Error state
         Toaster.error('Unable to submit enquiry.');
+        return null;
       }
     } catch (error) {
       state = LoadState(isLoading: false, error: error.toString());  // Handle exception
       Toaster.error(error.toString());
+      return null;
     }
   }
 
@@ -49,6 +54,27 @@ class EnquiryNotifier extends StateNotifier<LoadState> {
       } else {
         state = LoadState(isLoading: false, error: 'Unable to submit enquiry.');  // Error state
         Toaster.error('Unable to fetch enquiry. Try again later');
+        return null;
+      }
+    } catch (error) {
+      state = LoadState(isLoading: false, error: error.toString());  // Handle exception
+      Toaster.error(error.toString());
+      return null;
+    }
+  }
+
+
+  Future<String?> getEnquiryReport({required String passportNo, required String code}) async {
+    state = LoadState(isLoading: true);  // Set loading state
+
+    try {
+      final result = await enquiryRepository.getEnquiryReport(passportNo: passportNo, code: code);
+      if (result != null) {
+        state = LoadState(isLoading: false, isSuccess: true);  // Success state
+        return result;
+      } else {
+        state = LoadState(isLoading: false, error: 'Unable to find the appointment');  // Error state
+        // Toaster.error('Unable to find the appointment');
         return null;
       }
     } catch (error) {

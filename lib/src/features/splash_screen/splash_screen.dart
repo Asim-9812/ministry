@@ -2,6 +2,7 @@
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:ministry/src/core/api/api.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../core/resources/color_manager.dart';
 import '../dashboard/presentation/ui/dashboard.dart';
@@ -16,7 +17,7 @@ class SplashScreen extends StatelessWidget {
 
     return AnimatedSplashScreen(
       backgroundColor: MyColors.white,
-      splash: 'assets/images/hospital_logo.png',
+      splash: logoUrl,
       nextScreen: const Dashboard(),
       splashIconSize: 140,
       centered: true,

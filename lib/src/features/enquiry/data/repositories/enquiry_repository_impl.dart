@@ -107,17 +107,17 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
   }
 
   @override
-  Future<bool> insertEnquiry({required Map<String, dynamic> data}) async {
+  Future<String?> insertEnquiry({required Map<String, dynamic> data}) async {
     try{
 
       final response = await dio.post(Api.insertEnquiry,
         data: data
       );
       if(response.statusCode == 200){
-        return true;
+        return response.data['message'] as String;
       }
       else{
-        throw Exception('Unable to fetch data.');
+        return null;
       }
     }on DioException catch(e){
       print(e);
@@ -183,6 +183,34 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
       }
     }on DioException catch(e){
       print(e);
+      return null;
+    }
+  }
+
+  @override
+  Future<String?> getEnquiryReport({required String passportNo, required String code}) async {
+
+    try{
+      print('${Api.getAppointmentSlip}$passportNo&code=$code');
+
+      final response = await dio.get('${Api.getAppointmentSlip}$passportNo');
+      if(response.statusCode == 200){
+        final data = response.data['result'] as List<dynamic>;
+        final htmlContent = data[0]['htmlContent'] as String?;
+        // final getEnquiryData = data.singleWhere((e)=> e['AppointmentDate'] == date, orElse: ()=>null);
+        if(htmlContent != null){
+          return htmlContent;
+        }
+        else{
+          return null;
+        }
+
+      }
+      else{
+        return null;
+      }
+    }on DioException catch(e){
+
       return null;
     }
   }

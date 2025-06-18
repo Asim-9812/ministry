@@ -21,7 +21,7 @@
 
     <!-- Baidesik Swasthya Parikshan-->
     <application
-        android:label="Baidesik Swasthya Parikshan"
+        android:label="Mero Swasthya Parikshan"
         android:name="${applicationName}"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:icon="@mipmap/launcher_icon"

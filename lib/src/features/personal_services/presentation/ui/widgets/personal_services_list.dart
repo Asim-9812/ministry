@@ -9,6 +9,8 @@ import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_list.dart'
 import 'package:ministry/src/features/report/presentation/ui/medical_report_list.dart';
 import '../../../../../core/resources/color_manager.dart';
 import '../../../../../core/resources/gap_manager.dart';
+import '../../../../enquiry/application/controller/enquiry_notifier.dart';
+import '../../../../enquiry/presentation/ui/enquiry_html_report.dart';
 import '../../../items/items.dart';
 
 class PersonalServicesList extends ConsumerWidget {
@@ -41,9 +43,17 @@ class PersonalServicesList extends ConsumerWidget {
               ),
               elevation: 0,
               child: InkWell(
-                onTap: (){
+                onTap: () async {
                   if(index == 0 && passportNo != null){
                     routeTo(context, EnquiryList(passportNo: passportNo));
+                    // final reportHtml = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: passportNo);
+                    //
+                    // if(reportHtml == null){
+                    //   Toaster.error('No appointment found');
+                    // }
+                    // else{
+                    //   routeTo(context, EnquiryReportHtml(html: reportHtml));
+                    // }
                   }
                   else if(index == 1){
                     routeTo(context, MedicalReportList());

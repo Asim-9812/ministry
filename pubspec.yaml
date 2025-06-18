@@ -116,11 +116,11 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/hospital_logo.png"
+  image_path: "assets/images/ministry-fav-logo.png"
   remove_alpha_ios: true
   min_sdk_android: 24 # android min sdk min:16, default 21
   adaptive_icon_background: "#FFFFFF"
-  adaptive_icon_foreground: "assets/images/hospital_logo.png"
+  adaptive_icon_foreground: "assets/images/ministry-fav-logo.png"
 
 
   # The "flutter_lints" package below contains a set of recommended lints to

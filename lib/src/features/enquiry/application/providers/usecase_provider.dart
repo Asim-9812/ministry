@@ -44,3 +44,9 @@ final getEnquiryListUseCaseProviders = Provider<GetEnquiryList>((ref) {
   final repository = ref.watch(enquiryRepositoryProvider);
   return GetEnquiryList(repository);
 });
+
+
+// final getEnquiryReportUseCaseProviders = Provider<GetEnquiryReport>((ref) {
+//   final repository = ref.watch(enquiryRepositoryProvider);
+//   return GetEnquiryReport(repository);
+// });

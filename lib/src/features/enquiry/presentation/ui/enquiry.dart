@@ -3,12 +3,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
 import 'package:ministry/src/core/utils/page_route.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
 import 'package:ministry/src/core/widgets/common_widgets.dart';
 import 'package:ministry/src/features/enquiry/application/controller/enquiry_controller.dart';
+import 'package:ministry/src/features/enquiry/application/controller/enquiry_notifier.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/country_picker.dart';
+import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_html_report.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_list.dart';
 
 import '../../../../core/resources/font_manager.dart';
@@ -21,6 +24,7 @@ class Enquiry extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
 
     final controller = ref.watch(enquiryController).passController;
+    final enquiryState = ref.watch(enquiryNotifier);
 
     return Scaffold(
       appBar: commonNavBar('Appointments'),
@@ -74,16 +78,19 @@ class Enquiry extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(8)
                           )
                       ),
-                      onPressed: (){
+                      onPressed: () async {
                         if(controller.text.trim().isEmpty){
                           Toaster.error('Passport number is required');
                         }
                         else{
+
+
+
                           routeTo(context, EnquiryList(passportNo: controller.text.trim()));
                           controller.clear();
                         }
                       },
-                      child: Text('Next')
+                      child: enquiryState.isLoading? SpinKitDualRing(color: MyColors.white, size: 16,) : Text('Next')
                   ),
                 ),
               ],

@@ -1,6 +1,8 @@
 
 
 
+import 'dart:ui';
+import 'package:ministry/src/core/api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
@@ -45,7 +47,24 @@ class Homepage extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children:[
-                      // Image.asset('assets/images/hospital_logo.png',width: 80,height: 80,),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: Container(
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: MyColors.white.withValues(alpha: 80), // semi-transparent for blur effect
+                            borderRadius: BorderRadius.circular(100),
+
+                          ),
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Image.asset(logoUrl),
+                            ),
+                          ),
+                        ),
+                      ),
 
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.start,
@@ -76,9 +95,9 @@ class Homepage extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 80,
-                      ),
+                      // SizedBox(
+                      //   height: 80,
+                      // ),
                     ]
                 ),
               ),

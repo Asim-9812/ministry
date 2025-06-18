@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ministry/src/core/providers/user_info_provider.dart';
 import 'package:ministry/src/features/login/application/login_controller.dart';
+import 'package:ministry/src/core/api/api.dart';
 
 import '../../../../core/resources/color_manager.dart';
 import '../../../../core/resources/font_manager.dart';
@@ -29,8 +30,6 @@ class LoginPage extends ConsumerWidget {
     final formKey = ref.watch(loginController).formKey;
     final usernameController = ref.watch(loginController).usernameController;
     final passwordController = ref.watch(loginController).passwordController;
-
-
 
     return SafeArea(
       child: GestureDetector(
@@ -77,7 +76,7 @@ class LoginPage extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Image.asset('assets/images/hospital_logo.png',width: 100,height: 100,),
+                                Image.asset(logoUrl,width: 100,height: 100,),
                                 h10,
                                 Text('Sign In',style: TextStyle(color: MyColors.primary,fontSize: 32,fontWeight: FontWeight.bold),),
                                 h10,
