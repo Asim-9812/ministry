@@ -193,12 +193,15 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
     try{
       print('${Api.getAppointmentSlip}$passportNo&code=$code');
 
-      final response = await dio.get('${Api.getAppointmentSlip}$passportNo');
+      final response = await dio.get('${Api.getAppointmentSlip}$passportNo&code=$code');
       if(response.statusCode == 200){
+
         final data = response.data['result'] as List<dynamic>;
+        // print(data.length);
         final htmlContent = data[0]['htmlContent'] as String?;
         // final getEnquiryData = data.singleWhere((e)=> e['AppointmentDate'] == date, orElse: ()=>null);
         if(htmlContent != null){
+
           return htmlContent;
         }
         else{

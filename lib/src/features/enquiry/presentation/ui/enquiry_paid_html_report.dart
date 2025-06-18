@@ -36,7 +36,13 @@ class EnquiryPaidHtml extends ConsumerWidget {
 
 
     return Scaffold(
-      appBar: commonNavBar('Appointment'),
+      appBar: commonNavBar('Appointment',
+          onTap: (){
+            ref.invalidate(enquiryListProvider);
+
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+          }
+      ),
       body: WebViewWidget(controller: wbController),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(

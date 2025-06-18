@@ -74,7 +74,7 @@ class EnquiryNotifier extends StateNotifier<LoadState> {
         return result;
       } else {
         state = LoadState(isLoading: false, error: 'Unable to find the appointment');  // Error state
-        // Toaster.error('Unable to find the appointment');
+        Toaster.error('Unable to find the appointment');
         return null;
       }
     } catch (error) {
