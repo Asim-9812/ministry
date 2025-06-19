@@ -1,11 +1,6 @@
 
-import 'dart:io';
-
 import 'package:flutter/services.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -279,7 +274,6 @@ class EnquiryPaidDetails extends ConsumerWidget {
                                         Text('TXN ID : 1234567890',style: TextStyle(fontSize: 12,fontStyle: FontStyle.italic),),
                                         w04,
                                         InkWell(
-
                                             onTap: (){
                                               Clipboard.setData(ClipboardData(text: '1234567890'));
                                               Toaster.message('Transaction id copied');
@@ -287,7 +281,7 @@ class EnquiryPaidDetails extends ConsumerWidget {
                                             child: Icon(Icons.copy,color: MyColors.black,size: 10,))
                                       ],
                                     )
-                                  ],
+                                    ],
                                 ),
                                 h10,
                                 Text('Date: 02 June 2025, 10:30 AM', style: br2),

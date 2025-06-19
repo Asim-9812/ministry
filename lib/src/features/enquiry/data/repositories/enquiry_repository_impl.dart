@@ -191,7 +191,7 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
   Future<String?> getEnquiryReport({required String passportNo, required String code}) async {
 
     try{
-      print('${Api.getAppointmentSlip}$passportNo&code=$code');
+      // print('${Api.getAppointmentSlip}$passportNo&code=$code');
 
       final response = await dio.get('${Api.getAppointmentSlip}$passportNo&code=$code');
       if(response.statusCode == 200){

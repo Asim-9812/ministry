@@ -36,6 +36,35 @@ class Enquiry extends ConsumerWidget {
           children: [
 
             h10,
+            Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                      style: TextButton.styleFrom(
+                          backgroundColor: MyColors.primary,
+                          foregroundColor: MyColors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)
+                          )
+                      ),
+                      onPressed: ()=>routeTo(context, CountryPicker()),
+                      child: Text('Get an appointment')
+                  ),
+                ),
+              ],
+            ),
+
+            h20,
+            Row(
+              children: [
+                Expanded(child: Divider()),
+                w10,
+                Text('OR'),
+                w10,
+                Expanded(child: Divider()),
+              ],
+            ),
+            h20,
             Text('Search for your appointments', style: br1,),
             h10,
             Row(
@@ -44,26 +73,26 @@ class Enquiry extends ConsumerWidget {
                   child: TextFormField(
                     controller: controller,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: MyColors.primary
-                        )
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                              color: MyColors.primary
-                          )
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                              color: MyColors.primary
-                          )
-                      ),
-                      labelText: 'Passport no.',
-                      prefixIcon: Icon(Icons.search,color: MyColors.primary,)
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                                color: MyColors.primary
+                            )
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                                color: MyColors.primary
+                            )
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                                color: MyColors.primary
+                            )
+                        ),
+                        labelText: 'Passport no.',
+                        prefixIcon: Icon(Icons.search,color: MyColors.primary,)
                     ),
                   ),
                 ),
@@ -95,34 +124,7 @@ class Enquiry extends ConsumerWidget {
                 ),
               ],
             ),
-            h20,
-            Row(
-              children: [
-                Expanded(child: Divider()),
-                w10,
-                Text('OR'),
-                w10,
-                Expanded(child: Divider()),
-              ],
-            ),
-            h20,
-            Row(
-              children: [
-                Expanded(
-                  child: TextButton(
-                      style: TextButton.styleFrom(
-                          backgroundColor: MyColors.primary,
-                          foregroundColor: MyColors.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16)
-                          )
-                      ),
-                      onPressed: ()=>routeTo(context, CountryPicker()),
-                      child: Text('Get an appointment')
-                  ),
-                ),
-              ],
-            ),
+
           ],
         ),
       ),

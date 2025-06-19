@@ -8,12 +8,8 @@ import 'package:ministry/src/core/utils/page_route.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
 import 'package:ministry/src/features/enquiry/application/controller/enquiry_controller.dart';
 import 'package:ministry/src/features/enquiry/data/services/esewa_services.dart';
-import 'package:ministry/src/features/enquiry/data/services/khalti_services.dart';
 import 'package:ministry/src/features/enquiry/domain/model/medical_agency_model.dart';
 import 'package:ministry/src/features/enquiry/domain/model/payment_model.dart';
-import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_details.dart';
-import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_html_report.dart';
-import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_paid_details.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_paid_html_report.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/widgets/khalti_payment.dart';
 import 'package:pdf/pdf.dart';
@@ -433,7 +429,6 @@ class EnquiryPayment extends ConsumerWidget {
                                 else{
                                   Toaster.error('Payment not verified');
                                   ref.read(enquiryController.notifier).paymentLoading(false);
-
                                 }
                               }
                               else{
