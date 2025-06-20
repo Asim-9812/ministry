@@ -46,3 +46,16 @@ class GetProvinces{
 
 
 }
+
+class GetDistricts{
+
+  final EnquiryRepository repository;
+
+  GetDistricts(this.repository);
+
+  Future<List<dynamic>> call({required int? provinceId}) {
+    return repository.fetchDistricts(provinceId: provinceId);
+  }
+
+
+}

@@ -285,7 +285,6 @@ class EnquiryPaidDetails extends ConsumerWidget {
                                 ),
                                 h10,
                                 Text('Date: 02 June 2025, 10:30 AM', style: br2),
-
                               ],
                             ),
                           )

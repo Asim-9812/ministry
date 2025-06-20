@@ -33,6 +33,7 @@ class EnquiryForm extends ConsumerWidget {
 
     // final countriesAsyncValue = ref.watch(countriesProvider);
     final medicalAsyncValue = ref.watch(medicalAgenciesProvider(provinceId));
+    final districtAsyncValue = ref.watch(districtProvider(provinceId));
     final formKey = ref.watch(enquiryController).formKey;
     final nameController = ref.watch(enquiryController).nameController;
     final emailController = ref.watch(enquiryController).emailController;
@@ -43,6 +44,7 @@ class EnquiryForm extends ConsumerWidget {
     final selectedCountry = ref.watch(enquiryController).selectedCountryDynamic;
     final selectedCode = ref.watch(enquiryController).selectedCode;
     final selectedMedicalAgency = ref.watch(enquiryController).selectedMedical;
+    final selectedDistrict = ref.watch(enquiryController).selectedDistrict;
 
     return GestureDetector(
       onTap: ()=>FocusScope.of(context).unfocus(),
@@ -176,73 +178,127 @@ class EnquiryForm extends ConsumerWidget {
                       // },
                     ),
                     h10,
-                    medicalAsyncValue.when(
-                      data: (medicalAgencies) {
-                        return DropdownSearch<MedicalAgencyModel>(
-                          items: (filter, loadProps) => medicalAgencies, // List of MedicalAgencyModel
-                          selectedItem: selectedMedicalAgency,
-                          itemAsString: (MedicalAgencyModel agency) => agency.organizationname, // Display organization name
-                          compareFn: (a, b) => a.code == b.code,
-                          filterFn: (MedicalAgencyModel agency, String query) {
-                            final lowerQuery = query.toLowerCase();
-                            return agency.code.toLowerCase().contains(lowerQuery) ||
-                                agency.organizationname.toLowerCase().contains(lowerQuery) ||
-                                agency.fullAddress.toLowerCase().contains(lowerQuery);
-                          },
-                          decoratorProps: DropDownDecoratorProps(
-                            decoration: InputDecoration(
-                              labelText: "Select Medical Agency",
-                              prefixIcon: Icon(Icons.account_balance_outlined,color: MyColors.primary,),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: MyColors.primary),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: MyColors.primary),
-                              ),
-                            ),
-                          ),
-                          onChanged: (value) {
-                            ref.read(enquiryController.notifier).selectMedicalAgency(value);
-                            FocusManager.instance.primaryFocus?.unfocus();
-                          },
-                          popupProps: PopupProps.menu(
-                            showSearchBox: true, // Enables search
-                            searchFieldProps: TextFieldProps(
-                              decoration: InputDecoration(
-                                hintText: "Search agency...",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: MyColors.primary),
-                                ),
-                              ),
-                            ),
-                            emptyBuilder: (context, searchEntry) => Center(child: Text('No available agency in this province.')),
-                            itemBuilder: (context, item, isDisabled, isSelected) =>
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 16),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(item.organizationname,style: br1,),
-                                      Text(item.fullAddress,style: br3,),
-                                    ],
-                                  ),
-                                ),
-                          ),
-                          validator: (value) {
-                            if(value == null){
-                              return 'Please select a Medical Agency';
-                            }
-                            return null;
-                          },
-                        );
-                      },
-                      error: (error, stack) => Text('$error'),
-                      loading: () => commonShimmer(height: 50, width: double.infinity),
-                    ),
-                    h10,
+                    // medicalAsyncValue.when(
+                    //   data: (medicalAgencies) {
+                    //     return DropdownSearch<MedicalAgencyModel>(
+                    //       items: (filter, loadProps) => medicalAgencies, // List of MedicalAgencyModel
+                    //       selectedItem: selectedMedicalAgency,
+                    //       itemAsString: (MedicalAgencyModel agency) => agency.organizationname, // Display organization name
+                    //       compareFn: (a, b) => a.code == b.code,
+                    //       filterFn: (MedicalAgencyModel agency, String query) {
+                    //         final lowerQuery = query.toLowerCase();
+                    //         return agency.code.toLowerCase().contains(lowerQuery) ||
+                    //             agency.organizationname.toLowerCase().contains(lowerQuery) ||
+                    //             agency.fullAddress.toLowerCase().contains(lowerQuery);
+                    //       },
+                    //       decoratorProps: DropDownDecoratorProps(
+                    //         decoration: InputDecoration(
+                    //           labelText: "Select Medical Agency",
+                    //           prefixIcon: Icon(Icons.account_balance_outlined,color: MyColors.primary,),
+                    //           border: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(12),
+                    //             borderSide: BorderSide(color: MyColors.primary),
+                    //           ),
+                    //           enabledBorder: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(12),
+                    //             borderSide: BorderSide(color: MyColors.primary),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       onChanged: (value) {
+                    //         ref.read(enquiryController.notifier).selectMedicalAgency(value);
+                    //         FocusManager.instance.primaryFocus?.unfocus();
+                    //       },
+                    //       popupProps: PopupProps.menu(
+                    //         showSearchBox: true, // Enables search
+                    //         searchFieldProps: TextFieldProps(
+                    //           decoration: InputDecoration(
+                    //             hintText: "Search agency...",
+                    //             border: OutlineInputBorder(
+                    //               borderRadius: BorderRadius.circular(12),
+                    //               borderSide: BorderSide(color: MyColors.primary),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         emptyBuilder: (context, searchEntry) => Center(child: Text('No available agency in this province.')),
+                    //         itemBuilder: (context, item, isDisabled, isSelected) =>
+                    //             Padding(
+                    //               padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 16),
+                    //               child: Column(
+                    //                 crossAxisAlignment: CrossAxisAlignment.start,
+                    //                 children: [
+                    //                   Text(item.organizationname,style: br1,),
+                    //                   Text(item.fullAddress,style: br3,),
+                    //                 ],
+                    //               ),
+                    //             ),
+                    //       ),
+                    //       validator: (value) {
+                    //         if(value == null){
+                    //           return 'Please select a Medical Agency';
+                    //         }
+                    //         return null;
+                    //       },
+                    //     );
+                    //   },
+                    //   error: (error, stack) => Text('$error'),
+                    //   loading: () => commonShimmer(height: 50, width: double.infinity),
+                    // ),
+                    ///divider
+                    // districtAsyncValue.when(
+                    //   data: (districts) {
+                    //     return DropdownSearch<dynamic>(
+                    //       items: (filter, loadProps) => districts, // List of MedicalAgencyModel
+                    //       selectedItem: selectedDistrict,
+                    //       itemAsString: (dynamic district) => district['districtName'], // Display organization name
+                    //       compareFn: (a, b) => a.code == b.code,
+                    //       filterFn: (dynamic district, String query) {
+                    //         final lowerQuery = query.toLowerCase();
+                    //         return district['districtName'].toLowerCase().contains(lowerQuery) ;
+                    //       },
+                    //       decoratorProps: DropDownDecoratorProps(
+                    //         decoration: InputDecoration(
+                    //           labelText: "Select District",
+                    //           prefixIcon: Icon(Icons.account_balance_outlined,color: MyColors.primary,),
+                    //           border: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(12),
+                    //             borderSide: BorderSide(color: MyColors.primary),
+                    //           ),
+                    //           enabledBorder: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(12),
+                    //             borderSide: BorderSide(color: MyColors.primary),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       onChanged: (value) {
+                    //         ref.read(enquiryController.notifier).selectedDistrict(value);
+                    //         FocusManager.instance.primaryFocus?.unfocus();
+                    //       },
+                    //       popupProps: PopupProps.menu(
+                    //         showSearchBox: true, // Enables search
+                    //         searchFieldProps: TextFieldProps(
+                    //           decoration: InputDecoration(
+                    //             hintText: "Search available districts...",
+                    //             border: OutlineInputBorder(
+                    //               borderRadius: BorderRadius.circular(12),
+                    //               borderSide: BorderSide(color: MyColors.primary),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         emptyBuilder: (context, searchEntry) => Center(child: Text('No available district in this province.')),
+                    //
+                    //       ),
+                    //       validator: (value) {
+                    //         if(value == null){
+                    //           return 'Please select a District';
+                    //         }
+                    //         return null;
+                    //       },
+                    //     );
+                    //   },
+                    //   error: (error, stack) => Text('$error'),
+                    //   loading: () => commonShimmer(height: 50, width: double.infinity),
+                    // ),
                     TextFormField(
                       controller: dateController,
                       readOnly: true,
@@ -313,13 +369,13 @@ class EnquiryForm extends ConsumerWidget {
                                     "contact": phoneController.text.trim(),
                                     "emailID": emailController.text.trim().isEmpty ? '' : emailController.text.trim(),
                                     "appliedFor": '${selectedCountry['id']}',
-                                    "medicalAgency": selectedCode,
+                                    "medicalAgency": "",
                                     "queries": remarksController.text.trim().isEmpty ? '' : remarksController.text.trim(),
                                     "passportNumber": passportController.text.trim(),
                                     "flag": "string",
                                     "entryDate": now,
                                     "appointmentDate": DateFormat('yyyy-MM-ddTHH:mm:ss').format(selectedDate!),
-                                    "extra1": "string"
+                                    "extra1": selectedDistrict['districtId']
                                   };
                                   // await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete((){
                                   //   ref.invalidate(enquiryListProvider);

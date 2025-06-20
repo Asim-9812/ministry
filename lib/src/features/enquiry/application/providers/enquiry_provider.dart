@@ -37,6 +37,11 @@ final provinceProvider = FutureProvider<List<dynamic>>((ref) async {
   return getProvinceUseCase();
 });
 
+final districtProvider = FutureProvider.family<List<dynamic>, int?>((ref, provinceId) async {
+  final getDistrictUseCase = ref.watch(getDistrictUseCaseProviders);
+  return getDistrictUseCase(provinceId: provinceId);
+});
+
 final enquiryListProvider = FutureProvider.family<List<EnquiryModel>, String>((ref, passportNo) async {
   final getEnquiryListUseCase = ref.watch(getEnquiryListUseCaseProviders);
   return getEnquiryListUseCase(passportNo: passportNo);

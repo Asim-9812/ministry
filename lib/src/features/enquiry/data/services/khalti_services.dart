@@ -24,7 +24,6 @@ class KhaltiServices{
         ),
       );
 
-      print(initiationModel.token);
       return initiationModel.token;
     } catch (e) {
       if (e is FailureHttpResponse) {

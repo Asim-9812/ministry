@@ -107,6 +107,34 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
   }
 
   @override
+  Future<List<dynamic>> fetchDistricts({required int? provinceId}) async {
+
+    try{
+      if(provinceId == null) return [];
+      final response = await dio.post(Api.getEnquiryList,
+          data: {
+            "tableName": "GetEnquiryByPassportNo",
+            "parameter": {
+              "extra1": "$provinceId",
+              "flag": "getDistrictbyprovinceId"
+            }
+          }
+      );
+      if(response.statusCode == 200){
+        final data = response.data['data'] as List<dynamic>;
+
+        return data;
+      }
+      else{
+        throw Exception('Unable to fetch data.');
+      }
+    }on DioException catch(e){
+      print(e);
+      throw Exception('Unable to fetch data.');
+    }
+  }
+
+  @override
   Future<String?> insertEnquiry({required Map<String, dynamic> data}) async {
     try{
 

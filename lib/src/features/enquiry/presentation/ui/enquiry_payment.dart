@@ -34,7 +34,7 @@ class EnquiryPayment extends ConsumerWidget {
 
     final enquiryState = ref.watch(enquiryNotifier);
     final selectedCountry = ref.watch(enquiryController).selectedCountryDynamic;
-    final selectedMedicalAgency = ref.watch(enquiryController).selectedMedical!;
+    // final selectedMedicalAgency = ref.watch(enquiryController).selectedMedical!;
     final selectedPayment = ref.watch(enquiryController).selectedPayment;
     final isPaying = ref.watch(enquiryController).isPaying;
 

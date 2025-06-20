@@ -9,7 +9,7 @@ import 'package:ministry/src/features/enquiry/domain/model/payment_model.dart';
 
 
 
-final enquiryController = ChangeNotifierProvider.autoDispose((ref)=>EnquiryController());
+final enquiryController = ChangeNotifierProvider((ref)=>EnquiryController());
 
 
 class EnquiryController extends ChangeNotifier{
@@ -33,6 +33,7 @@ class EnquiryController extends ChangeNotifier{
   String? selectedCountry;
   dynamic selectedCountryDynamic;
   dynamic selectedProvince;
+  dynamic selectedDistrict;
   String? countryErrorText;
   String? provinceErrorText;
   String? medicalErrorText;
@@ -59,6 +60,11 @@ class EnquiryController extends ChangeNotifier{
 
   void selectProvince(dynamic province){
     selectedProvince = province;
+    notifyListeners();
+  }
+
+  void selectDistrict(dynamic district){
+    selectedDistrict = district;
     notifyListeners();
   }
 

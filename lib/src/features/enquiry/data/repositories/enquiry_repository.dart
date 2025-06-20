@@ -12,8 +12,10 @@ abstract class EnquiryRepository{
   Future<List<String>> fetchCountriesList();
   Future<List<dynamic>> fetchAvailableCountriesList();
   Future<List<dynamic>> fetchProvinces();
+  Future<List<dynamic>> fetchDistricts({required int? provinceId});
   Future<String?> insertEnquiry({required Map<String, dynamic> data});
   Future<List<EnquiryModel>> enquiryList({required String passportNo});
+
   Future<EnquiryModel?> getEnquiry({required String passportNo, required String date});
   Future<String?> getEnquiryReport({required String passportNo, required String code});
 
