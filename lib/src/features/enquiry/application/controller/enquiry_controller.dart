@@ -9,7 +9,7 @@ import 'package:ministry/src/features/enquiry/domain/model/payment_model.dart';
 
 
 
-final enquiryController = ChangeNotifierProvider((ref)=>EnquiryController());
+final enquiryController = ChangeNotifierProvider.autoDispose((ref)=>EnquiryController());
 
 
 class EnquiryController extends ChangeNotifier{

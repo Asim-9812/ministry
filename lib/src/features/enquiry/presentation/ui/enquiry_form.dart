@@ -375,7 +375,7 @@ class EnquiryForm extends ConsumerWidget {
                                     "flag": "string",
                                     "entryDate": now,
                                     "appointmentDate": DateFormat('yyyy-MM-ddTHH:mm:ss').format(selectedDate!),
-                                    "extra1": selectedDistrict['districtId']
+                                    "extra1": selectedDistrict['districtId'].toString()
                                   };
                                   // await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data).whenComplete((){
                                   //   ref.invalidate(enquiryListProvider);

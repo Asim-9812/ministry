@@ -410,6 +410,7 @@ class EnquiryPayment extends ConsumerWidget {
                                   if(code != null){
                                     ref.invalidate(enquiryListProvider);
                                     final value = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: data['passportNumber'], code: code);
+                                    // ref.invalidate(enquiryController);
                                     if(value == null){
                                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
                                     }

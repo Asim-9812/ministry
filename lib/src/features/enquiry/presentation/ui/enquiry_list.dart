@@ -61,6 +61,7 @@ class EnquiryList extends ConsumerWidget {
                     padding: const EdgeInsets.only(bottom: 10.0),
                     child: ListTile(
                         onTap: () async {
+                          Toaster.message('Please wait...');
                           final reportHtml = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: enquiry.passportNumber, code: enquiry.id.toString());
 
                           if(reportHtml == null){
