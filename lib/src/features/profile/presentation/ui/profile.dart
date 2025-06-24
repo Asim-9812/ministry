@@ -111,7 +111,7 @@ class ProfilePage extends ConsumerWidget {
                           icon: Icons.logout, name: 'Log out'
                       ),
                       h50,
-                      Text('Version 1.0.0',style: bh3,),
+                      Text('Version 1.0.0 + b2',style: bh3,),
                     ],
                   ),
                 ),

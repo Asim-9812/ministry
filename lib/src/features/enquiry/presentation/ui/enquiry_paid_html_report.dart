@@ -35,40 +35,47 @@ class EnquiryPaidHtml extends ConsumerWidget {
       ..loadHtmlString(wrappedHtml);
 
 
-    return Scaffold(
-      appBar: commonNavBar('Appointment',
-          onTap: (){
-            ref.invalidate(enquiryListProvider);
+    return WillPopScope(
 
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
-          }
-      ),
-      body: WebViewWidget(controller: wbController),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: MyColors.primary,
-        onPressed: () async {
-
-          await Printing.layoutPdf(
-            onLayout: (format) async {
-              final doc = await Printing.convertHtml(
-                format: format,
-                html: makeDesktopHtml(html), // inject your sanitized HTML here
-              );
-              return doc;
-            },
-          );
-
-          // await Printing.layoutPdf(onLayout: (format) async {
-          //   final body = makeDesktopHtml(html);
-          //
-          //   final pdf = pw.Document();
-          //   final widgets = await w2p.HTMLToPdf().convert(body);
-          //   pdf.addPage(pw.MultiPage(build: (context) => widgets));
-          //   return await pdf.save();
-          // });
+      onWillPop: () {
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+         return Future.value(true);
         },
-        child: Icon(Icons.print, color: MyColors.white,),
+      child: Scaffold(
+        appBar: commonNavBar('Appointment',
+            onTap: (){
+              ref.invalidate(enquiryListProvider);
+
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+            }
+        ),
+        body: WebViewWidget(controller: wbController),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: MyColors.primary,
+          onPressed: () async {
+
+            await Printing.layoutPdf(
+              onLayout: (format) async {
+                final doc = await Printing.convertHtml(
+                  format: format,
+                  html: makeDesktopHtml(html), // inject your sanitized HTML here
+                );
+                return doc;
+              },
+            );
+
+            // await Printing.layoutPdf(onLayout: (format) async {
+            //   final body = makeDesktopHtml(html);
+            //
+            //   final pdf = pw.Document();
+            //   final widgets = await w2p.HTMLToPdf().convert(body);
+            //   pdf.addPage(pw.MultiPage(build: (context) => widgets));
+            //   return await pdf.save();
+            // });
+          },
+          child: Icon(Icons.print, color: MyColors.white,),
+        ),
       ),
     );
   }

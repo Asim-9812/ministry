@@ -56,7 +56,7 @@ dependencies:
   flutter_riverpod: ^2.6.1
 #  flutter_share: ^2.0.0
   flutter_spinkit: ^5.2.1
-#  flutter_typeahead: ^5.2.0
+  flutter_typeahead: ^5.2.0
 #  flutter_widget_from_html: ^0.15.2
   fluttertoast: ^8.2.8
   font_awesome_flutter: ^10.7.0

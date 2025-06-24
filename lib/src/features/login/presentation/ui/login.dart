@@ -212,7 +212,9 @@ class LoginPage extends ConsumerWidget {
                                     ),
                                     h30
                                   ],
-                                )
+                                ),
+                                h50,
+                                Text('Version 1.0.0 + b2',style: bh3,),
                               ],
                             ),
                           ),

@@ -7,6 +7,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ministry/src/features/enquiry/application/providers/usecase_provider.dart';
 import 'package:ministry/src/features/enquiry/domain/model/enquiry_model.dart';
+import 'package:ministry/src/features/enquiry/domain/model/payment_model.dart';
 
 import '../../domain/model/medical_agency_model.dart';
 
@@ -46,3 +47,11 @@ final enquiryListProvider = FutureProvider.family<List<EnquiryModel>, String>((r
   final getEnquiryListUseCase = ref.watch(getEnquiryListUseCaseProviders);
   return getEnquiryListUseCase(passportNo: passportNo);
 });
+
+
+final paymentListProvider = FutureProvider.family<List<PaymentListModel>, String>((ref, code) async {
+  final getPaymentListUseCase = ref.watch(getPaymentListUseCaseProviders);
+  return getPaymentListUseCase(code: code);
+});
+
+

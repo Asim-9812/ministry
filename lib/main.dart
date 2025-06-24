@@ -72,10 +72,10 @@ void main() async {
   await NotificationController.initialize();
   await NotificationController.startListeningNotificationEvents();
 
-  await Khalti.init(
-      publicKey: 'live_public_key_ceead578475246fc83a9040d00610f93',
-    enabledDebugging: true,
-  );
+  // await Khalti.init(
+  //     publicKey: 'live_public_key_ceead578475246fc83a9040d00610f93',
+  //   enabledDebugging: true,
+  // );
 
 
   Workmanager().initialize(

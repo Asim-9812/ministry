@@ -15,6 +15,8 @@ import '../../../../core/resources/gap_manager.dart';
 import '../../../dashboard/presentation/ui/dashboard.dart';
 import 'helpers/download_enquiry_pdf.dart';
 
+
+
 class EnquiryPaidDetails extends ConsumerWidget {
   final EnquiryModel enquiry;
   const EnquiryPaidDetails({required this.enquiry, super.key});
@@ -128,8 +130,6 @@ class EnquiryPaidDetails extends ConsumerWidget {
                                   border: Border.all(
                                       color: MyColors.grey
                                   )
-
-
                               ),
                               margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -165,6 +165,7 @@ class EnquiryPaidDetails extends ConsumerWidget {
                                 ],
                               ),
                             ),
+
                             Container(
                               decoration: BoxDecoration(
                                   color: MyColors.lightGrey.withValues(alpha: 120),

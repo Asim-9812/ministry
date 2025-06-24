@@ -7,6 +7,7 @@ import 'package:ministry/src/core/api/api.dart';
 import 'package:ministry/src/features/enquiry/domain/model/enquiry_model.dart';
 import 'package:ministry/src/features/enquiry/domain/model/medical_agency_model.dart';
 
+import '../../domain/model/payment_model.dart';
 import 'enquiry_repository.dart';
 
 class EnquiryRepositoryImpl extends EnquiryRepository{
@@ -138,7 +139,7 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
   Future<String?> insertEnquiry({required Map<String, dynamic> data}) async {
 
     try{
-      print(data);
+      // print(data);
 
       final response = await dio.post(Api.insertEnquiry,
         data: data
@@ -153,6 +154,59 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
       print(e);
       throw Exception('Unable to fetch data.');
     }
+  }
+
+  @override
+  Future<List<PaymentListModel>> fetchPaymentList({required String code}) async {
+   try{
+     final response = await dio.post(Api.getEnquiryList,
+         data: {
+           "tableName": "GetEnquiryByPassportNo",
+           "parameter": {
+             "extra1": "adm",
+             "flag": "getpaymentListbyCompanyCode"
+           }
+         }
+     );
+     if(response.statusCode == 200){
+       final data = response.data['data'] as List<dynamic>;
+       final paymentList = data.map((e)=>PaymentListModel.fromJson(e)).toList();
+       return paymentList;
+     }
+     else{
+       throw Exception('Unable to fetch data.');
+     }
+   }on DioException catch(e){
+     print(e);
+     throw Exception('Unable to fetch data.');
+   }
+  }
+
+  @override
+  Future<PaymentCredModel> fetchPaymentCred({required String code, required int paymentId}) async {
+   try{
+     final response = await dio.post(Api.getEnquiryList,
+         data: {
+           "tableName": "GetEnquiryByPassportNo",
+           "parameter": {
+             "extra1": "$paymentId",
+             "medicalAgency" : "adm",
+             "flag": "getpaymentdetailsbyCompanyCode"
+           }
+         }
+     );
+     if(response.statusCode == 200){
+       final data = response.data['data'] as List<dynamic>;
+       final paymentList = data.map((e)=>PaymentCredModel.fromJson(e)).toList();
+       return paymentList[0];
+     }
+     else{
+       throw Exception('Unable to fetch data.');
+     }
+   }on DioException catch(e){
+     print(e);
+     throw Exception('Unable to fetch data.');
+   }
   }
 
   @override
@@ -185,7 +239,7 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
 
   @override
   Future<EnquiryModel?> getEnquiry({required String passportNo, required String date}) async {
-    print(date);
+    // print(date);
     try{
       final response = await dio.post(Api.getEnquiryList,
           data: {
@@ -221,7 +275,7 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
   Future<String?> getEnquiryReport({required String passportNo, required String code}) async {
 
     try{
-      print('${Api.getAppointmentSlip}$passportNo&code=$code');
+      // print('${Api.getAppointmentSlip}$passportNo&code=$code');
 
       final response = await dio.get('${Api.getAppointmentSlip}$passportNo&code=$code');
       if(response.statusCode == 200){
@@ -231,7 +285,6 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
         final htmlContent = data[0]['htmlContent'] as String?;
         // final getEnquiryData = data.singleWhere((e)=> e['AppointmentDate'] == date, orElse: ()=>null);
         if(htmlContent != null){
-
           return htmlContent;
         }
         else{

@@ -41,6 +41,7 @@ class EnquiryController extends ChangeNotifier{
 
   bool isPaying = false;
   PaymentModel? selectedPayment;
+  PaymentListModel? selectedPaymentMethod;
 
   void paymentLoading(bool value){
     isPaying = value;
@@ -52,6 +53,12 @@ class EnquiryController extends ChangeNotifier{
     selectedPayment = value;
     notifyListeners();
   }
+
+  void selectPaymentMethod(PaymentListModel value){
+    selectedPaymentMethod = value;
+    notifyListeners();
+  }
+
 
   void selectDate(DateTime time){
     selectedDate = time;

@@ -14,7 +14,7 @@ class EsewaServices{
   
   final dio = Dio();
 
-  Future<EsewaPaymentSuccessResult?> makePayment() async {
+  Future<EsewaPaymentSuccessResult?> makePayment({required String pkey, required String skey}) async {
     final completer = Completer<EsewaPaymentSuccessResult?>();
     String? error;
 
@@ -22,8 +22,8 @@ class EsewaServices{
       EsewaFlutterSdk.initPayment(
         esewaConfig: EsewaConfig(
           environment: Environment.test,
-          clientId: esewa_client_id,
-          secretId: esewa_secret_key,
+          clientId: pkey,
+          secretId: skey,
         ),
         esewaPayment: EsewaPayment(
           productId: "1",
@@ -52,12 +52,12 @@ class EsewaServices{
   }
 
 
-  Future<bool> verifyTransactionStatus(EsewaPaymentSuccessResult result) async {
+  Future<bool> verifyTransactionStatus({required EsewaPaymentSuccessResult result, required String pkey, required String skey}) async {
     var response = await dio.get('https://rc.esewa.com.np/mobile/transaction?txnRefId=${result.refId}',
       options: Options(
         headers: {
-          'merchantId' : esewa_client_id,
-          'merchantSecret': esewa_secret_key,
+          'merchantId' : pkey,
+          'merchantSecret': skey,
           'Content-Type' : 'application/json'
         }
       )

@@ -5,8 +5,9 @@ import 'package:khalti/khalti.dart';
 
 class KhaltiServices{
 
-  Future<String> initiatePayment({required String number, required String pin}) async {
+  Future<String> initiatePayment({required String number, required String pin, required String pkey}) async {
     try {
+      KhaltiService.publicKey = pkey;
       final service = KhaltiService(client: KhaltiHttpClient());
 
       final initiationModel = await service.initiatePayment(

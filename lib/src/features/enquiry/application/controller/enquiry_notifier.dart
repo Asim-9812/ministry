@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
 import 'package:ministry/src/features/enquiry/data/repositories/enquiry_repository_impl.dart';
 import 'package:ministry/src/features/enquiry/domain/model/enquiry_model.dart';
+import 'package:ministry/src/features/enquiry/domain/model/payment_model.dart';
 import '../../../../core/models/load_state.dart';
 import '../../data/repositories/enquiry_repository.dart';
 
@@ -63,6 +64,18 @@ class EnquiryNotifier extends StateNotifier<LoadState> {
     }
   }
 
+  Future<PaymentCredModel> fetchPaymentCred({required String code, required int paymentId}) async {
+    state = LoadState(isLoading: true);  // Set loading state
+    try {
+      final result = await enquiryRepository.fetchPaymentCred(code: code, paymentId: paymentId);
+      state = LoadState(isLoading: false, isSuccess: true);  // Success state
+      return result;
+    } catch (error) {
+      state = LoadState(isLoading: false, error: error.toString());  // Handle exception
+      Toaster.error(error.toString());
+      rethrow;
+    }
+  }
 
   Future<String?> getEnquiryReport({required String passportNo, required String code}) async {
     state = LoadState(isLoading: true);  // Set loading state

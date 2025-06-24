@@ -6,6 +6,7 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ministry/src/features/enquiry/domain/usecase/get_enquiry_list.dart';
+import 'package:ministry/src/features/enquiry/domain/usecase/get_payments.dart';
 
 import '../../domain/usecase/get_countries.dart';
 import '../../domain/usecase/get_medical_agency.dart';
@@ -48,6 +49,11 @@ final getDistrictUseCaseProviders = Provider<GetDistricts>((ref) {
 final getEnquiryListUseCaseProviders = Provider<GetEnquiryList>((ref) {
   final repository = ref.watch(enquiryRepositoryProvider);
   return GetEnquiryList(repository);
+});
+
+final getPaymentListUseCaseProviders = Provider<GetPaymentList>((ref) {
+  final repository = ref.watch(enquiryRepositoryProvider);
+  return GetPaymentList(repository);
 });
 
 

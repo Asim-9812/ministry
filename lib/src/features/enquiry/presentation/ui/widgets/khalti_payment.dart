@@ -12,6 +12,7 @@ import 'package:khalti/khalti.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
 import 'package:ministry/src/core/widgets/common_widgets.dart';
+import 'package:ministry/src/features/enquiry/domain/model/payment_model.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_html_report.dart';
 import 'package:pinput/pinput.dart';
 
@@ -25,7 +26,9 @@ import '../enquiry_paid_html_report.dart';
 
 class KhaltiPaymentUI extends ConsumerStatefulWidget {
   final Map<String, dynamic> data;
-  const KhaltiPaymentUI({required this.data, super.key});
+  final PaymentCredModel paymentCred;
+  final String code;
+  const KhaltiPaymentUI({required this.data, required this.paymentCred, required this.code, super.key});
 
   @override
   ConsumerState<KhaltiPaymentUI> createState() => _KhaltiPaymentUIState();
@@ -136,7 +139,8 @@ class _KhaltiPaymentUIState extends ConsumerState<KhaltiPaymentUI> {
                                   try{
                                     final genToken = await KhaltiServices().initiatePayment(
                                         number: phoneController.text.trim(),
-                                        pin: pinController.text.trim()
+                                        pin: pinController.text.trim(),
+                                        pkey: widget.paymentCred.publickey,
                                     );
 
                                     setState(() {
@@ -195,20 +199,12 @@ class _KhaltiPaymentUIState extends ConsumerState<KhaltiPaymentUI> {
                                     });
                                     final response = await KhaltiServices().confirmPayment(token: token!, otp: otpController.text.trim(), pin: pinController.text.trim());
 
-                                    final code = await ref.read(enquiryNotifier.notifier).insertEnquiry(data: widget.data);
-                                    if(code != null){
-                                      ref.invalidate(enquiryListProvider);
-                                      final value = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: widget.data['passportNumber'], code: code);
-                                      if(value == null){
-                                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
-                                      }
-                                      else{
-                                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>EnquiryPaidHtml(html: value)), (route) => false,);
-                                      }
+                                    final value = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: widget.data['passportNumber'], code: widget.code);
+                                    if(value == null){
+                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
                                     }
                                     else{
-                                      Toaster.error('Something went wrong.');
-                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>EnquiryPaidHtml(html: value)), (route) => false,);
                                     }
 
                                     Toaster.success('Payment Successful');
