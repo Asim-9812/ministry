@@ -11,6 +11,7 @@ PaymentListModel _$PaymentListModelFromJson(Map<String, dynamic> json) =>
       paymentid: (json['paymentid'] as num).toInt(),
       paymentName: json['paymentName'] as String,
       PaymentLogo: json['PaymentLogo'] as String,
+      organizationId: (json['organizationId'] as num).toInt(),
     );
 
 Map<String, dynamic> _$PaymentListModelToJson(PaymentListModel instance) =>
@@ -18,6 +19,7 @@ Map<String, dynamic> _$PaymentListModelToJson(PaymentListModel instance) =>
       'paymentid': instance.paymentid,
       'paymentName': instance.paymentName,
       'PaymentLogo': instance.PaymentLogo,
+      'organizationId': instance.organizationId,
     };
 
 PaymentCredModel _$PaymentCredModelFromJson(Map<String, dynamic> json) =>

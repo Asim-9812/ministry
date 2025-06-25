@@ -28,7 +28,9 @@ class KhaltiPaymentUI extends ConsumerStatefulWidget {
   final Map<String, dynamic> data;
   final PaymentCredModel paymentCred;
   final String code;
-  const KhaltiPaymentUI({required this.data, required this.paymentCred, required this.code, super.key});
+  final PaymentListModel selectedPayment;
+  final String paymentId;
+  const KhaltiPaymentUI({required this.data, required this.paymentId, required this.paymentCred, required this.code, required this.selectedPayment, super.key});
 
   @override
   ConsumerState<KhaltiPaymentUI> createState() => _KhaltiPaymentUIState();
@@ -199,12 +201,38 @@ class _KhaltiPaymentUIState extends ConsumerState<KhaltiPaymentUI> {
                                     });
                                     final response = await KhaltiServices().confirmPayment(token: token!, otp: otpController.text.trim(), pin: pinController.text.trim());
 
-                                    final value = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: widget.data['passportNumber'], code: widget.code);
-                                    if(value == null){
-                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
-                                    }
-                                    else{
-                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>EnquiryPaidHtml(html: value)), (route) => false,);
+                                    final paymentInfo = {
+                                      "tableName": "TransactionalDetails",
+                                      "parameter": {
+                                        "id": null,
+                                        "orgid": "${widget.selectedPayment.organizationId}",
+                                        "paymentmethod": "2",
+                                        "uniquereferenceid": "1",
+                                        "totalamount": "10.0",
+                                        "ledger": "",
+                                        "transactionid": "$response",
+                                        "entrydate": "",
+                                        "paymentBy": "${widget.data['passportNumber']}",
+                                        "extra1": "${widget.code}",
+                                        "extra2": "",
+                                        "extra3": "",
+                                        "flag": "Insert"
+                                      }
+                                    };
+
+                                    final paymentInsert = await ref.read(enquiryNotifier.notifier).insertPaymentInfo(data: paymentInfo);
+
+
+                                    if(paymentInsert){
+                                      final value = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: widget.data['passportNumber'], code: widget.paymentId);
+                                      // ref.invalidate(enquiryController);
+                                      if(value == null){
+                                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+                                      }
+                                      else{
+                                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>EnquiryPaidHtml(html: value)), (route) => false,);
+                                      }
+
                                     }
 
                                     Toaster.success('Payment Successful');

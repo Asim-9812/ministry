@@ -158,27 +158,45 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
 
   @override
   Future<List<PaymentListModel>> fetchPaymentList({required String code}) async {
+    try{
+      final response = await dio.post(Api.getEnquiryList,
+          data: {
+            "tableName": "GetEnquiryByPassportNo",
+            "parameter": {
+              "extra1": "adm",
+              "flag": "getpaymentListbyCompanyCode"
+            }
+          }
+      );
+      if(response.statusCode == 200){
+        final data = response.data['data'] as List<dynamic>;
+        final paymentList = data.map((e)=>PaymentListModel.fromJson(e)).toList();
+        return paymentList;
+      }
+      else{
+        throw Exception('Unable to fetch data.');
+      }
+    }on DioException catch(e){
+      print(e);
+      throw Exception('Unable to fetch data.');
+    }
+  }
+
+  @override
+  Future<bool> insertPaymentInfo({required Map<String, dynamic> data}) async {
    try{
      final response = await dio.post(Api.getEnquiryList,
-         data: {
-           "tableName": "GetEnquiryByPassportNo",
-           "parameter": {
-             "extra1": "adm",
-             "flag": "getpaymentListbyCompanyCode"
-           }
-         }
+         data: data
      );
      if(response.statusCode == 200){
-       final data = response.data['data'] as List<dynamic>;
-       final paymentList = data.map((e)=>PaymentListModel.fromJson(e)).toList();
-       return paymentList;
+       return true;
      }
      else{
-       throw Exception('Unable to fetch data.');
+       throw Exception('Unable to insert data.');
      }
    }on DioException catch(e){
      print(e);
-     throw Exception('Unable to fetch data.');
+     throw Exception('Unable to insert data.');
    }
   }
 
@@ -275,7 +293,7 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
   Future<String?> getEnquiryReport({required String passportNo, required String code}) async {
 
     try{
-      // print('${Api.getAppointmentSlip}$passportNo&code=$code');
+      print('${Api.getAppointmentSlip}$passportNo&code=$code');
 
       final response = await dio.get('${Api.getAppointmentSlip}$passportNo&code=$code');
       if(response.statusCode == 200){

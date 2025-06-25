@@ -100,8 +100,6 @@ class EnquiryPaidDetails extends ConsumerWidget {
                                           border: Border.all(
                                               color: MyColors.grey
                                           )
-
-
                                       ),
                                       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                                       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),

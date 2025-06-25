@@ -15,6 +15,7 @@ abstract class EnquiryRepository{
   Future<List<dynamic>> fetchProvinces();
   Future<List<dynamic>> fetchDistricts({required int? provinceId});
   Future<String?> insertEnquiry({required Map<String, dynamic> data});
+  Future<bool> insertPaymentInfo({required Map<String, dynamic> data});
 
   Future<List<PaymentListModel>> fetchPaymentList({required String code});
   Future<PaymentCredModel> fetchPaymentCred({required String code, required int paymentId});

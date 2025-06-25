@@ -7,6 +7,7 @@ class KhaltiServices{
 
   Future<String> initiatePayment({required String number, required String pin, required String pkey}) async {
     try {
+
       KhaltiService.publicKey = pkey;
       final service = KhaltiService(client: KhaltiHttpClient());
 
@@ -14,14 +15,9 @@ class KhaltiServices{
         request: PaymentInitiationRequestModel(
           amount: 1000,
           mobile: number,
-          productIdentity: 'mac-mini',
-          productName: 'Apple Mac Mini',
+          productIdentity: 'appointment',
+          productName: 'Appointment',
           transactionPin: pin,
-          productUrl: 'https://khalti.com/bazaar/mac-mini-16-512-m1',
-          additionalData: {
-            'vendor': 'Oliz Store',
-            'manufacturer': 'Apple Inc.',
-          },
         ),
       );
 
@@ -44,7 +40,7 @@ class KhaltiServices{
 
 
 
-  Future<bool> confirmPayment({required String token, required String otp, required String pin}) async {
+  Future<String?> confirmPayment({required String token, required String otp, required String pin}) async {
     try{
 
       print('confirming');
@@ -60,7 +56,7 @@ class KhaltiServices{
         ),
       );
 
-      return true;
+      return confirmationModel.idx;
 
 
     }catch (e){
@@ -71,10 +67,10 @@ class KhaltiServices{
         final errorKey = errorData?['error_key'] ?? '';
 
         print('Khalti Error [$errorKey]: $errorDetail');
-        throw '$errorDetail';
+        return null;
       } else {
         print('Unexpected error: $e');
-        throw 'Unexpected error occurred';
+        return null;
       }
     }
   }

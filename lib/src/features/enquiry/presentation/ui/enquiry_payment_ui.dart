@@ -11,8 +11,6 @@ import 'package:ministry/src/core/utils/shimmers.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
 import 'package:ministry/src/features/enquiry/application/controller/enquiry_controller.dart';
 import 'package:ministry/src/features/enquiry/data/services/esewa_services.dart';
-import 'package:ministry/src/features/enquiry/domain/model/medical_agency_model.dart';
-import 'package:ministry/src/features/enquiry/domain/model/payment_model.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_paid_html_report.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/widgets/khalti_payment.dart';
 import 'package:pdf/pdf.dart';
@@ -422,15 +420,44 @@ class EnquiryPaymentUI extends ConsumerWidget {
 
                                 final verification = await EsewaServices().verifyTransactionStatus(result: makePayment, pkey: pkey, skey: skey);
 
-                                if(verification){
-                                  final value = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: data['passportNumber'], code: paymentId);
-                                  // ref.invalidate(enquiryController);
-                                  if(value == null){
-                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+                                if(verification != null){
+
+                                  final paymentInfo = {
+                                    "tableName": "TransactionalDetails",
+                                    "parameter": {
+                                      "id": null,
+                                      "orgid": "${selectedPayment.organizationId}",
+                                      "paymentmethod": "1",
+                                      "uniquereferenceid": "1",
+                                      "totalamount": "10.0",
+                                      "ledger": "",
+                                      "transactionid": "$verification",
+                                      "entrydate": "",
+                                      "paymentBy": "${data['passportNumber']}",
+                                      "extra1": "$code",
+                                      "extra2": "",
+                                      "extra3": "",
+                                      "flag": "Insert"
+                                    }
+                                  };
+
+                                  final paymentInsert = await ref.read(enquiryNotifier.notifier).insertPaymentInfo(data: paymentInfo);
+
+
+                                  if(paymentInsert){
+                                    print('payments done');
+                                    final value = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: data['passportNumber'], code: paymentId);
+                                    // ref.invalidate(enquiryController);
+                                    print('print done');
+                                    if(value == null){
+                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+                                    }
+                                    else{
+                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>EnquiryPaidHtml(html: value)), (route) => false,);
+                                    }
+
                                   }
-                                  else{
-                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>EnquiryPaidHtml(html: value)), (route) => false,);
-                                  }
+
 
 
 
@@ -455,7 +482,7 @@ class EnquiryPaymentUI extends ConsumerWidget {
 
                               ref.read(enquiryController.notifier).paymentLoading(true);
 
-                              routeTo(context, KhaltiPaymentUI(data: data, paymentCred: paymentCred, code: paymentId,));
+                              routeTo(context, KhaltiPaymentUI(data: data, paymentCred: paymentCred, code: code, selectedPayment: selectedPayment, paymentId: paymentId,));
 
                               ref.read(enquiryController.notifier).paymentLoading(false);
 

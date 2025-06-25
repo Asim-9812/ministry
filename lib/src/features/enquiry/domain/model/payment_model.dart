@@ -29,11 +29,13 @@ class PaymentListModel {
   final int paymentid;
   final String paymentName;
   final String PaymentLogo;
+  final int organizationId;
 
   PaymentListModel({
     required this.paymentid,
     required this.paymentName,
     required this.PaymentLogo,
+    required this.organizationId,
   });
 
   factory PaymentListModel.fromJson(Map<String, dynamic> json) =>

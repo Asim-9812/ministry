@@ -29,7 +29,7 @@ class EnquiryNotifier extends StateNotifier<LoadState> {
 
       if (result != null) {
         state = LoadState(isLoading: false, isSuccess: true);  // Success state
-        Toaster.success('Enquiry submitted.');
+        // Toaster.success('Enquiry submitted.');
         return result;
       } else {
         state = LoadState(isLoading: false, error: 'Unable to submit enquiry.');  // Error state
@@ -40,6 +40,29 @@ class EnquiryNotifier extends StateNotifier<LoadState> {
       state = LoadState(isLoading: false, error: error.toString());  // Handle exception
       Toaster.error(error.toString());
       return null;
+    }
+  }
+
+  Future<bool> insertPaymentInfo({required Map<String, dynamic> data}) async {
+    state = LoadState(isLoading: true);  // Set loading state
+
+    try {
+      bool result = await enquiryRepository.insertPaymentInfo(data: data);
+
+
+      if (result) {
+        state = LoadState(isLoading: false, isSuccess: true);  // Success state
+        Toaster.success('Enquiry submitted.');
+        return true;
+      } else {
+        state = LoadState(isLoading: false, error: 'Unable to submit enquiry.');  // Error state
+        Toaster.error('Unable to submit enquiry.');
+        return false;
+      }
+    } catch (error) {
+      state = LoadState(isLoading: false, error: error.toString());  // Handle exception
+      Toaster.error(error.toString());
+      return false;
     }
   }
 
