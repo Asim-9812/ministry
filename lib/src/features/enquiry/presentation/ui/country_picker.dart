@@ -28,8 +28,10 @@ class CountryPicker extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final selectedCountry = ref.watch(enquiryController).selectedCountryDynamic;
     final selectedProvince = ref.watch(enquiryController).selectedProvince;
+    final selectedSector = ref.watch(enquiryController).selectedSector;
     final countriesAsyncValue = ref.watch(availableCountriesProvider);
     final provincesAsyncValue = ref.watch(provinceProvider);
+    final sectorAsyncValue = ref.watch(sectorProvider);
     final districtAsyncValue = ref.watch(districtProvider(selectedProvince == null ? null : selectedProvince['id']));
     final selectedDistrict = ref.watch(enquiryController).selectedDistrict;
     return Scaffold(
@@ -96,16 +98,16 @@ class CountryPicker extends ConsumerWidget {
                     loading: ()=>commonShimmer(width: double.infinity,height: 50)
                 ),
                 h20,
-                provincesAsyncValue.when(
-                    data: (provinces){
+                sectorAsyncValue.when(
+                    data: (sectors){
                       return DropdownSearch<Map<String, dynamic>>(
-                        items: (filter, loadProps) => provinces.map((e)=>e as Map<String, dynamic>).toList(), // List of provinces as <String>
-                        selectedItem: selectedProvince,
+                        items: (filter, loadProps) => sectors.map((e)=>e as Map<String, dynamic>).toList(), // List of provinces as <String>
+                        selectedItem: selectedSector,
                         compareFn: (a, b) => a['id'] == b['id'],
                         itemAsString: (item) => item['value'],
                         decoratorProps: DropDownDecoratorProps(
                           decoration: InputDecoration(
-                            labelText: "Select a province",
+                            labelText: "Select a Sector",
                             prefixIcon: Icon(Icons.pin_drop,color: MyColors.primary,),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -118,7 +120,7 @@ class CountryPicker extends ConsumerWidget {
                           ),
                         ),
                         onChanged: (value) {
-                          ref.read(enquiryController.notifier).selectProvince(value);
+                          ref.read(enquiryController.notifier).selectSector(value);
                         },
                         popupProps: PopupProps.menu(
                             showSearchBox: true, // Enables the search feature
@@ -137,7 +139,7 @@ class CountryPicker extends ConsumerWidget {
                         ),
                         validator: (value) {
                           if(value == null){
-                            return 'Please select a province';
+                            return 'Please select a sector';
                           }
                           return null;
                         },
@@ -146,66 +148,117 @@ class CountryPicker extends ConsumerWidget {
                     error: (error, stack)=> Center(child: Text('$error')),
                     loading: ()=>commonShimmer(width: double.infinity,height: 50)
                 ),
-                h20,
-                districtAsyncValue.when(
-                  data: (districts) {
-                    return DropdownSearch<Map<String, dynamic>>(
-                      items: (filter, loadProps) => districts.isEmpty ? [] : districts.map((e) => e as Map<String, dynamic>).toList() , // List of provinces as <String>
-                      selectedItem: selectedProvince,
-                      compareFn: (a, b) => a['districtId'] == b['districtId'],
-                      filterFn: (district, String query) {
-                        final lowerQuery = query.toLowerCase();
-                        final name = district['districtName'];
-                        if (name == null) return false;
-                        return name.toLowerCase().contains(lowerQuery);
-                      },
-
-                      itemAsString: (item) => item['districtName'] ?? 'N/A',
-
-                      decoratorProps: DropDownDecoratorProps(
-                        decoration: InputDecoration(
-                          labelText: "Select a district",
-                          prefixIcon: Icon(Icons.pin_drop,color: MyColors.primary,),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: MyColors.primary),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: MyColors.primary),
-                          ),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        ref.read(enquiryController.notifier).selectDistrict(value);
-                      },
-                      popupProps: PopupProps.menu(
-                          showSearchBox: true, // Enables the search feature
-                          searchFieldProps: TextFieldProps(
-                            decoration: InputDecoration(
-                              hintText: "Search district...",
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: MyColors.primary),
-                              ),
-                            ),
-                          ),
-                          constraints: BoxConstraints(
-                              maxHeight: 250
-                          ),
-                        emptyBuilder: (context, searchEntry) => Center(child: Text('No available district in this province.')),
-                      ),
-                      validator: (value) {
-                        if(value == null){
-                          return 'Please select a district';
-                        }
-                        return null;
-                      },
-                    );
-                  },
-                  error: (error, stack) => Text('$error'),
-                  loading: () => commonShimmer(height: 50, width: double.infinity),
-                ),
+                // h20,
+                // provincesAsyncValue.when(
+                //     data: (provinces){
+                //       return DropdownSearch<Map<String, dynamic>>(
+                //         items: (filter, loadProps) => provinces.map((e)=>e as Map<String, dynamic>).toList(), // List of provinces as <String>
+                //         selectedItem: selectedProvince,
+                //         compareFn: (a, b) => a['id'] == b['id'],
+                //         itemAsString: (item) => item['value'],
+                //         decoratorProps: DropDownDecoratorProps(
+                //           decoration: InputDecoration(
+                //             labelText: "Select a province",
+                //             prefixIcon: Icon(Icons.pin_drop,color: MyColors.primary,),
+                //             border: OutlineInputBorder(
+                //               borderRadius: BorderRadius.circular(12),
+                //               borderSide: BorderSide(color: MyColors.primary),
+                //             ),
+                //             enabledBorder: OutlineInputBorder(
+                //               borderRadius: BorderRadius.circular(12),
+                //               borderSide: BorderSide(color: MyColors.primary),
+                //             ),
+                //           ),
+                //         ),
+                //         onChanged: (value) {
+                //           ref.read(enquiryController.notifier).selectProvince(value);
+                //         },
+                //         popupProps: PopupProps.menu(
+                //             showSearchBox: true, // Enables the search feature
+                //             searchFieldProps: TextFieldProps(
+                //               decoration: InputDecoration(
+                //                 hintText: "Search province...",
+                //                 border: OutlineInputBorder(
+                //                   borderRadius: BorderRadius.circular(12),
+                //                   borderSide: BorderSide(color: MyColors.primary),
+                //                 ),
+                //               ),
+                //             ),
+                //             constraints: BoxConstraints(
+                //                 maxHeight: 250
+                //             )
+                //         ),
+                //         validator: (value) {
+                //           if(value == null){
+                //             return 'Please select a province';
+                //           }
+                //           return null;
+                //         },
+                //       );
+                //     },
+                //     error: (error, stack)=> Center(child: Text('$error')),
+                //     loading: ()=>commonShimmer(width: double.infinity,height: 50)
+                // ),
+                // h20,
+                // districtAsyncValue.when(
+                //   data: (districts) {
+                //     return DropdownSearch<Map<String, dynamic>>(
+                //       items: (filter, loadProps) => districts.isEmpty ? [] : districts.map((e) => e as Map<String, dynamic>).toList() , // List of provinces as <String>
+                //       selectedItem: selectedProvince,
+                //       compareFn: (a, b) => a['districtId'] == b['districtId'],
+                //       filterFn: (district, String query) {
+                //         final lowerQuery = query.toLowerCase();
+                //         final name = district['districtName'];
+                //         if (name == null) return false;
+                //         return name.toLowerCase().contains(lowerQuery);
+                //       },
+                //
+                //       itemAsString: (item) => item['districtName'] ?? 'N/A',
+                //
+                //       decoratorProps: DropDownDecoratorProps(
+                //         decoration: InputDecoration(
+                //           labelText: "Select a district",
+                //           prefixIcon: Icon(Icons.pin_drop,color: MyColors.primary,),
+                //           border: OutlineInputBorder(
+                //             borderRadius: BorderRadius.circular(12),
+                //             borderSide: BorderSide(color: MyColors.primary),
+                //           ),
+                //           enabledBorder: OutlineInputBorder(
+                //             borderRadius: BorderRadius.circular(12),
+                //             borderSide: BorderSide(color: MyColors.primary),
+                //           ),
+                //         ),
+                //       ),
+                //       onChanged: (value) {
+                //         ref.read(enquiryController.notifier).selectDistrict(value);
+                //       },
+                //       popupProps: PopupProps.menu(
+                //           showSearchBox: true, // Enables the search feature
+                //           searchFieldProps: TextFieldProps(
+                //             decoration: InputDecoration(
+                //               hintText: "Search district...",
+                //               border: OutlineInputBorder(
+                //                 borderRadius: BorderRadius.circular(12),
+                //                 borderSide: BorderSide(color: MyColors.primary),
+                //               ),
+                //             ),
+                //           ),
+                //           constraints: BoxConstraints(
+                //               maxHeight: 250
+                //           ),
+                //         emptyBuilder: (context, searchEntry) => Center(child: Text('No available district in this province.')),
+                //       ),
+                //       validator: (value) {
+                //         if(value == null){
+                //           return 'Please select a district';
+                //         }
+                //         return null;
+                //       },
+                //     );
+                //   },
+                //   error: (error, stack) => Text('$error'),
+                //   loading: () => commonShimmer(height: 50, width: double.infinity),
+                // ),
                 h20,
                 Row(
                   children: [
@@ -219,7 +272,7 @@ class CountryPicker extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(16)
                             )
                           ),
-                          onPressed: (selectedCountry == null || selectedProvince == null || selectedDistrict == null) ? null : ()=>routeTo(context, EnquiryForm(provinceId: selectedProvince['id'],)), child: Text('Next')),
+                          onPressed: (selectedCountry == null || selectedProvince == null || selectedSector == null) ? null : ()=>routeTo(context, EnquiryForm()), child: Text('Next')),
                     ),
                   ],
                 )

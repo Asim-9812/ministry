@@ -33,6 +33,7 @@ class EnquiryController extends ChangeNotifier{
   String? selectedCountry;
   dynamic selectedCountryDynamic;
   dynamic selectedProvince;
+  dynamic selectedSector;
   dynamic selectedDistrict;
   String? countryErrorText;
   String? provinceErrorText;
@@ -67,6 +68,11 @@ class EnquiryController extends ChangeNotifier{
 
   void selectProvince(dynamic province){
     selectedProvince = province;
+    notifyListeners();
+  }
+
+  void selectSector(dynamic province){
+    selectedSector = province;
     notifyListeners();
   }
 

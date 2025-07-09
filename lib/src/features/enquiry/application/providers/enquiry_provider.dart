@@ -38,6 +38,11 @@ final provinceProvider = FutureProvider<List<dynamic>>((ref) async {
   return getProvinceUseCase();
 });
 
+final sectorProvider = FutureProvider<List<dynamic>>((ref) async {
+  final getSectorUseCase = ref.watch(getSectorUseCaseProviders);
+  return getSectorUseCase();
+});
+
 final districtProvider = FutureProvider.family<List<dynamic>, int?>((ref, provinceId) async {
   final getDistrictUseCase = ref.watch(getDistrictUseCaseProviders);
   return getDistrictUseCase(provinceId: provinceId);

@@ -11,6 +11,9 @@ class KhaltiServices{
       KhaltiService.publicKey = pkey;
       final service = KhaltiService(client: KhaltiHttpClient());
 
+
+
+
       final initiationModel = await service.initiatePayment(
         request: PaymentInitiationRequestModel(
           amount: 1000,
@@ -18,8 +21,11 @@ class KhaltiServices{
           productIdentity: 'appointment',
           productName: 'Appointment',
           transactionPin: pin,
+
         ),
       );
+
+
 
       return initiationModel.token;
     } catch (e) {

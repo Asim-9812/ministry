@@ -8,21 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:khalti/khalti.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
 import 'package:ministry/src/core/widgets/common_widgets.dart';
 import 'package:ministry/src/features/enquiry/domain/model/payment_model.dart';
-import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_html_report.dart';
 import 'package:pinput/pinput.dart';
-
 import '../../../../../core/resources/gap_manager.dart';
 import '../../../../dashboard/presentation/ui/dashboard.dart';
 import '../../../application/controller/enquiry_notifier.dart';
-import '../../../application/providers/enquiry_provider.dart';
 import '../../../data/services/khalti_services.dart';
-import '../enquiry_paid_details.dart';
 import '../enquiry_paid_html_report.dart';
+
+
 
 class KhaltiPaymentUI extends ConsumerStatefulWidget {
   final Map<String, dynamic> data;
@@ -250,7 +247,6 @@ class _KhaltiPaymentUIState extends ConsumerState<KhaltiPaymentUI> {
                                 else{
                                   Toaster.error('OTP is required');
                                 }
-                
                               },
                               child: isLoading? SpinKitDualRing(color: MyColors.white, size: 16,) :  Text('Confirm Payment')),
                         ),

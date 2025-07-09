@@ -40,6 +40,12 @@ final getProvinceUseCaseProviders = Provider<GetProvinces>((ref) {
   return GetProvinces(repository);
 });
 
+final getSectorUseCaseProviders = Provider<GetSectors>((ref) {
+  final repository = ref.watch(enquiryRepositoryProvider);
+  return GetSectors(repository);
+});
+
+
 final getDistrictUseCaseProviders = Provider<GetDistricts>((ref) {
   final repository = ref.watch(enquiryRepositoryProvider);
   return GetDistricts(repository);

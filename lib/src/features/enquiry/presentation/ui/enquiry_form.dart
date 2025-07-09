@@ -19,8 +19,8 @@ import '../../../login/application/login_notifier.dart';
 import '../../application/controller/enquiry_notifier.dart';
 
 class EnquiryForm extends ConsumerWidget {
-  final int provinceId;
-  const EnquiryForm({required this.provinceId,super.key});
+  // final int provinceId;
+  const EnquiryForm({super.key});
 
   @override
   Widget build(BuildContext context, ref) {
@@ -41,7 +41,7 @@ class EnquiryForm extends ConsumerWidget {
     final selectedCountry = ref.watch(enquiryController).selectedCountryDynamic;
     // final selectedCode = ref.watch(enquiryController).selectedCode;
     // final selectedMedicalAgency = ref.watch(enquiryController).selectedMedical;
-    final selectedDistrict = ref.watch(enquiryController).selectedDistrict;
+    final selectedSector = ref.watch(enquiryController).selectedSector;
     final authState = ref.watch(loginNotifierProvider);
     final formState = ref.watch(enquiryNotifier);
 
@@ -428,7 +428,7 @@ class EnquiryForm extends ConsumerWidget {
                                     "flag": "string",
                                     "entryDate": now,
                                     "appointmentDate": DateFormat('yyyy-MM-ddTHH:mm:ss').format(selectedDate!),
-                                    "extra1": '${selectedDistrict['districtId']}'
+                                    "extra1": '${selectedSector['id']}'
                                   };
                                   final response = await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data);
                                   if(response != null){

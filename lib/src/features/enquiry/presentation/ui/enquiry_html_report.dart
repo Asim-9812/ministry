@@ -6,18 +6,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
 import 'package:ministry/src/core/widgets/common_widgets.dart';
-import 'package:ministry/src/features/report/application/providers/medical_report_provider.dart';
-import 'package:ministry/src/features/report/data/sample_report.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:printing/printing.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:htmltopdfwidgets/htmltopdfwidgets.dart' as w2p;
 
-import '../../../dashboard/presentation/ui/dashboard.dart';
-import '../../application/providers/enquiry_provider.dart';
 
 class EnquiryReportHtml extends ConsumerWidget {
   final String html;

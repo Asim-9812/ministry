@@ -33,6 +33,9 @@ class QuickServices extends StatelessWidget {
             )
           ),
           onPressed : ()=> routeTo(context, Enquiry()),
+          // onPressed : () async {
+          //   await ConnectIpsService().connectIps();
+          // },
           child : Text('Click Here')
         )
       )

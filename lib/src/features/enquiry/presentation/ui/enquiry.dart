@@ -112,9 +112,6 @@ class Enquiry extends ConsumerWidget {
                           Toaster.error('Passport number is required');
                         }
                         else{
-
-
-
                           routeTo(context, EnquiryList(passportNo: controller.text.trim()));
                           controller.clear();
                         }

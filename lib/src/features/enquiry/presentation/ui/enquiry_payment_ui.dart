@@ -1,9 +1,5 @@
 
 
-
-
-import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ministry/src/core/api/api.dart';
 import 'package:ministry/src/core/utils/page_route.dart';
@@ -66,12 +62,11 @@ class EnquiryPaymentUI extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    
                     Theme(
                       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                       child: ExpansionTile(
                         initiallyExpanded: true,
-                          title: Text('Appointment Details',style: ph2,),
+                        title: Text('Appointment Details',style: ph2,),
                         children: [
                           Container(
                             decoration: BoxDecoration(
@@ -80,8 +75,6 @@ class EnquiryPaymentUI extends ConsumerWidget {
                                 border: Border.all(
                                     color: MyColors.grey
                                 )
-
-
                             ),
                             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -167,8 +160,6 @@ class EnquiryPaymentUI extends ConsumerWidget {
                                   border: Border.all(
                                       color: MyColors.grey
                                   )
-
-
                               ),
                               margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -186,8 +177,6 @@ class EnquiryPaymentUI extends ConsumerWidget {
                       ),
                     ),
                     h10,
-        
-        
                     // h10,
                     //
                     // Padding(
@@ -335,7 +324,6 @@ class EnquiryPaymentUI extends ConsumerWidget {
               child: Text('Select payment method',style: br2,),
             ),
             h10,
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: paymentAsyncValue.when(
@@ -500,7 +488,6 @@ class EnquiryPaymentUI extends ConsumerWidget {
                 ],
               ),
             ),
-        
           ],
         ),
       ),

@@ -47,6 +47,20 @@ class GetProvinces{
 
 }
 
+class GetSectors{
+
+  final EnquiryRepository repository;
+
+  GetSectors(this.repository);
+
+  Future<List<dynamic>> call() {
+    return repository.fetchSectors();
+  }
+
+
+}
+
+
 class GetDistricts{
 
   final EnquiryRepository repository;
