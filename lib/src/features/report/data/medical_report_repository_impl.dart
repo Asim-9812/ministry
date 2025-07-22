@@ -52,6 +52,7 @@ class MedicalReportRepositoryImpl extends MedicalReportRepository{
   @override
   Future<List<Map<String, dynamic>>> getMedicalReportList({required String id, required String token}) async {
     try{
+      print('refreshed');
 
       final response = await dio.get('${Api.getMedicalReport}$id',
         // options: Options(

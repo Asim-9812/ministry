@@ -18,7 +18,9 @@ class EnquiryController extends ChangeNotifier{
 
   final formKey = GlobalKey<FormState>();
   TextEditingController passportController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
+  TextEditingController confirmPassportController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController remarksController = TextEditingController();

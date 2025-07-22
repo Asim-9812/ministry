@@ -205,7 +205,7 @@ class _KhaltiPaymentUIState extends ConsumerState<KhaltiPaymentUI> {
                                         "orgid": "${widget.selectedPayment.organizationId}",
                                         "paymentmethod": "2",
                                         "uniquereferenceid": "1",
-                                        "totalamount": "10.0",
+                                        "totalamount": "9500.0",
                                         "ledger": "",
                                         "transactionid": "$response",
                                         "entrydate": "",

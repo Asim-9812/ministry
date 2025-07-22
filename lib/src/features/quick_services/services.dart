@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ministry/src/core/utils/page_route.dart';
 import 'package:ministry/src/core/utils/toaster.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/enquiry.dart';
@@ -7,12 +8,15 @@ import 'package:ministry/src/features/enquiry/presentation/ui/enquiry.dart';
 import '../../core/resources/color_manager.dart';
 import '../../core/resources/font_manager.dart';
 import '../../core/resources/gap_manager.dart';
+import '../dashboard/application/controller/dashboard_controller.dart';
+import '../login/application/login_notifier.dart';
 
-class QuickServices extends StatelessWidget {
+class QuickServices extends ConsumerWidget {
   const QuickServices({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final authState = ref.watch(loginNotifierProvider);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: ListTile(
@@ -32,7 +36,20 @@ class QuickServices extends StatelessWidget {
               borderRadius: BorderRadius.circular(12)
             )
           ),
-          onPressed : ()=> routeTo(context, Enquiry()),
+          onPressed : (){
+
+            if(authState.user == null){
+              ref.read(dashboardController.notifier).changeNavIndex(3);
+              ref.read(dashboardController.notifier).changePageIndex(4);
+              Toaster.message('Please log in to get an appointment.');
+
+            }
+            else{
+              routeTo(context, Enquiry());
+            }
+
+
+          },
           // onPressed : () async {
           //   await ConnectIpsService().connectIps();
           // },

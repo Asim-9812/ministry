@@ -14,23 +14,17 @@ class ConnectIpsService{
       KhaltiService.publicKey = 'live_public_key_ceead578475246fc83a9040d00610f93';
       final service = KhaltiService(client: KhaltiHttpClient());
       final bankPaymentUrl = service.buildBankUrl(
-        bankId: '1234567890',
+        bankId: 'UniqueID',
         amount: 1000,
-        mobile: '9818327838',
-        productIdentity: 'macbook-pro-21',
-        productName: 'Macbook Pro 2021',
         paymentType: PaymentType.connectIPS,
-        returnUrl: 'www.google.com',
+        productName: 'Test product',
+        mobile: '9887162315',
+        productIdentity: 'TEST122',
+        returnUrl: 'www.google.com'
       );
-      print('url ; $bankPaymentUrl');
-
       await ExternalLinks.url(bankPaymentUrl);
-
-
     }catch (e){
       print(e);
     }
-
   }
-
 }

@@ -20,21 +20,24 @@ class PublicNotices extends ConsumerWidget {
           if(notices.isEmpty){
             return NoPublicNotices();
           }
-          return ListView.separated(
-            padding: EdgeInsets.only(bottom: 50),
-            itemCount: notices.length,
-              separatorBuilder: (context,index){
-                return Divider(
-                  color: MyColors.grey,
-                  endIndent: 16,
-                  indent: 16,
-                );
-              },
-              itemBuilder: (context,index){
-                final notice = notices[index];
+          return RefreshIndicator(
+            onRefresh: () async => ref.refresh(noticeProviders),
+            child: ListView.separated(
+              padding: EdgeInsets.only(bottom: 50),
+              itemCount: notices.length,
+                separatorBuilder: (context,index){
+                  return Divider(
+                    color: MyColors.grey,
+                    endIndent: 16,
+                    indent: 16,
+                  );
+                },
+                itemBuilder: (context,index){
+                  final notice = notices[index];
 
-                return NoticeDialog(notice: notice);
-              }
+                  return NoticeDialog(notice: notice);
+                }
+            ),
           );
         },
         error: (error,stack)=>Padding(

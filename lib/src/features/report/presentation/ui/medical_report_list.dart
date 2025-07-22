@@ -25,24 +25,27 @@ class MedicalReportList extends ConsumerWidget {
       appBar: commonNavBar('Report'),
       body: reportListAsyncValue.when(
           data: (reportList){
-            return ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
-                itemCount: reportList.length,
-                itemBuilder: (context, index){
-                  final report = reportList[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: ListTile(
-                      onTap: ()=>routeTo(context, MedicalReport(html: report['reports'])),
-                      tileColor: MyColors.lightGrey,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)
+            return RefreshIndicator(
+              onRefresh: () async => ref.refresh(medicalReportListProvider),
+              child: ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+                  itemCount: reportList.length,
+                  itemBuilder: (context, index){
+                    final report = reportList[index];
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: ListTile(
+                        onTap: ()=>routeTo(context, MedicalReport(html: report['reports'])),
+                        tileColor: MyColors.lightGrey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)
+                        ),
+                        leading: Icon(Icons.file_present_rounded,color: MyColors.primary,),
+                        title: Text('${report['patientId']}'),
                       ),
-                      leading: Icon(Icons.file_present_rounded,color: MyColors.primary,),
-                      title: Text('${report['patientId']}'),
-                    ),
-                  );
-                }
+                    );
+                  }
+              ),
             );
           },
           error: (error,stack)=>Center(child: Text('$error'),),

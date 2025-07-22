@@ -7,8 +7,11 @@ class EnquiryModel {
   @JsonKey(name: 'Id')
   final int id;
 
-  @JsonKey(name: 'FullName')
-  final String fullName;
+  @JsonKey(name: 'FirstName')
+  final String firstName;
+
+  @JsonKey(name: 'LastName')
+  final String? lastName;
 
   @JsonKey(name: 'Contact')
   final String contact;
@@ -45,7 +48,8 @@ class EnquiryModel {
 
   EnquiryModel({
     required this.id,
-    required this.fullName,
+    required this.firstName,
+    this.lastName,
     required this.contact,
     required this.emailID,
     required this.passportNumber,

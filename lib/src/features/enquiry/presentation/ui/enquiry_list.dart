@@ -37,88 +37,97 @@ class EnquiryList extends ConsumerWidget {
           data: (enquiries){
             if(enquiries.isEmpty){
               return Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.search_off, color: MyColors.grey, size: 48,),
-                    h10,
-                    Text('No Appointments found.', style: bh3,)
-                  ],
+                child: RefreshIndicator(
+                  onRefresh: () async => ref.refresh(enquiryListProvider(passportNo)),
+                  child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.search_off, color: MyColors.grey, size: 48,),
+                        h10,
+                        Text('No Appointments found.', style: bh3,)
+                      ],
+                    ),
+                  ),
                 ),
               );
             }
-            return ListView.builder(
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                itemCount: enquiries.length,
-                itemBuilder: (context, index) {
-                  final enquiry = enquiries[index];
-                  final code = enquiry.medicalAgency;
-                  final date = DateFormat('yyyy-MM-dd HH:mm a').format(enquiry.appointmentDate);
-                  // final status = enquiry.extra1;
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: ListTile(
-                        onTap: () async {
-                          Toaster.message('Please wait...');
-                          final reportHtml = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: enquiry.passportNumber, code: enquiry.id.toString());
+            return RefreshIndicator(
+              onRefresh: () async => ref.refresh(enquiryListProvider(passportNo)),
+              child: ListView.builder(
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  itemCount: enquiries.length,
+                  itemBuilder: (context, index) {
+                    final enquiry = enquiries[index];
+                    final code = enquiry.medicalAgency;
+                    final date = DateFormat('yyyy-MM-dd').format(enquiry.appointmentDate);
+                    // final status = enquiry.extra1;
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: ListTile(
+                          onTap: () async {
+                            Toaster.message('Please wait...');
+                            final reportHtml = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: enquiry.passportNumber, code: enquiry.id.toString());
 
-                          if(reportHtml == null){
-                            Toaster.error('Something went wrong. Try again later');
-                          }
-                          else{
-                            routeTo(context, EnquiryReportHtml(html: reportHtml));
-                          }
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            side: BorderSide(
-                                color: MyColors.primary
-                            )
-                        ),
-                        // tileColor: MyColors.lightGrey,
-                        leading: Icon(Icons.file_copy_outlined, color: MyColors.primary,),
-                        title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(enquiry.medicalAgencyFullName,style: br1, maxLines: 1,),
-                            Text('Passport No. ${enquiry.passportNumber}',style: br2,),
-                          ],
-                        ),
-                        trailing: Column(
-                          mainAxisAlignment:MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(date),
-                            // status == null
-                            //     ? Container(
-                            //       decoration: BoxDecoration(
-                            //         color: MyColors.lightGrey,
-                            //         borderRadius: BorderRadius.circular(8)
-                            //       ),
-                            //       padding: EdgeInsets.all(4),
-                            //       child: Text('Pending'))
-                            //     : status.toLowerCase() == 'accepted'
-                            //     ? Container(
-                            //       decoration: BoxDecoration(
-                            //           color: MyColors.green,
-                            //           borderRadius: BorderRadius.circular(8)
-                            //       ),
-                            //       padding: EdgeInsets.all(4),
-                            //       child: Text('Accepted',style: TextStyle(color: MyColors.white),))
-                            //     : Container(
-                            //       decoration: BoxDecoration(
-                            //           color: MyColors.red,
-                            //           borderRadius: BorderRadius.circular(8)
-                            //       ),
-                            //       padding: EdgeInsets.all(4),
-                            //       child: Text('Rejected',style: TextStyle(color: MyColors.white))),
-                          ],
-                        )
-                    ),
-                  );
-                },
+                            if(reportHtml == null){
+                              Toaster.error('Something went wrong. Try again later');
+                            }
+                            else{
+                              routeTo(context, EnquiryReportHtml(html: reportHtml));
+                            }
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              side: BorderSide(
+                                  color: MyColors.primary
+                              )
+                          ),
+                          // tileColor: MyColors.lightGrey,
+                          leading: Icon(Icons.file_copy_outlined, color: MyColors.primary,),
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(enquiry.medicalAgencyFullName,style: br1, maxLines: 1,),
+                              Text('Passport No. ${enquiry.passportNumber}',style: br2,),
+                            ],
+                          ),
+                          trailing: Column(
+                            mainAxisAlignment:MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(date),
+                              // status == null
+                              //     ? Container(
+                              //       decoration: BoxDecoration(
+                              //         color: MyColors.lightGrey,
+                              //         borderRadius: BorderRadius.circular(8)
+                              //       ),
+                              //       padding: EdgeInsets.all(4),
+                              //       child: Text('Pending'))
+                              //     : status.toLowerCase() == 'accepted'
+                              //     ? Container(
+                              //       decoration: BoxDecoration(
+                              //           color: MyColors.green,
+                              //           borderRadius: BorderRadius.circular(8)
+                              //       ),
+                              //       padding: EdgeInsets.all(4),
+                              //       child: Text('Accepted',style: TextStyle(color: MyColors.white),))
+                              //     : Container(
+                              //       decoration: BoxDecoration(
+                              //           color: MyColors.red,
+                              //           borderRadius: BorderRadius.circular(8)
+                              //       ),
+                              //       padding: EdgeInsets.all(4),
+                              //       child: Text('Rejected',style: TextStyle(color: MyColors.white))),
+                            ],
+                          )
+                      ),
+                    );
+                  },
+              ),
             );
           },
           error: (error, stack)=> Center(child: Text('$error', style: bh3,)),

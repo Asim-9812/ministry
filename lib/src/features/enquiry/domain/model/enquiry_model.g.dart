@@ -8,7 +8,8 @@ part of 'enquiry_model.dart';
 
 EnquiryModel _$EnquiryModelFromJson(Map<String, dynamic> json) => EnquiryModel(
       id: (json['Id'] as num).toInt(),
-      fullName: json['FullName'] as String,
+      firstName: json['FirstName'] as String,
+      lastName: json['LastName'] as String?,
       contact: json['Contact'] as String,
       emailID: json['EmailID'] as String,
       passportNumber: json['PassportNumber'] as String,
@@ -25,7 +26,8 @@ EnquiryModel _$EnquiryModelFromJson(Map<String, dynamic> json) => EnquiryModel(
 Map<String, dynamic> _$EnquiryModelToJson(EnquiryModel instance) =>
     <String, dynamic>{
       'Id': instance.id,
-      'FullName': instance.fullName,
+      'FirstName': instance.firstName,
+      'LastName': instance.lastName,
       'Contact': instance.contact,
       'EmailID': instance.emailID,
       'PassportNumber': instance.passportNumber,

@@ -15,8 +15,6 @@ import 'package:ministry/src/core/widgets/common_widgets.dart';
 import 'package:ministry/src/features/enquiry/application/controller/enquiry_controller.dart';
 import 'package:ministry/src/features/enquiry/application/providers/enquiry_provider.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_form.dart';
-
-
 import '../../../../core/resources/font_manager.dart';
 import '../../../../core/resources/gap_manager.dart';
 import '../../../../core/utils/page_route.dart';
@@ -48,7 +46,7 @@ class CountryPicker extends ConsumerWidget {
                 Text('Apply for :',style: bh1,),
                 h20,
                 countriesAsyncValue.when(
-                    data: (countries){
+                    data: (countries) {
                       return DropdownSearch<Map<String, dynamic>>(
                         items: (filter, loadProps) => countries.map((e)=>e as Map<String, dynamic>).toList(), // List of countries as <String>
                         selectedItem: selectedCountry,
@@ -272,7 +270,8 @@ class CountryPicker extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(16)
                             )
                           ),
-                          onPressed: (selectedCountry == null || selectedProvince == null || selectedSector == null) ? null : ()=>routeTo(context, EnquiryForm()), child: Text('Next')),
+                          onPressed: (selectedCountry == null || selectedSector == null) ? null : ()=>routeTo(context, EnquiryForm()), child: Text('Next')
+                      ),
                     ),
                   ],
                 )

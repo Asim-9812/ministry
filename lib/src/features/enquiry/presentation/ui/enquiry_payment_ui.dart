@@ -85,7 +85,6 @@ class EnquiryPaymentUI extends ConsumerWidget {
                               children: [
                                 Text('Appointment Date & Time', style: ph3,),
                                 Text(date, style: bh2,),
-
                                 h10,
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,8 +116,6 @@ class EnquiryPaymentUI extends ConsumerWidget {
                                 border: Border.all(
                                     color: MyColors.grey
                                 )
-
-
                             ),
                             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -128,7 +125,7 @@ class EnquiryPaymentUI extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('Full name', style: ph3,),
-                                Text(data['fullName'], style: bh2,),
+                                Text(data['FirstName'] + ' ' + data['LastName'], style: bh2,),
                                 h10,
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -316,7 +313,7 @@ class EnquiryPaymentUI extends ConsumerWidget {
             h20,
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text('Payment Amount: Rs. 10.00',style: bh2,),
+              child: Text('Payment Amount: Rs. 9500.00',style: bh2,),
             ),
             h10,
             Padding(
@@ -330,7 +327,7 @@ class EnquiryPaymentUI extends ConsumerWidget {
                   data: (paymentList){
                     return Column(
                       children: paymentList.map((e){
-                        final icon = e.paymentid == 1 ? 'assets/icons/esewa.png' : 'assets/icons/khalti.png';
+                        final icon = e.paymentid == -1 ? e.PaymentLogo : e.paymentid == 1 ? 'assets/icons/esewa.png' : 'assets/icons/khalti.png';
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: RadioListTile(
@@ -417,7 +414,7 @@ class EnquiryPaymentUI extends ConsumerWidget {
                                       "orgid": "${selectedPayment.organizationId}",
                                       "paymentmethod": "1",
                                       "uniquereferenceid": "1",
-                                      "totalamount": "10.0",
+                                      "totalamount": "9500.0",
                                       "ledger": "",
                                       "transactionid": "$verification",
                                       "entrydate": "",
@@ -430,8 +427,6 @@ class EnquiryPaymentUI extends ConsumerWidget {
                                   };
 
                                   final paymentInsert = await ref.read(enquiryNotifier.notifier).insertPaymentInfo(data: paymentInfo);
-
-
                                   if(paymentInsert){
                                     print('payments done');
                                     final value = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: data['passportNumber'], code: paymentId);
@@ -443,12 +438,7 @@ class EnquiryPaymentUI extends ConsumerWidget {
                                     else{
                                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>EnquiryPaidHtml(html: value)), (route) => false,);
                                     }
-
                                   }
-
-
-
-
                                   ref.read(enquiryController.notifier).paymentLoading(false);
                                 }
                                 else{
@@ -460,21 +450,50 @@ class EnquiryPaymentUI extends ConsumerWidget {
                                 ref.read(enquiryController.notifier).paymentLoading(false);
                                 Toaster.error('Payment unsuccessful');
                               }
-
                             }
-
                             else if(selectedPayment.paymentid == 2){
-
                               final paymentCred = await ref.read(enquiryNotifier.notifier).fetchPaymentCred(code: code, paymentId: 2);
-
-
                               ref.read(enquiryController.notifier).paymentLoading(true);
-
                               routeTo(context, KhaltiPaymentUI(data: data, paymentCred: paymentCred, code: code, selectedPayment: selectedPayment, paymentId: paymentId,));
-
                               ref.read(enquiryController.notifier).paymentLoading(false);
-
                               // await KhaltiServices().initiatePayment();
+                            }
+                            else if(selectedPayment.paymentid == -1){
+
+                              final paymentInfo = {
+                                "tableName": "TransactionalDetails",
+                                "parameter": {
+                                  "id": null,
+                                  "orgid": "${selectedPayment.organizationId}",
+                                  "paymentmethod": "3",
+                                  "uniquereferenceid": "1",
+                                  "totalamount": "0.0",
+                                  "ledger": "",
+                                  "transactionid": "COUNTER",
+                                  "entrydate": "",
+                                  "paymentBy": "${data['passportNumber']}",
+                                  "extra1": "$code",
+                                  "extra2": "",
+                                  "extra3": "",
+                                  "flag": "Insert"
+                                }
+                              };
+
+                              final paymentInsert = await ref.read(enquiryNotifier.notifier).insertPaymentInfo(data: paymentInfo);
+                              if(paymentInsert){
+                                print('payments done');
+                                final value = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: data['passportNumber'], code: paymentId);
+                                // ref.invalidate(enquiryController);
+                                print(value);
+                                print('print done');
+                                if(value == null){
+                                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Dashboard()), (route) => false,);
+                                }
+                                else{
+                                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>EnquiryPaidHtml(html: value)), (route) => false,);
+                                }
+                              }
+                              ref.read(enquiryController.notifier).paymentLoading(false);
                             }
                           }
                           else{
@@ -483,7 +502,8 @@ class EnquiryPaymentUI extends ConsumerWidget {
                         },
                         child:(isPaying || enquiryState.isLoading)
                             ? SpinKitDualRing(color: MyColors.white,size: 16,)
-                            : Text('Confirm Payment')),
+                            : Text('Confirm Payment')
+                    ),
                   ),
                 ],
               ),

@@ -159,10 +159,13 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
       // print(data);
 
       final response = await dio.post(Api.insertEnquiry,
-        data: data
+        data: {
+          "tableName": "GetEnquiryByPassportNo",
+          "parameter": data
+        }
       );
       if(response.statusCode == 200){
-        return response.data['message'] as String;
+        return response.data['data'][0]['message'] as String;
       }
       else{
         return null;
@@ -188,6 +191,13 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
       if(response.statusCode == 200){
         final data = response.data['data'] as List<dynamic>;
         final paymentList = data.map((e)=>PaymentListModel.fromJson(e)).toList();
+        final payAtCounter = PaymentListModel(
+            paymentid: -1,
+            paymentName: 'Pay At Counter',
+            PaymentLogo: 'assets/icons/cash-counting.png',
+            organizationId: paymentList.first.organizationId
+        );
+        paymentList.add(payAtCounter);
         return paymentList;
       }
       else{
@@ -310,7 +320,7 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
   Future<String?> getEnquiryReport({required String passportNo, required String code}) async {
 
     try{
-      print('${Api.getAppointmentSlip}$passportNo&code=$code');
+      // print('${Api.getAppointmentSlip}$passportNo&code=$code');
 
       final response = await dio.get('${Api.getAppointmentSlip}$passportNo&code=$code');
       if(response.statusCode == 200){
@@ -318,8 +328,10 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
         final data = response.data['result'] as List<dynamic>;
         // print(data.length);
         final htmlContent = data[0]['htmlContent'] as String?;
+        print(htmlContent != null);
         // final getEnquiryData = data.singleWhere((e)=> e['AppointmentDate'] == date, orElse: ()=>null);
         if(htmlContent != null){
+
           return htmlContent;
         }
         else{

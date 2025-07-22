@@ -7,6 +7,7 @@ class Api{
 
   static const baseUrl = 'https://mainapi.hospitalsnepal.com/api/central';
 
+  static const signup = '$baseUrl/Patient/Synchronise';
   static const login = '$baseUrl/Member/MemberLogin';
 
   static const publicNoticeList = '$baseUrl/Notice/PublicList';
@@ -18,7 +19,7 @@ class Api{
   static const getProvince = '$baseUrl/GlobalDropdown/getDropDownList?DropDownType=province';
   static const getSector = '$baseUrl/GlobalDropdown/getDropDownList?DropDownType=sector';
   // static const getAvailableAgency = '$baseUrl/GlobalDropdown/getDropDownList?DropDownType=FilterByCountry&filter1=';
-  static const insertEnquiry = '$baseUrl/Enquiry/Insert';
+  static const insertEnquiry = '$baseUrl/GlobalDropdown/genericapi';
   static const getEnquiryList = '$baseUrl/GlobalDropdown/genericapi';
 
   static const getMedicalReport = '$baseUrl/MedicalReport/GetReportForMobileByPatientID?PatientNo=';

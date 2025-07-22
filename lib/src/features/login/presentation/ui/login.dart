@@ -7,8 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ministry/src/core/providers/user_info_provider.dart';
+import 'package:ministry/src/core/utils/page_route.dart';
 import 'package:ministry/src/features/login/application/login_controller.dart';
 import 'package:ministry/src/core/api/api.dart';
+import 'package:ministry/src/features/sign_up/presentation/sign_up.dart';
 
 import '../../../../core/resources/color_manager.dart';
 import '../../../../core/resources/font_manager.dart';
@@ -208,6 +210,24 @@ class LoginPage extends ConsumerWidget {
                                         child: loginState.isLoading
                                             ? const SpinKitDualRing(color: MyColors.white, size: 16,)
                                             : const Text('Login',style: wh2,),
+                                      ),
+                                    ),
+                                    h30
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            elevation: 0,
+                                              backgroundColor: MyColors.grey.withValues(alpha: 150),
+                                              shape: ContinuousRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(24)
+                                              )
+                                          ),
+                                        onPressed: ()=>routeTo(context, SignUp()),
+                                        child: const Text('Sign up',style: ph2,),
                                       ),
                                     ),
                                     h30

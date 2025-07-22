@@ -10,8 +10,6 @@ import 'package:intl/intl.dart';
 import 'package:ministry/src/core/utils/page_route.dart';
 import 'package:ministry/src/core/widgets/common_widgets.dart';
 import 'package:ministry/src/features/enquiry/application/controller/enquiry_controller.dart';
-// import 'package:ministry/src/features/enquiry/application/providers/enquiry_provider.dart';
-import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_payment.dart';
 import 'package:ministry/src/features/enquiry/presentation/ui/enquiry_payment_ui.dart';
 import '../../../../core/resources/color_manager.dart';
 import '../../../../core/resources/gap_manager.dart';
@@ -27,23 +25,24 @@ class EnquiryForm extends ConsumerWidget {
 
 
     final passportController = ref.watch(enquiryController).passportController;
-
-    // final countriesAsyncValue = ref.watch(countriesProvider);
-    // final medicalAsyncValue = ref.watch(medicalAgenciesProvider(provinceId));
-    // final districtAsyncValue = ref.watch(districtProvider(provinceId));
+    final confirmPassportController = ref.watch(enquiryController).confirmPassportController;
     final formKey = ref.watch(enquiryController).formKey;
-    final nameController = ref.watch(enquiryController).nameController;
+    final firstNameController = ref.watch(enquiryController).firstNameController;
+    final lastNameController = ref.watch(enquiryController).lastNameController;
     final emailController = ref.watch(enquiryController).emailController;
     final phoneController = ref.watch(enquiryController).phoneController;
     final remarksController = ref.watch(enquiryController).remarksController;
     final dateController = ref.watch(enquiryController).dateController;
     final selectedDate = ref.watch(enquiryController).selectedDate;
     final selectedCountry = ref.watch(enquiryController).selectedCountryDynamic;
-    // final selectedCode = ref.watch(enquiryController).selectedCode;
-    // final selectedMedicalAgency = ref.watch(enquiryController).selectedMedical;
     final selectedSector = ref.watch(enquiryController).selectedSector;
     final authState = ref.watch(loginNotifierProvider);
     final formState = ref.watch(enquiryNotifier);
+    // final countriesAsyncValue = ref.watch(countriesProvider);
+    // final medicalAsyncValue = ref.watch(medicalAgenciesProvider(provinceId));
+    // final districtAsyncValue = ref.watch(districtProvider(provinceId));
+    // final selectedCode = ref.watch(enquiryController).selectedCode;
+    // final selectedMedicalAgency = ref.watch(enquiryController).selectedMedical;
 
     return GestureDetector(
       onTap: ()=>FocusScope.of(context).unfocus(),
@@ -82,6 +81,7 @@ class EnquiryForm extends ConsumerWidget {
                       //   FilteringTextInputFormatter.digitsOnly
                       // ],
                     ),
+
                     if(authState.user != null)
                       TypeAheadField(
 
@@ -91,6 +91,7 @@ class EnquiryForm extends ConsumerWidget {
                           return TextFormField(
                             focusNode: focusNode,
                             controller: passportController,
+                            textCapitalization: TextCapitalization.characters,
                             decoration: InputDecoration(
                               labelText: "Passport No.",
                               prefixIcon: Icon(Icons.person,color: MyColors.primary,),
@@ -127,7 +128,9 @@ class EnquiryForm extends ConsumerWidget {
                         },
                         onSelected: (suggestion) {
                           passportController.text = suggestion!;
-                          nameController.text = authState.user!.firstName + ' ' + authState.user!.lastName;
+                          confirmPassportController.text = suggestion;
+                          firstNameController.text = authState.user!.firstName;
+                          lastNameController.text = authState.user!.lastName;
                           emailController.text = authState.user!.email;
                           phoneController.text = authState.user!.contact!;
 
@@ -135,11 +138,13 @@ class EnquiryForm extends ConsumerWidget {
                         emptyBuilder: (context) => SizedBox(),
 
                       ),
+
                     h10,
                     TextFormField(
-                      controller: nameController,
+                      controller: confirmPassportController,
+                      textCapitalization: TextCapitalization.characters,
                       decoration: InputDecoration(
-                        labelText: "Full name",
+                        labelText: "Confirm Your Passport",
                         prefixIcon: Icon(Icons.person,color: MyColors.primary,),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -152,59 +157,102 @@ class EnquiryForm extends ConsumerWidget {
                       ),
                       validator: (value) {
                         if(value == null || value.trim().isEmpty){
-                          return 'Name is required.';
+                          return 'Confirm your passport';
+                        }
+                        else if(passportController.text.trim().isNotEmpty && value.toLowerCase() != passportController.text.trim().toLowerCase()){
+                          return 'Passport does not match';
+                        }
+                        return null;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+
+                    ),
+                    h10,
+                    TextFormField(
+                      controller: firstNameController,
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        labelText: "First name",
+                        prefixIcon: Icon(Icons.person,color: MyColors.primary,),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: MyColors.primary),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: MyColors.primary),
+                        ),
+                      ),
+                      validator: (value) {
+                        if(value == null || value.trim().isEmpty){
+                          return 'First Name is required.';
                         }
                         return null;
                       },
                     ),
                     h10,
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: emailController,
-                            decoration: InputDecoration(
-                              labelText: "E-mail (Optional)",
-                              prefixIcon: Icon(Icons.mail,color: MyColors.primary,),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: MyColors.primary),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: MyColors.primary),
-                              ),
-                            ),
+                    TextFormField(
+                      controller: lastNameController,
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        labelText: "Last name",
+                        prefixIcon: Icon(Icons.person,color: MyColors.primary,),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: MyColors.primary),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: MyColors.primary),
+                        ),
+                      ),
+                      validator: (value) {
+                        if(value == null || value.trim().isEmpty){
+                          return 'Last Name is required.';
+                        }
+                        return null;
+                      },
+                    ),
+                    h10,
+                    TextFormField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+                        labelText: "E-mail (Optional)",
+                        prefixIcon: Icon(Icons.mail,color: MyColors.primary,),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: MyColors.primary),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: MyColors.primary),
+                        ),
+                      ),
 
-                          ),
+                    ),
+                    h10,
+                    TextFormField(
+                      controller: phoneController,
+                      decoration: InputDecoration(
+                        labelText: "Mobile no.",
+                        prefixIcon: Icon(Icons.phone,color: MyColors.primary,),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: MyColors.primary),
                         ),
-                        w10,
-                        Expanded(
-                          child: TextFormField(
-                            controller: phoneController,
-                            decoration: InputDecoration(
-                              labelText: "Mobile no.",
-                              prefixIcon: Icon(Icons.phone,color: MyColors.primary,),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: MyColors.primary),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: MyColors.primary),
-                              ),
-                            ),
-                            validator: (value) {
-                              if(value == null || value.trim().isEmpty){
-                                return 'Contact is required.';
-                              }
-                              return null;
-                            },
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                          ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: MyColors.primary),
                         ),
+                      ),
+                      validator: (value) {
+                        if(value == null || value.trim().isEmpty){
+                          return 'Contact is required.';
+                        }
+                        return null;
+                      },
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly
                       ],
                     ),
                     h10,
@@ -364,18 +412,13 @@ class EnquiryForm extends ConsumerWidget {
                         );
 
                         if(selectDate != null){
-                          TimeOfDay? selectTime = await showTimePicker(context: context, initialTime: TimeOfDay.now());
-
-                          if(selectTime != null){
-                            DateTime appointedDate = DateTime(selectDate.year, selectDate.month, selectDate.day, selectTime.hour, selectTime.minute);
-                            dateController.text = DateFormat('yyyy-MM-dd HH:mm a').format(appointedDate);
-                            ref.read(enquiryController.notifier).selectDate(appointedDate);
-                          }
+                          dateController.text = DateFormat('yyyy-MM-dd').format(selectDate);
+                          ref.read(enquiryController.notifier).selectDate(selectDate);
                         }
 
                       },
                       decoration: InputDecoration(
-                        labelText: "Select Appointment date & time",
+                        labelText: "Select Appointment date",
                         prefixIcon: Icon(Icons.watch_later_outlined,color: MyColors.primary,),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -392,8 +435,10 @@ class EnquiryForm extends ConsumerWidget {
                         }
                         try{
                           final now = DateTime.now();
-                          final date = DateFormat('yyyy-MM-dd HH:mm a').parse(value);
-                          if(date.isBefore(now)){
+                          final currentDate = DateTime(now.year,now.month,now.day);
+                          final date = DateFormat('yyyy-MM-dd').parse(value);
+                          final selectedDate = DateTime(date.year,date.month,date.day);
+                          if(selectedDate.isBefore(currentDate)){
                             return 'Selected date or time is before current date or time';
                           }
                         }catch(e){
@@ -417,15 +462,16 @@ class EnquiryForm extends ConsumerWidget {
                                 if(formKey.currentState!.validate()){
                                   final now = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now().add(Duration(seconds: 50)));
                                   Map<String, dynamic> data = {
-                                    "id": 0,
-                                    "fullName": nameController.text.trim(),
+                                    "id": "0",
+                                    "FirstName": firstNameController.text.trim(),
+                                    "LastName": lastNameController.text.trim(),
                                     "contact": phoneController.text.trim(),
                                     "emailID": emailController.text.trim().isEmpty ? '' : emailController.text.trim(),
                                     "appliedFor": '${selectedCountry['id']}',
                                     "medicalAgency": "",
                                     "queries": remarksController.text.trim().isEmpty ? '' : remarksController.text.trim(),
-                                    "passportNumber": passportController.text.trim(),
-                                    "flag": "string",
+                                    "passportNumber": passportController.text.trim().toUpperCase(),
+                                    "flag": "Insert",
                                     "entryDate": now,
                                     "appointmentDate": DateFormat('yyyy-MM-ddTHH:mm:ss').format(selectedDate!),
                                     "extra1": '${selectedSector['id']}'
@@ -436,7 +482,7 @@ class EnquiryForm extends ConsumerWidget {
                                     final id = idCode[0];
                                     final code = idCode[1];
 
-                                    final date = DateFormat('yyyy-MM-dd HH:mm a').format(selectedDate);
+                                    final date = DateFormat('yyyy-MM-dd').format(selectedDate);
                                     routeTo(context, EnquiryPaymentUI(data: data, date: date, code: code, paymentId: id,));
                                   }
 

@@ -181,7 +181,7 @@ class EnquiryDetails extends ConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text('Full name', style: ph3,),
-                                  Text(enquiry.fullName, style: bh2,),
+                                  Text(enquiry.firstName + ' ' + '${enquiry.lastName ?? ''}', style: bh2,),
                                   h10,
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
