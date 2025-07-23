@@ -5,7 +5,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 final signupController = ChangeNotifierProvider<SignupController>((ref)=>SignupController());
 
 
@@ -17,6 +16,9 @@ class SignupController extends ChangeNotifier{
   String? gender;
   int? genderId;
   bool genderError = false;
+
+  String countryCode = 'NP';
+  String number = '977';
 
   TextEditingController  passportController = TextEditingController();
   TextEditingController  firstNameController = TextEditingController();
@@ -47,6 +49,14 @@ class SignupController extends ChangeNotifier{
   void toggleGenderError(){
     genderError = true;
     notifyListeners();
+  }
+
+
+  void setCode(String value, String dialCode){
+    countryCode = value;
+    number = dialCode;
+    notifyListeners();
+
   }
 
 }

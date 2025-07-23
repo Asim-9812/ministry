@@ -43,6 +43,7 @@ dependencies:
   awesome_notifications_core: ^0.10.0
   carousel_slider: ^5.0.0
   connectivity_wrapper: ^1.1.4
+  country_code_picker: ^3.3.0
   cupertino_icons: ^1.0.6
   dartz: ^0.10.1
   device_preview_plus: any

@@ -11,11 +11,14 @@ import 'package:ministry/src/features/reminders/application/controller/reminder_
 import 'package:ministry/src/features/reminders/application/provider/reminders_providers.dart';
 import 'package:ministry/src/features/reminders/domain/model/reminder_model.dart';
 import 'package:ministry/src/features/reminders/domain/model/reminder_tag_model.dart';
+import 'package:ministry/src/features/reminders/presentation/ui/reminder_lock_screen.dart';
 import 'package:ministry/src/features/reminders/presentation/ui/widgets/fab/fab_widgets.dart';
 import 'package:ministry/src/features/reminders/presentation/ui/widgets/no_items.dart';
 import 'package:ministry/src/features/reminders/presentation/ui/widgets/reminder_list_tile.dart';
 import '../../../../core/resources/gap_manager.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+
+import '../../../login/application/login_notifier.dart';
 
 
 class Reminders extends ConsumerWidget {
@@ -25,11 +28,15 @@ class Reminders extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final type = ref.watch(reminderController).reminderType;
     final reminderList = ref.watch(reminderProvider);
+    final authState = ref.watch(loginNotifierProvider);
     return Scaffold(
       appBar: commonAppBar('Reminders'),
       floatingActionButtonLocation: ExpandableFab.location,
-      floatingActionButton: ReminderFab(),
-      body: Padding(
+      floatingActionButton: authState.user == null ? null : ReminderFab(),
+      body: authState.user == null
+          ? ReminderLockScreen()
+
+          : Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,25 +1,25 @@
 
 
 
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:ministry/src/core/providers/user_info_provider.dart';
 import 'package:ministry/src/core/resources/color_manager.dart';
-import 'package:ministry/src/core/utils/page_route.dart';
-import 'package:ministry/src/core/utils/toaster.dart';
 import 'package:ministry/src/core/widgets/common_widgets.dart';
-import 'package:ministry/src/features/dashboard/application/controller/dashboard_controller.dart';
-import 'package:ministry/src/features/dashboard/presentation/ui/dashboard.dart';
-import 'package:ministry/src/features/login/application/login_notifier.dart';
 import 'package:ministry/src/features/sign_up/application/controller/signup_controller.dart';
 import 'package:ministry/src/features/sign_up/application/signup_notifier.dart';
-import 'package:ministry/src/features/status_page/presentation/status_page.dart';
-
+import '../../../core/providers/user_info_provider.dart';
 import '../../../core/resources/font_manager.dart';
 import '../../../core/resources/gap_manager.dart';
+import '../../../core/utils/page_route.dart';
+import '../../../core/utils/toaster.dart';
+import '../../dashboard/application/controller/dashboard_controller.dart';
+import '../../dashboard/presentation/ui/dashboard.dart';
+import '../../login/application/login_notifier.dart';
+
 
 class SignUp extends ConsumerWidget {
   const SignUp({super.key});
@@ -43,6 +43,9 @@ class SignUp extends ConsumerWidget {
     final genderList = ['Male', 'Female', 'Other'];
 
     final signUpState = ref.watch(signupNotifierProvider);
+
+    final countryCode = controller.countryCode;
+    final dialCode = controller.number;
 
 
 
@@ -197,6 +200,7 @@ class SignUp extends ConsumerWidget {
                   ],
                 ),
                 h10,
+
                 TextFormField(
                   controller: contactController,
                   keyboardType: TextInputType.number,
@@ -221,7 +225,14 @@ class SignUp extends ConsumerWidget {
                         )
                     ),
                     labelText: 'Contact',
-                    prefixIcon: Icon(Icons.phone,color: MyColors.primary,),
+                    prefixIcon: CountryCodePicker(
+                      flagWidth: 18,
+                      initialSelection: countryCode,
+                      onChanged: (value) {
+                        print(value.dialCode);
+                        ref.read(signupController.notifier).setCode(value.code!, value.dialCode!);
+                      },
+                    ),
                   ),
                   validator: (val){
                     if(val == null || val.trim().isEmpty){
@@ -261,7 +272,7 @@ class SignUp extends ConsumerWidget {
                     prefixIcon: Icon(Icons.email,color: MyColors.primary,),
                   ),
                   validator: (val){
-                    if(val == null || val.trim().isEmpty){
+                    if(countryCode != 'NP' && (val == null || val.trim().isEmpty)){
                       return 'Email is required';
                     }
                     return null;
@@ -360,6 +371,7 @@ class SignUp extends ConsumerWidget {
                         ),
                         onPressed: () async {
 
+
                           if(formKey.currentState!.validate()){
                             if(selectedGender == null){
                               ref.read(signupController.notifier).toggleGenderError();
@@ -376,7 +388,7 @@ class SignUp extends ConsumerWidget {
                                 "lastName": lastNameController.text.toUpperCase(),
                                 "gender": '$selectedGenderId',
                                 "email": emailController.text.trim(),
-                                "contact": contactController.text.trim(),
+                                "contact": dialCode + contactController.text.trim(),
                                 "key": "string",
                                 "orgId": "SUP",
                                 "flag": "string",
@@ -389,6 +401,10 @@ class SignUp extends ConsumerWidget {
                                 await ref.read(loginNotifierProvider.notifier).login(username: passportController.text.trim().toUpperCase(), password: passwordController.text.trim()).then((_){
                                   // ref.invalidate(dashboardController);
                                   ref.refresh(userInfoProvider);
+                                  int newPageIndex = 2;
+                                  int newNavIndex = -1;
+                                  ref.read(dashboardController.notifier).changeNavIndex(newNavIndex);
+                                  ref.read(dashboardController.notifier).changePageIndex(newPageIndex);
                                   routeResetTo(context, Dashboard());
                                 });
 
