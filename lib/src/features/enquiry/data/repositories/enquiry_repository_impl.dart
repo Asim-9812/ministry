@@ -255,13 +255,13 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
   }
 
   @override
-  Future<List<EnquiryModel>> enquiryList({required String passportNo}) async {
+  Future<List<EnquiryModel>> enquiryList({required String userId, required String passportNo, required int filter}) async {
     try{
       final response = await dio.post(Api.getEnquiryList,
         data: {
           "tableName": "GetEnquiryByPassportNo",
           "parameter": {
-            "passportNumber": "$passportNo",
+            "passportNumber": "$userId",
             "flag": "getprintlist"
           }
         }
@@ -271,7 +271,18 @@ class EnquiryRepositoryImpl extends EnquiryRepository{
         final enquiryList = data.map((e)=>EnquiryModel.fromJson(e)).toList();
 
         enquiryList.sort((a,b)=>b.entryDate.compareTo(a.entryDate));
-        return enquiryList;
+
+
+        if(filter == 1){
+          return enquiryList.where((e)=>e.passportNumber == passportNo).toList();
+        }
+        else if(filter == 2){
+          enquiryList.removeWhere((e)=>e.passportNumber == passportNo);
+          return enquiryList;
+        }
+        else{
+          return enquiryList;
+        }
       }
       else{
         throw Exception('Unable to fetch data.');

@@ -41,6 +41,17 @@ class EnquiryController extends ChangeNotifier{
   String? provinceErrorText;
   String? medicalErrorText;
 
+  String forType = '';
+  bool isSelf = false;
+
+
+  void selectType(String type){
+    forType = type;
+    isSelf = type == 'Self';
+    notifyListeners();
+  }
+
+
 
   bool isPaying = false;
   PaymentModel? selectedPayment;

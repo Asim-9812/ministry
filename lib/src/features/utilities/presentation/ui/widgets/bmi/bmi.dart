@@ -67,10 +67,13 @@ class Bmi extends ConsumerWidget {
                                             : 'assets/icons/woman.png',
                                         // width: 110,
                                         height: height < 91
-                                            ? (91 * 91 / 120)
+                                            ? (91 * 91 / 150)
                                             : height > 243
-                                            ? (243 * 243 / 120)
-                                            : (height * height / 120),
+                                            ? (243 * 243 / 90)
+                                            : height > 210 ? (height * height / 90)
+                                            : 170 < height && height < 210? (height * height / 85)
+                                            : 60 < height && height < 170? (height * height / 75)
+                                            : (height * height / 80),
                                         fit: BoxFit.fitHeight,
                                       ),
                                     ),

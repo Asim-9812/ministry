@@ -38,6 +38,9 @@ class EnquiryForm extends ConsumerWidget {
     final selectedSector = ref.watch(enquiryController).selectedSector;
     final authState = ref.watch(loginNotifierProvider);
     final formState = ref.watch(enquiryNotifier);
+    final selectedType = ref.watch(enquiryController).forType;
+    final isSelf = ref.watch(enquiryController).isSelf;
+    final typeList = ['Self', 'Others'];
     // final countriesAsyncValue = ref.watch(countriesProvider);
     // final medicalAsyncValue = ref.watch(medicalAgenciesProvider(provinceId));
     // final districtAsyncValue = ref.watch(districtProvider(provinceId));
@@ -55,9 +58,52 @@ class EnquiryForm extends ConsumerWidget {
                 key: formKey,
                 child: Column(
                   children: [
+                    Row(
+                      children: typeList.map((type) {
+                        return Expanded(
+                          child: Padding(
+                            padding: type == 'Self' ? EdgeInsets.only(right: 8) : EdgeInsets.zero,
+                            child: RadioListTile(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                side: BorderSide(
+                                  color: type == selectedType ? MyColors.primary : MyColors.darkGrey
+                                )
+                              ),
+                              title: Text(type),
+                              value: type,
+                              groupValue: selectedType,
+                              onChanged: (value) {
+                                if (value != null) {
+
+                                  ref.read(enquiryController.notifier).selectType(value);
+                                  if(value == 'Self'){
+                                    passportController.text = authState.user!.passportNo!;
+                                    confirmPassportController.text = authState.user!.passportNo!;
+                                    firstNameController.text = authState.user!.firstName;
+                                    lastNameController.text = authState.user!.lastName;
+                                    emailController.text = authState.user!.email;
+                                    phoneController.text = authState.user!.contact!;
+                                  }
+                                  if(value == 'Others'){
+                                    passportController.text = '';
+                                    confirmPassportController.text = '';
+                                    firstNameController.text = '';
+                                    lastNameController.text = '';
+                                    emailController.text = '';
+                                    phoneController.text = '';
+                                  }
+
+                                }
+                              },
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
                     h10,
-                    if(authState.user == null)
                     TextFormField(
+
                       controller: passportController,
                       decoration: InputDecoration(
                         labelText: "Passport No.",
@@ -70,7 +116,10 @@ class EnquiryForm extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide(color: MyColors.primary),
                         ),
+                        filled: isSelf,
+                        fillColor: MyColors.lightGrey
                       ),
+                      readOnly: isSelf,
                       validator: (value) {
                         if(value == null || value.trim().isEmpty){
                           return 'Passport is required.';
@@ -82,62 +131,62 @@ class EnquiryForm extends ConsumerWidget {
                       // ],
                     ),
 
-                    if(authState.user != null)
-                      TypeAheadField(
-
-                        controller: passportController,
-
-                        builder: (context, controller, focusNode) {
-                          return TextFormField(
-                            focusNode: focusNode,
-                            controller: passportController,
-                            textCapitalization: TextCapitalization.characters,
-                            decoration: InputDecoration(
-                              labelText: "Passport No.",
-                              prefixIcon: Icon(Icons.person,color: MyColors.primary,),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: MyColors.primary),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: MyColors.primary),
-                              ),
-                            ),
-                            validator: (value) {
-                              if(value == null || value.trim().isEmpty){
-                                return 'Passport is required.';
-                              }
-                              return null;
-                            },
-                          );
-                        },
-                        suggestionsCallback: (pattern) {
-                          if(pattern.trim().isEmpty){
-                            return [authState.user!.passportNo];
-                          }
-                          // You can fetch from an API or filter a list
-                          return [authState.user!.passportNo]
-                              .where((item) => item!.toLowerCase().startsWith(pattern.toLowerCase()))
-                              .toList();
-                        },
-                        itemBuilder: (context, suggestion) {
-                          return ListTile(
-                            title: Text(suggestion!),
-                          );
-                        },
-                        onSelected: (suggestion) {
-                          passportController.text = suggestion!;
-                          confirmPassportController.text = suggestion;
-                          firstNameController.text = authState.user!.firstName;
-                          lastNameController.text = authState.user!.lastName;
-                          emailController.text = authState.user!.email;
-                          phoneController.text = authState.user!.contact!;
-
-                        },
-                        emptyBuilder: (context) => SizedBox(),
-
-                      ),
+                    // if(authState.user != null)
+                    //   TypeAheadField(
+                    //
+                    //     controller: passportController,
+                    //
+                    //     builder: (context, controller, focusNode) {
+                    //       return TextFormField(
+                    //         focusNode: focusNode,
+                    //         controller: passportController,
+                    //         textCapitalization: TextCapitalization.characters,
+                    //         decoration: InputDecoration(
+                    //           labelText: "Passport No.",
+                    //           prefixIcon: Icon(Icons.person,color: MyColors.primary,),
+                    //           border: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(12),
+                    //             borderSide: BorderSide(color: MyColors.primary),
+                    //           ),
+                    //           enabledBorder: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(12),
+                    //             borderSide: BorderSide(color: MyColors.primary),
+                    //           ),
+                    //         ),
+                    //         validator: (value) {
+                    //           if(value == null || value.trim().isEmpty){
+                    //             return 'Passport is required.';
+                    //           }
+                    //           return null;
+                    //         },
+                    //       );
+                    //     },
+                    //     suggestionsCallback: (pattern) {
+                    //       if(pattern.trim().isEmpty){
+                    //         return [authState.user!.passportNo];
+                    //       }
+                    //       // You can fetch from an API or filter a list
+                    //       return [authState.user!.passportNo]
+                    //           .where((item) => item!.toLowerCase().startsWith(pattern.toLowerCase()))
+                    //           .toList();
+                    //     },
+                    //     itemBuilder: (context, suggestion) {
+                    //       return ListTile(
+                    //         title: Text(suggestion!),
+                    //       );
+                    //     },
+                    //     onSelected: (suggestion) {
+                    //       passportController.text = suggestion!;
+                    //       confirmPassportController.text = suggestion;
+                    //       firstNameController.text = authState.user!.firstName;
+                    //       lastNameController.text = authState.user!.lastName;
+                    //       emailController.text = authState.user!.email;
+                    //       phoneController.text = authState.user!.contact!;
+                    //
+                    //     },
+                    //     emptyBuilder: (context) => SizedBox(),
+                    //
+                    //   ),
 
                     h10,
                     TextFormField(
@@ -154,7 +203,10 @@ class EnquiryForm extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide(color: MyColors.primary),
                         ),
+                          filled: isSelf,
+                          fillColor: MyColors.lightGrey
                       ),
+                      readOnly: isSelf,
                       validator: (value) {
                         if(value == null || value.trim().isEmpty){
                           return 'Confirm your passport';
@@ -164,7 +216,7 @@ class EnquiryForm extends ConsumerWidget {
                         }
                         return null;
                       },
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      autovalidateMode: AutovalidateMode.onUnfocus,
 
                     ),
                     h10,
@@ -182,7 +234,10 @@ class EnquiryForm extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide(color: MyColors.primary),
                         ),
+                          filled: isSelf,
+                          fillColor: MyColors.lightGrey
                       ),
+                      readOnly: isSelf,
                       validator: (value) {
                         if(value == null || value.trim().isEmpty){
                           return 'First Name is required.';
@@ -205,7 +260,10 @@ class EnquiryForm extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide(color: MyColors.primary),
                         ),
+                          filled: isSelf,
+                          fillColor: MyColors.lightGrey
                       ),
+                      readOnly: isSelf,
                       validator: (value) {
                         if(value == null || value.trim().isEmpty){
                           return 'Last Name is required.';
@@ -227,7 +285,10 @@ class EnquiryForm extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide(color: MyColors.primary),
                         ),
+                          filled: isSelf,
+                          fillColor: MyColors.lightGrey
                       ),
+                      readOnly: isSelf,
 
                     ),
                     h10,
@@ -244,7 +305,10 @@ class EnquiryForm extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide(color: MyColors.primary),
                         ),
+                          filled: isSelf,
+                          fillColor: MyColors.lightGrey
                       ),
+                      readOnly: isSelf,
                       validator: (value) {
                         if(value == null || value.trim().isEmpty){
                           return 'Contact is required.';
@@ -474,7 +538,8 @@ class EnquiryForm extends ConsumerWidget {
                                     "flag": "Insert",
                                     "entryDate": now,
                                     "appointmentDate": DateFormat('yyyy-MM-ddTHH:mm:ss').format(selectedDate!),
-                                    "extra1": '${selectedSector['id']}'
+                                    "extra1": '${selectedSector['id']}',
+                                    "CreatedBy": authState.user?.id.toString()
                                   };
                                   final response = await ref.read(enquiryNotifier.notifier).insertEnquiry(data: data);
                                   if(response != null){
@@ -485,8 +550,6 @@ class EnquiryForm extends ConsumerWidget {
                                     final date = DateFormat('yyyy-MM-dd').format(selectedDate);
                                     routeTo(context, EnquiryPaymentUI(data: data, date: date, code: code, paymentId: id,));
                                   }
-
-
                                 }
                               },
                               child:  formState.isLoading ? SpinKitDualRing(color: MyColors.white, size: 16,) : Text('Proceed to payment')

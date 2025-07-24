@@ -45,7 +45,7 @@ class PersonalServicesList extends ConsumerWidget {
               child: InkWell(
                 onTap: () async {
                   if(index == 0 && passportNo != null){
-                    routeTo(context, EnquiryList(passportNo: passportNo));
+                    routeTo(context, EnquiryList());
                     // final reportHtml = await ref.read(enquiryNotifier.notifier).getEnquiryReport(passportNo: passportNo);
                     //
                     // if(reportHtml == null){

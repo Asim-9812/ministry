@@ -20,7 +20,7 @@ abstract class EnquiryRepository{
 
   Future<List<PaymentListModel>> fetchPaymentList({required String code});
   Future<PaymentCredModel> fetchPaymentCred({required String code, required int paymentId});
-  Future<List<EnquiryModel>> enquiryList({required String passportNo});
+  Future<List<EnquiryModel>> enquiryList({required String userId, required String passportNo, required int filter});
 
   Future<EnquiryModel?> getEnquiry({required String passportNo, required String date});
   Future<String?> getEnquiryReport({required String passportNo, required String code});

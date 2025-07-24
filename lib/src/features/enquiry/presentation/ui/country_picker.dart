@@ -32,6 +32,7 @@ class CountryPicker extends ConsumerWidget {
     final sectorAsyncValue = ref.watch(sectorProvider);
     final districtAsyncValue = ref.watch(districtProvider(selectedProvince == null ? null : selectedProvince['id']));
     final selectedDistrict = ref.watch(enquiryController).selectedDistrict;
+
     return Scaffold(
       appBar: commonNavBar('Appointment Form'),
       body: FadeIn(
@@ -45,6 +46,7 @@ class CountryPicker extends ConsumerWidget {
               children: [
                 Text('Apply for :',style: bh1,),
                 h20,
+
                 countriesAsyncValue.when(
                     data: (countries) {
                       return DropdownSearch<Map<String, dynamic>>(

@@ -52,10 +52,10 @@ class LoginRepositoryImpl implements LoginRepository{
 
       }
       else {
-        throw Exception('Failed to fetch data');
+        throw Exception('Failed to log in. Try Again later');
       }
     }on DioException {
-      throw Exception('Failed to fetch data');
+      throw Exception('Failed to log in. Try Again later');
     }
   }
 

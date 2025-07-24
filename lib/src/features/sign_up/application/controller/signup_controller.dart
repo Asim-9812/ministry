@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final signupController = ChangeNotifierProvider<SignupController>((ref)=>SignupController());
+final signupController = ChangeNotifierProvider.autoDispose<SignupController>((ref)=>SignupController());
 
 
 class SignupController extends ChangeNotifier{

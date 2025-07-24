@@ -12,8 +12,8 @@ class GetEnquiryList{
 
   GetEnquiryList(this.repository);
 
-  Future<List<EnquiryModel>> call({required String passportNo}) {
-    return repository.enquiryList(passportNo: passportNo);
+  Future<List<EnquiryModel>> call({required String userId, required String passportNo, required int filter}) {
+    return repository.enquiryList(userId: userId, passportNo: passportNo, filter: filter);
   }
 
 }

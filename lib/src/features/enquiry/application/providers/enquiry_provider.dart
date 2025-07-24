@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ministry/src/features/enquiry/application/providers/usecase_provider.dart';
 import 'package:ministry/src/features/enquiry/domain/model/enquiry_model.dart';
 import 'package:ministry/src/features/enquiry/domain/model/payment_model.dart';
+import 'package:ministry/src/features/login/application/login_notifier.dart';
 
 import '../../domain/model/medical_agency_model.dart';
 
@@ -48,9 +49,11 @@ final districtProvider = FutureProvider.family<List<dynamic>, int?>((ref, provin
   return getDistrictUseCase(provinceId: provinceId);
 });
 
-final enquiryListProvider = FutureProvider.family<List<EnquiryModel>, String>((ref, passportNo) async {
+final enquiryListProvider = FutureProvider.family.autoDispose<List<EnquiryModel>, int>((ref, filter) async {
+  final passportNo = ref.read(loginNotifierProvider).user!.passportNo;
+  final userId = ref.read(loginNotifierProvider).user!.id;
   final getEnquiryListUseCase = ref.watch(getEnquiryListUseCaseProviders);
-  return getEnquiryListUseCase(passportNo: passportNo);
+  return getEnquiryListUseCase(passportNo: passportNo!, userId: userId.toString(), filter: filter);
 });
 
 

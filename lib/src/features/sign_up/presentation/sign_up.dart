@@ -131,6 +131,7 @@ class SignUp extends ConsumerWidget {
                 ),
                 h10,
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       child: TextFormField(
@@ -168,7 +169,7 @@ class SignUp extends ConsumerWidget {
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
                     ),
-                    w10,
+                    w08,
                     PopupMenuButton(
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 8,vertical: 14),
@@ -268,7 +269,7 @@ class SignUp extends ConsumerWidget {
                             color: MyColors.primary
                         )
                     ),
-                    labelText: 'Email',
+                    labelText: 'Email ${countryCode == 'NP' ? '(Optional)' : ''}',
                     prefixIcon: Icon(Icons.email,color: MyColors.primary,),
                   ),
                   validator: (val){
@@ -398,15 +399,8 @@ class SignUp extends ConsumerWidget {
                               final isSignedUp = await ref.read(signupNotifierProvider.notifier).signUp(data: data);
 
                               if(isSignedUp) {
-                                await ref.read(loginNotifierProvider.notifier).login(username: passportController.text.trim().toUpperCase(), password: passwordController.text.trim()).then((_){
-                                  // ref.invalidate(dashboardController);
-                                  ref.refresh(userInfoProvider);
-                                  int newPageIndex = 2;
-                                  int newNavIndex = -1;
-                                  ref.read(dashboardController.notifier).changeNavIndex(newNavIndex);
-                                  ref.read(dashboardController.notifier).changePageIndex(newPageIndex);
-                                  routeResetTo(context, Dashboard());
-                                });
+                                Toaster.success('Signup successful! Please log in to continue.');
+                                Navigator.pop(context);
 
                               }
 
