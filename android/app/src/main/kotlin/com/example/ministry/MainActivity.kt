@@ -1,4 +1,4 @@
-package com.example.ministry
+package com.swasthyaparikshan.searchtech
 
 import io.flutter.embedding.android.FlutterActivity
 
